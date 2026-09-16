@@ -1,0 +1,47 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import { site, contact } from "../data/config";
+---
+
+<PageLayout
+  title="Politica de confidențialitate"
+  description="Ce date colectează site-ul Fata cu 4pezi și cum sunt folosite."
+>
+  <section class="mx-auto max-w-3xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
+    <div class="prose-fatacu max-w-prose text-ink-soft">
+      <p>
+        Această pagină descrie, pe scurt, modul în care {site.legalName} tratează datele persoanelor care
+        vizitează acest site. Conținutul de mai jos este o versiune inițială și va fi completat cu textul legal
+        definitiv, verificat juridic, înainte de lansarea publică a site-ului.
+      </p>
+
+      <h2>Ce date colectăm</h2>
+      <p>
+        Site-ul, în forma sa actuală, nu folosește cookie-uri de analiză sau de publicitate și nu are un formular
+        propriu de colectare a datelor. Acțiuni precum „Fă o sesizare”, „Vreau să adopt” sau contactul cu un
+        partener deschid direct clientul tău de e-mail — informațiile pe care alegi să le trimiți ajung în căsuța
+        de e-mail a asociației, nu sunt stocate de acest site.
+      </p>
+
+      <h2>Cookie-uri</h2>
+      <p>
+        Nu folosim în prezent cookie-uri care necesită consimțământ. Dacă vom introduce, în viitor, instrumente de
+        analiză a traficului sau alte funcționalități care presupun cookie-uri neesențiale, vom actualiza această
+        pagină și vom afișa un banner de consimțământ înainte de activarea lor.
+      </p>
+
+      <h2>Donații și plăți online</h2>
+      <p>
+        Integrarea unui procesator de plăți pentru donații cu cardul este în pregătire. Odată activă, datele de
+        plată vor fi procesate direct de furnizorul de plăți ales, nu vor tranzita sau fi stocate de acest site, iar
+        politica va fi actualizată cu detaliile relevante.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Pentru întrebări legate de confidențialitate, ne poți scrie la{" "}
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>.
+      </p>
+    </div>
+  </section>
+</PageLayout>

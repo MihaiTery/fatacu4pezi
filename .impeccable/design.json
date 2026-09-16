@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-16T00:00:00.000Z",
+  "title": "Design System: Fata cu 4pezi",
+  "extensions": {
+    "colorMeta": {
+      "green": { "role": "primary", "displayName": "Route Green", "canonical": "#324f40", "tonalRamp": ["#14201a", "#1c2e25", "#24392e", "#324f40", "#4c705e", "#7c9c8c", "#b7cec1", "#e4efe9"] },
+      "green-dark": { "role": "primary", "displayName": "Route Green Dark", "canonical": "#24392e", "tonalRamp": ["#0e1712", "#182720", "#24392e", "#33513f", "#4f7360", "#82a892", "#bcdcc9", "#e8f4ec"] },
+      "cream": { "role": "neutral", "displayName": "Warm Cream", "canonical": "#f9edd3", "tonalRamp": ["#4a3d1e", "#7a6631", "#a68c4c", "#d1b676", "#eddba1", "#f9edd3", "#fbf3e2", "#fdf9f1"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#fffcf5", "tonalRamp": ["#4d4a3b", "#8a8266", "#c2b891", "#e6dcc0", "#f5eedb", "#fffcf5", "#fffdf9", "#fffefc"] },
+      "ink": { "role": "neutral", "displayName": "Brand Ink", "canonical": "#3e1d0d", "tonalRamp": ["#170b05", "#241209", "#3e1d0d", "#5c2c14", "#8a4a29", "#b97650", "#d9ab8c", "#efd8c9"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "canonical": "#6b4a35", "tonalRamp": ["#241a12", "#382719", "#4f3623", "#6b4a35", "#8f6a4f", "#b6927345", "#d7bda6", "#ede1d5"] },
+      "blue": { "role": "secondary", "displayName": "Sky Chip Blue", "canonical": "#c4e0f5", "tonalRamp": ["#1d3a4c", "#2c567090", "#3e6f8c", "#7aa5c2", "#a8c9df", "#c4e0f5", "#dcedf8", "#eff6fb"] },
+      "pink": { "role": "secondary", "displayName": "Blush Chip Pink", "canonical": "#f2cfdc", "tonalRamp": ["#4c1f2b", "#732e40", "#a3475d", "#cc7891", "#e2a8b9", "#f2cfdc", "#f8e0e9", "#fcf0f4"] },
+      "green-soft": { "role": "tint", "displayName": "Green Soft", "canonical": "#dfe8df", "tonalRamp": ["#28322b", "#3d4c40", "#5c705f", "#8ba28d", "#b6c9b6", "#dfe8df", "#eef3ee", "#f7faf7"] },
+      "blue-soft": { "role": "tint", "displayName": "Blue Soft", "canonical": "#e4f0f9", "tonalRamp": ["#233842", "#375667", "#527c92", "#89aec2", "#bcdbea", "#e4f0f9", "#eff7fb", "#f8fbfd"] },
+      "pink-soft": { "role": "tint", "displayName": "Pink Soft", "canonical": "#f8e4eb", "tonalRamp": ["#40232c", "#603443", "#8a4e60", "#bd8393", "#dcb6c1", "#f8e4eb", "#fbeef2", "#fdf7f9"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero H1 and major page H1s only — Jost, wide tracking." },
+      "body": { "displayName": "Body", "purpose": "All paragraph copy, nav, UI text — Poppins." },
+      "label": { "displayName": "Label", "purpose": "Footer headers, status pills, card meta, article dates." }
+    },
+    "shadows": [
+      { "name": "pill-overlay", "value": "0 1px 2px rgba(0,0,0,0.05)", "purpose": "Legibility only, under the status pill floated over an animal photo. Not used for structural elevation anywhere else." }
+    ],
+    "motion": [
+      { "name": "route-stop-stagger", "value": "120ms per-stop delay, 0.5s ease color transition", "purpose": "RouteJourney's scroll-triggered light-up of stop markers and connecting line; skipped entirely under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Fast-commitment CTA (Donează). Fully rounded, deep green fill.",
+      "html": "<a href=\"/doneaza\" class=\"ds-btn ds-btn-primary\">Donează</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 9999px; font-weight: 600; font-family: Poppins, sans-serif; padding: 12px 20px; font-size: 0.95rem; transition: background-color 0.15s; text-decoration: none; } .ds-btn-primary { background: #324f40; color: #f9edd3; } .ds-btn-primary:hover { background: #24392e; } .ds-btn-primary:focus-visible { outline: 2.5px solid #324f40; outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary-weight CTA (Redirecționează 3,5%). 2px ink border, inverts to solid ink on hover.",
+      "html": "<a href=\"/redirectioneaza\" class=\"ds-btn ds-btn-outline\">Redirecționează 3,5%</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 9999px; font-weight: 600; font-family: Poppins, sans-serif; padding: 10px 18px; font-size: 0.95rem; transition: background-color 0.15s, color 0.15s; text-decoration: none; } .ds-btn-outline { background: transparent; color: #3e1d0d; border: 2px solid #3e1d0d; } .ds-btn-outline:hover { background: #3e1d0d; color: #f9edd3; }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "chip",
+      "refersTo": "status-pill-disponibil",
+      "description": "The one always-unambiguous status signal on every animal card and profile. Four states: disponibil (green), in_tratament (blue), rezervat (pink), adoptat (outline).",
+      "html": "<span class=\"ds-status-pill ds-status-disponibil\"><span class=\"ds-status-dot\"></span>Disponibil pentru adopție</span>",
+      "css": ".ds-status-pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 9999px; padding: 4px 12px; font-family: Poppins, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.02em; } .ds-status-dot { height: 6px; width: 6px; border-radius: 9999px; background: currentColor; } .ds-status-disponibil { background: #324f40; color: #f9edd3; } .ds-status-in-tratament { background: #c4e0f5; color: #3e1d0d; } .ds-status-rezervat { background: #f2cfdc; color: #3e1d0d; } .ds-status-adoptat { background: transparent; color: #6b4a35; border: 1px solid rgba(62,29,13,0.25); }"
+    },
+    {
+      "name": "Animal Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Adoption catalogue card: photo with floating status pill, name, age/sex/size meta, up to three personality trait chips.",
+      "html": "<a href=\"#\" class=\"ds-animal-card\"><div class=\"ds-animal-card-photo\"><img src=\"\" alt=\"\" /><span class=\"ds-status-pill ds-status-disponibil\">Disponibil pentru adopție</span></div><div class=\"ds-animal-card-body\"><h3 class=\"ds-animal-card-title\">Nume</h3><p class=\"ds-animal-card-meta\">2 ani · Mascul · talie medie</p><ul class=\"ds-animal-card-tags\"><li>Jucăuș</li><li>Sociabil</li></ul></div></a>",
+      "css": ".ds-animal-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; border: 1px solid rgba(62,29,13,0.1); background: #fffcf5; text-decoration: none; color: inherit; transition: border-color 0.15s; } .ds-animal-card:hover { border-color: rgba(62,29,13,0.3); } .ds-animal-card-photo { position: relative; aspect-ratio: 4/3; overflow: hidden; } .ds-animal-card-photo img { height: 100%; width: 100%; object-fit: cover; } .ds-animal-card .ds-status-pill { position: absolute; left: 12px; top: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); } .ds-animal-card-body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 20px; } .ds-animal-card-title { font-family: 'Jost Variable', Jost, sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: 0.01em; color: #3e1d0d; } .ds-animal-card-meta { font-size: 0.875rem; color: #6b4a35; } .ds-animal-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; list-style: none; } .ds-animal-card-tags li { border-radius: 9999px; background: rgba(62,29,13,0.05); padding: 4px 10px; font-size: 0.75rem; color: #6b4a35; }"
+    },
+    {
+      "name": "Route Journey",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature five-stop rescue-route diagram with a numbered roundel per stop and a connecting line, scroll-lit in green with a stagger. Fully legible with no JS; skips animation under prefers-reduced-motion.",
+      "html": "<ol class=\"ds-route-journey\"><li class=\"ds-route-stop\"><span class=\"ds-route-mark\">1</span><div><p class=\"ds-route-label\">Stradă</p><p class=\"ds-route-text\">Animalul este găsit sau semnalat pe stradă.</p></div></li><li class=\"ds-route-stop\"><span class=\"ds-route-mark ds-lit\">2</span><div><p class=\"ds-route-label\">Prim ajutor</p><p class=\"ds-route-text\">Echipa intervine rapid.</p></div></li></ol>",
+      "css": ".ds-route-journey { display: flex; flex-wrap: wrap; gap: 32px; list-style: none; } .ds-route-stop { display: flex; flex-direction: column; gap: 12px; flex: 1 1 160px; } .ds-route-mark { display: flex; height: 32px; width: 32px; align-items: center; justify-content: center; border-radius: 9999px; border: 2px solid rgba(62,29,13,0.3); background: #f9edd3; font-family: Poppins, sans-serif; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.02em; color: #3e1d0d; transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease; } .ds-route-mark.ds-lit, .ds-route-mark:focus-visible { background-color: #324f40; border-color: #324f40; color: #f9edd3; } .ds-route-label { font-family: 'Jost Variable', Jost, sans-serif; font-size: 1.125rem; font-weight: 700; letter-spacing: 0.01em; color: #3e1d0d; } .ds-route-text { margin-top: 4px; font-size: 0.875rem; line-height: 1.6; color: #6b4a35; }"
+    },
+    {
+      "name": "Main Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Sticky header: crest logo left, nav center, Donează + Redirecționează 3,5% always visible top-right, slim social bar above.",
+      "html": "<header class=\"ds-header\"><a href=\"/\" class=\"ds-header-logo\"><img src=\"/logo/logo-maro.png\" alt=\"Asociația Fata cu 4pezi\" height=\"56\" /></a><nav class=\"ds-header-nav\"><a href=\"/\" class=\"ds-nav-link ds-active\">Acasă</a><a href=\"/adopta\" class=\"ds-nav-link\">Adoptă</a></nav><div class=\"ds-header-cta\"><a href=\"#\" class=\"ds-btn ds-btn-outline\">Redirecționează 3,5%</a><a href=\"#\" class=\"ds-btn ds-btn-primary\">Donează</a></div></header>",
+      "css": ".ds-header { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(62,29,13,0.1); background: #f9edd3; padding: 10px 24px; } .ds-nav-link { font-family: Poppins, sans-serif; font-size: 0.95rem; font-weight: 500; color: #3e1d0d; text-decoration: none; margin-right: 24px; transition: color 0.15s; } .ds-nav-link:hover, .ds-nav-link.ds-active { color: #324f40; } .ds-header-cta { display: flex; gap: 10px; } .ds-btn { display: inline-flex; align-items: center; border-radius: 9999px; font-weight: 600; padding: 10px 18px; font-size: 0.9rem; text-decoration: none; } .ds-btn-primary { background: #324f40; color: #f9edd3; } .ds-btn-outline { background: transparent; color: #3e1d0d; border: 2px solid #3e1d0d; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Route Line",
+    "overview": "The site is built as a rescue route made visible: a thin dashed line and small numbered roundels carry the organization's real mechanism (stradă → prim ajutor → tratament → sterilizare → familie nouă) into every layer of the interface, from the hero's stop chips to the adoption-status pill to the /despre journey diagram. It borrows the grammar of Bucharest transit and wayfinding signage — line, stop, roundel, unambiguous state — without ever drawing a bus, tram, or transit glyph. The effect is meant to read as an organized, multi-stage operation, not a one-off act of sympathy: structure carries the emotional weight instead of melodrama. The palette commits rather than hedges: cream is the one ground the whole site sits on, ink is the one line/text color, and deep green is the single saturated, surface-owning color — never diluted into a 'brand accent used sparingly.' Soft blue and soft pink stay strictly at chip/tag scale and never become backgrounds or section fills. Jost's geometric, wide-tracked display letterforms stand in for the brand's unlicensed Futura-Black Bold; Poppins, the brand's own second face, carries everything read at length.",
+    "keyCharacteristics": [
+      "One committed surface color (deep green), not a diluted accent-among-neutrals palette.",
+      "A literal route-line-and-roundel device reused functionally across status, journey, and rhythm — never as decorative wallpaper.",
+      "Fully rounded pill geometry (buttons, chips, status pills, badges) against sharp-cornered card containers (16px).",
+      "Hand-authored 24×24 stroke icon set (1.75px stroke) — no icon library, no emoji.",
+      "Placeholder imagery is itself route-language: circular ring pictograms for animals, route-line graphics for blog covers, monogram badges for partners — never stock/photorealistic imagery standing in as fact."
+    ],
+    "rules": [
+      { "name": "The One Surface-Owning Color Rule", "body": "Deep green is the only color allowed to fill a large surface (button, footer, lit route marker). Blue and pink are chip-scale only — if a design calls for a blue or pink background section, that is a deviation from the shipped system, not a variant of it.", "section": "colors" },
+      { "name": "The Cream-and-Paper Rule", "body": "Page ground is cream; any container that needs to visually separate from the ground (card, header, section band) uses paper, not a darker cream or a shadow. Depth comes from this tonal step and a 1px ink/10 border, not elevation.", "section": "colors" },
+      { "name": "The Wide-Tracking Rule", "body": "h1–h4 and any Jost-set label (RouteJourney stop numerals, status pills) carry a minimum letter-spacing: 0.01em — confident, never condensed or negative-tracked. This was a finish-review correction: an earlier negative-tracking pass on headings was wrong for this world and has been fully reversed.", "section": "typography" },
+      { "name": "The No-Shadow-For-Depth Rule", "body": "Containers separate from the page using a paper-tone fill and a 1px hairline border, never a drop shadow. The one exception (status-pill-over-photo) is legibility, not elevation styling.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use deep green (#324f40) as the only large-surface, saturated color — buttons, footer, active/lit states.",
+      "Do keep soft blue (#c4e0f5) and soft pink (#f2cfdc) at chip/status-pill scale only.",
+      "Do carry the route-line-and-roundel device functionally (status, journey, rhythm dividers) whenever a new surface needs a structural or status device, rather than inventing a new decorative motif.",
+      "Do set Jost headings and Jost-set labels with a minimum of 0.01em positive letter-spacing.",
+      "Do keep buttons pill-shaped and content cards at 16px radius — don't blend the two registers.",
+      "Do build any new icon in the existing 24×24, 1.75px-stroke, round-cap hand-authored system rather than pulling in an icon library or emoji."
+    ],
+    "donts": [
+      "Don't use paw prints, hearts, blobs, or literal transit/bus/tram iconography anywhere in the system — these were explicitly and permanently rejected during the direction contract, not merely avoided so far.",
+      "Don't apply hard offset (neobrutalist-style) shadows or any box-shadow for structural depth; this world conveys depth tonally and with hairline borders only.",
+      "Don't add kicker/eyebrow labels above headings, same-size icon+heading+text scaffolding grids, gradient text, or glass/blur decoration — these are standing craft-floor prohibitions for this build, not stylistic options.",
+      "Don't recolor or redraw the supplied crest logo outside its six provided colorways (maro, verde, bej, negru, roz, albastru); it is baked artwork, not a themeable component.",
+      "Don't give the donate (fast-commitment) and adopt (deliberate-journey) CTAs identical visual weight or treatment — the system deliberately keeps them distinct (green fill vs. dark fill) to signal their different pace."
+    ]
+  }
+}

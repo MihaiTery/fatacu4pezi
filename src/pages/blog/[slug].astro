@@ -1,0 +1,49 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import { withBase } from "../../lib/url";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("blog");
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const a = article.data;
+const { Content } = await render(article);
+const formattedDate = a.publishDate.toLocaleDateString("ro-RO", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<PageLayout title={a.title} description={a.description} image={undefined}>
+  <article class="mx-auto max-w-3xl px-4 pb-20 sm:px-6 lg:px-8">
+    <a href={withBase("/blog")} class="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-ink-soft hover:text-ink">
+      <Icon name="chevron-right" class="h-4 w-4 rotate-180" />
+      Înapoi la blog
+    </a>
+
+    <p class="text-sm font-medium text-ink-soft">{formattedDate} · {a.author}</p>
+
+    <div class="mt-6 overflow-hidden rounded-2xl">
+      <Image src={a.cover} alt={a.coverAlt} width={1000} height={625} class="aspect-[8/5] w-full object-cover" />
+    </div>
+
+    <div class="prose-fatacu mt-10 max-w-prose text-ink-soft">
+      <Content />
+    </div>
+
+    {
+      a.tags.length > 0 && (
+        <ul class="mt-10 flex flex-wrap gap-2 border-t border-ink/10 pt-6">
+          {a.tags.map((tag) => (
+            <li class="rounded-full bg-ink/5 px-3 py-1 text-xs text-ink-soft">{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+  </article>
+</PageLayout>

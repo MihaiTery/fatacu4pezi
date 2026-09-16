@@ -1,0 +1,60 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Icon from "../components/Icon.astro";
+import SocialBadge from "../components/SocialBadge.astro";
+import Button from "../components/Button.astro";
+import { site, contact } from "../data/config";
+
+const quickLinks = [
+  { title: "Ai găsit un animal în dificultate?", href: "/fa-o-sesizare", cta: "Fă o sesizare" },
+  { title: "Vrei să adopți?", href: "/adopta", cta: "Vezi animalele disponibile" },
+  { title: "Reprezinți o clinică veterinară?", href: "/parteneri", cta: "Vezi rețeaua de parteneri" },
+];
+---
+
+<PageLayout
+  title="Contact"
+  description="Datele de contact ale Asociației Fata cu 4pezi — București și Ilfov."
+  intro="Pentru sesizări sau adopții, paginile dedicate de mai jos ajung mai rapid la echipa potrivită. Pentru orice altceva, ne găsești aici."
+>
+  <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1fr]">
+      <div class="rounded-2xl border border-ink/10 bg-paper p-7">
+        <h2 class="font-display text-lg font-bold text-ink">{site.legalName}</h2>
+        <ul class="mt-5 flex flex-col gap-4 text-sm">
+          <li class="flex items-start gap-3">
+            <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
+            <a href={`mailto:${contact.email}`} class="text-ink hover:text-green">{contact.email}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="text-ink hover:text-green">{contact.phone}</a>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
+            <span class="text-ink">{contact.address}</span>
+          </li>
+        </ul>
+        <div class="mt-6 border-t border-ink/10 pt-5 text-xs text-ink-soft">
+          <p>CIF {contact.cif}</p>
+          <p class="mt-1">Nr. înregistrare {contact.registrationNumber}</p>
+        </div>
+        <SocialBadge size="md" class="mt-6" />
+      </div>
+
+      <div class="flex flex-col gap-4">
+        {
+          quickLinks.map((link) => (
+            <div class="flex flex-col gap-2 rounded-2xl border border-ink/10 bg-paper p-6">
+              <p class="font-semibold text-ink">{link.title}</p>
+              <Button href={link.href} variant="ghost" class="self-start">
+                {link.cta}
+                <Icon name="arrow-right" class="h-4 w-4" />
+              </Button>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</PageLayout>

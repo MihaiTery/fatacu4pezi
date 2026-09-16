@@ -1,0 +1,78 @@
+---
+import Logo from "./Logo.astro";
+import SocialBadge from "./SocialBadge.astro";
+import Icon from "./Icon.astro";
+import { site, contact, nav, legalLinks, credits } from "../data/config";
+import { withBase } from "../lib/url";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-green text-cream">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+      <div class="flex flex-col gap-4">
+        <Logo variant="bej" class="h-24 w-auto self-start" />
+        <p class="max-w-xs text-sm leading-relaxed text-cream/90">
+          {site.shortDescription}
+        </p>
+        <SocialBadge tone="cream" size="md" class="mt-1" />
+      </div>
+
+      <div>
+        <p class="font-display text-sm font-bold uppercase tracking-wide text-cream/70">Navigare</p>
+        <ul class="mt-4 flex flex-col gap-2.5 text-sm">
+          {
+            nav.map((item) => (
+              <li>
+                <a href={withBase(item.href)} class="text-cream/80 hover:text-cream">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-display text-sm font-bold uppercase tracking-wide text-cream/70">Implică-te</p>
+        <ul class="mt-4 flex flex-col gap-2.5 text-sm">
+          <li><a href={withBase("/doneaza")} class="text-cream/80 hover:text-cream">Donează</a></li>
+          <li><a href={withBase("/redirectioneaza")} class="text-cream/80 hover:text-cream">Redirecționează 3,5%</a></li>
+          <li><a href={withBase("/adopta")} class="text-cream/80 hover:text-cream">Adoptă</a></li>
+          <li><a href={withBase("/parteneri")} class="text-cream/80 hover:text-cream">Devino partener</a></li>
+          <li><a href={withBase("/shop")} class="text-cream/80 hover:text-cream">Magazin (în curând)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-display text-sm font-bold uppercase tracking-wide text-cream/70">Contact</p>
+        <ul class="mt-4 flex flex-col gap-3 text-sm text-cream/90">
+          <li class="flex items-start gap-2.5">
+            <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-cream/70" />
+            <a href={`mailto:${contact.email}`} class="hover:text-cream">{contact.email}</a>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-cream/70" />
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="hover:text-cream">{contact.phone}</a>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-cream/70" />
+            <span>{site.area}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-3 border-t border-cream/20 pt-6 text-xs text-cream/70 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {site.legalName}. Toate drepturile rezervate.</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href={withBase(legalLinks.privacyPolicy)} class="hover:text-cream">Politica de confidențialitate</a>
+        <span>CIF {contact.cif} · Înreg. {contact.registrationNumber}</span>
+        <a href={credits.studioUrl} target="_blank" rel="noopener noreferrer" class="hover:text-cream">
+          Design de {credits.studioName}
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

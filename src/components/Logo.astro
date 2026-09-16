@@ -1,0 +1,27 @@
+---
+// The lockup (illustration + "ASOCIAȚIA" arc + "Fata cu 4pezi" wordmark) is
+// baked into the supplied raster art — the SVG export's arc text relies on
+// an unlicensed font and drops a diacritic, so the PNG colorways are the
+// reliable source for on-screen use. Never redraw or recolor outside the
+// six supplied variants.
+import { withBase } from "../lib/url";
+
+interface Props {
+  variant?: "maro" | "verde" | "bej" | "negru" | "roz" | "albastru";
+  class?: string;
+  priority?: boolean;
+}
+
+const { variant = "maro", class: className, priority = false } = Astro.props;
+---
+
+<img
+  src={withBase(`/logo/logo-${variant}.png`)}
+  alt="Asociația Fata cu 4pezi"
+  width="288"
+  height="348"
+  class={className}
+  loading={priority ? "eager" : "lazy"}
+  fetchpriority={priority ? "high" : "auto"}
+  decoding="async"
+/>

@@ -1,0 +1,49 @@
+---
+import { withBase } from "../lib/url";
+
+interface Props {
+  href: string;
+  variant?: "primary" | "outline" | "dark" | "ghost" | "cream" | "outline-light";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  external?: boolean;
+}
+
+const { href, variant = "primary", size = "md", class: className, external = false } = Astro.props;
+// Only a genuine root-relative path ("/adopta") gets base-prefixed —
+// mailto:, tel:, https://, and #fragment hrefs pass through untouched.
+const resolvedHref = withBase(href);
+
+const base =
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-3";
+
+const sizes = {
+  sm: "px-4 py-2 text-sm",
+  md: "px-5 py-3 text-[0.95rem]",
+  lg: "px-7 py-4 text-base",
+};
+
+const variants = {
+  primary: "bg-green text-cream hover:bg-green-dark",
+  outline: "border-2 border-ink text-ink hover:bg-ink hover:text-cream",
+  dark: "bg-ink text-cream hover:bg-[#2a1108]",
+  ghost: "text-ink underline decoration-2 underline-offset-4 decoration-[color-mix(in_srgb,var(--color-ink)_35%,transparent)] hover:decoration-ink px-0 py-0 rounded-none",
+  // On dark/green surfaces (header, footer) — inverted treatments for contrast.
+  cream: "bg-cream text-ink hover:bg-white",
+  "outline-light": "border-2 border-cream/60 text-cream hover:bg-cream hover:text-green hover:border-cream",
+};
+
+const classes = [base, sizes[size], variants[variant], className].filter(Boolean).join(" ");
+---
+
+{
+  external ? (
+    <a href={resolvedHref} class={classes} target="_blank" rel="noopener noreferrer">
+      <slot />
+    </a>
+  ) : (
+    <a href={resolvedHref} class={classes}>
+      <slot />
+    </a>
+  )
+}

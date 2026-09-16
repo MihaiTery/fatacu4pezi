@@ -1,0 +1,29 @@
+---
+// The one always-unambiguous status signal on every animal card and profile —
+// styled like a route-stop marker, echoing the site's journey device.
+interface Props {
+  status: "disponibil" | "in_tratament" | "rezervat" | "adoptat";
+  class?: string;
+}
+
+const { status, class: className } = Astro.props;
+
+const labels: Record<Props["status"], string> = {
+  disponibil: "Disponibil pentru adopție",
+  in_tratament: "În tratament veterinar",
+  rezervat: "Rezervat",
+  adoptat: "Adoptat",
+};
+
+const styles: Record<Props["status"], string> = {
+  disponibil: "bg-green text-cream",
+  in_tratament: "bg-blue text-ink",
+  rezervat: "bg-pink text-ink",
+  adoptat: "bg-transparent text-ink-soft border border-ink/25",
+};
+---
+
+<span class={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide ${styles[status]} ${className ?? ""}`}>
+  <span class="h-1.5 w-1.5 rounded-full bg-current" aria-hidden="true"></span>
+  {labels[status]}
+</span>

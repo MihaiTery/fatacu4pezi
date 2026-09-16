@@ -1,0 +1,116 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import Button from "../components/Button.astro";
+import AnimalCard from "../components/AnimalCard.astro";
+import Icon from "../components/Icon.astro";
+import HeroMark from "../components/HeroMark.astro";
+import { getCollection } from "astro:content";
+import { site } from "../data/config";
+
+const allAnimals = await getCollection("animals");
+const featured = allAnimals
+  .filter((a) => a.data.status === "disponibil")
+  .sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0))
+  .slice(0, 3);
+
+const stops = ["Stradă", "Tratament", "Sterilizare", "Familie"];
+---
+
+<Layout title={site.name} description={site.shortDescription}>
+  <div class="flex min-h-screen flex-col">
+    <SiteHeader />
+
+    <main id="main" class="flex-1">
+      <!-- Hero -->
+      <section class="mx-auto grid max-w-7xl gap-10 px-4 pb-16 pt-14 sm:px-6 sm:pt-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-6 lg:px-8">
+        <div>
+          <h1 class="font-black text-[2.6rem] leading-[1.08] text-ink sm:text-6xl">
+            Salvăm câini și pisici de pe străzile Bucureștiului — și le găsim o familie.
+          </h1>
+          <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
+            Fata cu 4pezi intervine de la primul semnal de pe stradă până la o familie adoptivă responsabilă, cu tratament veterinar și sterilizare la fiecare pas.
+          </p>
+
+          <div
+            class="mt-8 flex max-w-2xl flex-wrap items-center gap-x-2 gap-y-3 text-sm font-medium text-ink-soft"
+            aria-label="Traseul unui animal salvat, de la stradă la familie"
+          >
+            {
+              stops.map((stop, i) => (
+                <>
+                  <span class="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-paper px-3.5 py-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-green" aria-hidden="true" />
+                    {stop}
+                  </span>
+                  {i < stops.length - 1 && (
+                    <Icon name="arrow-right" class="h-4 w-4 shrink-0 text-ink/30" aria-hidden="true" />
+                  )}
+                </>
+              ))
+            }
+          </div>
+
+          <div class="mt-10 flex flex-wrap items-center gap-3">
+            <Button href="/doneaza" variant="primary" size="lg">Donează</Button>
+            <Button href="/adopta" variant="dark" size="lg">Adoptă un animal</Button>
+            <Button href="/redirectioneaza" variant="outline" size="lg">Redirecționează 3,5%</Button>
+          </div>
+        </div>
+
+        <HeroMark />
+      </section>
+
+      <!-- Featured animals -->
+      <section class="border-t border-ink/10 bg-paper/60 py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
+            <h2 class="font-display text-2xl font-bold text-ink sm:text-3xl">Caută o familie chiar acum</h2>
+            <Button href="/adopta" variant="ghost">
+              Vezi toate animalele
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </Button>
+          </div>
+          <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {
+              featured.map((animal, i) => (
+                <div data-reveal style={`--reveal-delay: ${i * 100}`}>
+                  <AnimalCard animal={animal} />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Closing band: urgent report + credibility -->
+      <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div class="card-lift rounded-2xl border border-ink/10 bg-paper p-7" data-reveal>
+            <h2 class="font-display text-xl font-bold text-ink">Ai găsit un animal în pericol?</h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Spune-ne locația și ce ai observat — te ghidăm prin ce urmează.
+            </p>
+            <Button href="/fa-o-sesizare" variant="outline" size="sm" class="mt-4">
+              Fă o sesizare
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </Button>
+          </div>
+          <div class="card-lift rounded-2xl border border-ink/10 bg-paper p-7" data-reveal style="--reveal-delay: 100">
+            <h2 class="font-display text-xl font-bold text-ink">Vrei să știi cum funcționăm?</h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Cine suntem, cum lucrăm cu partenerii veterinari și unde poți verifica transparența noastră.
+            </p>
+            <Button href="/despre" variant="outline" size="sm" class="mt-4">
+              Despre asociație
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</Layout>

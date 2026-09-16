@@ -1,0 +1,100 @@
+---
+// The site's signature interaction: the rescue mechanism drawn as a route
+// with named stops. Numbers and copy are always fully visible; only the
+// green "lit" accent is JS-enhanced (a staggered light-up on scroll into
+// view). No-JS renders a complete, legible, neutral-toned diagram.
+// prefers-reduced-motion skips the stagger and renders already-lit.
+const stops = [
+  { label: "Stradă", text: "Animalul este găsit sau semnalat pe stradă, de multe ori de un vecin sau un trecător." },
+  { label: "Prim ajutor", text: "Echipa noastră sau un medic veterinar partener intervine rapid, în funcție de urgență." },
+  { label: "Tratament", text: "Este stabilizat, tratat și, dacă e nevoie, operat, până este apt medical." },
+  { label: "Sterilizare", text: "Este sterilizat — pasul care previne alte generații de animale fără stăpân." },
+  { label: "Familie nouă", text: "Intră în procesul de adopție și găsește, cu timp, o familie responsabilă." },
+];
+---
+
+<div class="route-journey" data-route-journey>
+  <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
+    {
+      stops.map((stop, i) => (
+        <li class="route-stop relative flex flex-col gap-3 lg:pt-10" style={`--i:${i}`}>
+          <span class="route-stop-line hidden lg:block absolute left-0 right-0 top-4 h-[2px] bg-ink/15" aria-hidden="true" />
+          <span class="route-stop-mark relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-ink/30 bg-cream text-sm font-semibold tracking-wide text-ink lg:absolute lg:top-0">
+            {i + 1}
+          </span>
+          <div>
+            <p class="font-display text-lg font-bold tracking-wide text-ink">{stop.label}</p>
+            <p class="mt-1 text-sm leading-relaxed text-ink-soft">{stop.text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .route-stop-mark {
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+    transition-delay: calc(var(--i) * 120ms);
+  }
+
+  [data-route-journey].is-visible .route-stop-mark {
+    background-color: var(--color-green);
+    border-color: var(--color-green);
+    color: var(--color-cream);
+  }
+
+  .route-stop-line {
+    overflow: hidden;
+  }
+
+  .route-stop-line::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: var(--color-green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s ease;
+  }
+
+  [data-route-journey].is-visible .route-stop-line::after {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .route-stop-mark {
+      background-color: var(--color-green);
+      border-color: var(--color-green);
+      color: var(--color-cream);
+      transition: none;
+    }
+    .route-stop-line::after {
+      transform: scaleX(1);
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const nodes = document.querySelectorAll<HTMLElement>("[data-route-journey]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.35 }
+    );
+    nodes.forEach((node) => observer.observe(node));
+  } else {
+    nodes.forEach((node) => node.classList.add("is-visible"));
+  }
+</script>

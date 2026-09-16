@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import { withBase } from "../lib/url";
+
+interface Props {
+  article: CollectionEntry<"blog">;
+}
+
+const { article } = Astro.props;
+const a = article.data;
+const formattedDate = a.publishDate.toLocaleDateString("ro-RO", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<a href={withBase(`/blog/${article.id}`)} class="card-lift group flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper transition-colors hover:border-ink/30">
+  <div class="aspect-[8/5] overflow-hidden">
+    <Image
+      src={a.cover}
+      alt={a.coverAlt}
+      width={800}
+      height={500}
+      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+    />
+  </div>
+  <div class="flex flex-1 flex-col gap-2.5 p-6">
+    <p class="text-xs font-semibold uppercase tracking-wide text-ink-soft">{formattedDate}</p>
+    <h3 class="font-display text-xl font-bold leading-snug text-ink">{a.title}</h3>
+    <p class="text-sm leading-relaxed text-ink-soft">{a.description}</p>
+  </div>
+</a>

@@ -1,0 +1,43 @@
+---
+// Social links as small circular monogram badges — the same route-stop
+// roundel language used for status pills and placeholder art, instead of
+// redrawn brand logos.
+import { social } from "../data/config";
+
+const links = [
+  { key: "instagram", label: "Instagram", mono: "IG", href: social.instagram },
+  { key: "facebook", label: "Facebook", mono: "FB", href: social.facebook },
+  { key: "tiktok", label: "TikTok", mono: "TT", href: social.tiktok },
+  { key: "youtube", label: "YouTube", mono: "YT", href: social.youtube },
+] as const;
+
+interface Props {
+  class?: string;
+  size?: "sm" | "md";
+  tone?: "ink" | "cream";
+}
+const { class: className, size = "sm", tone = "ink" } = Astro.props;
+const dims = size === "sm" ? "h-6 w-6 text-[0.6rem]" : "h-9 w-9 text-xs";
+const toneClasses =
+  tone === "ink"
+    ? "border-ink/25 text-ink/70 hover:border-ink hover:text-ink"
+    : "border-cream/30 text-cream/75 hover:border-cream hover:text-cream";
+---
+
+<ul class={`flex items-center gap-2 ${className ?? ""}`}>
+  {
+    links.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={link.label}
+          class={`flex ${dims} items-center justify-center rounded-full border font-display font-semibold transition-colors ${toneClasses}`}
+        >
+          {link.mono}
+        </a>
+      </li>
+    ))
+  }
+</ul>

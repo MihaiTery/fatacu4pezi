@@ -1,0 +1,114 @@
+---
+import PageLayout from "../../layouts/PageLayout.astro";
+import AnimalCard from "../../components/AnimalCard.astro";
+import { getCollection } from "astro:content";
+
+const allAnimals = (await getCollection("animals")).sort((a, b) => {
+  // Available first, then in treatment/reserved, adopted last — but nothing is hidden.
+  const order = { disponibil: 0, in_tratament: 1, rezervat: 2, adoptat: 3 };
+  return order[a.data.status] - order[b.data.status];
+});
+---
+
+<PageLayout
+  title="Adoptă"
+  description="Câini și pisici disponibili pentru adopție la Fata cu 4pezi, în București și împrejurimi — profiluri complete, cu stare medicală și temperament."
+  intro="Fiecare profil arată exact ce trebuie să știi înainte să decizi: stare medicală, temperament și cu cine se înțelege bine."
+>
+  <section class="mx-auto max-w-7xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
+    <div
+      class="sticky top-[calc(4.2rem+1px)] z-20 -mx-4 mb-8 flex flex-wrap items-center gap-2 border-b border-ink/10 bg-cream px-4 py-4 sm:static sm:mx-0 sm:border-none sm:bg-transparent sm:px-0 sm:py-0"
+      data-filters
+    >
+      <button type="button" class="filter-chip" data-filter="species" data-value="all" aria-pressed="true">Toate</button>
+      <button type="button" class="filter-chip" data-filter="species" data-value="caine" aria-pressed="false">Câini</button>
+      <button type="button" class="filter-chip" data-filter="species" data-value="pisica" aria-pressed="false">Pisici</button>
+      <span class="mx-1 hidden h-5 w-px bg-ink/15 sm:block" aria-hidden="true"></span>
+      <button type="button" class="filter-chip" data-filter="status" data-value="disponibil" aria-pressed="false">Doar disponibile</button>
+    </div>
+
+    <p class="mb-6 text-sm text-ink-soft" data-results-count role="status"></p>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-animal-grid>
+      {
+        allAnimals.map((animal, i) => (
+          <div
+            data-animal-item
+            data-species={animal.data.species}
+            data-status={animal.data.status}
+            data-reveal
+            style={`--reveal-delay: ${(i % 3) * 90}`}
+          >
+            <AnimalCard animal={animal} />
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="hidden py-16 text-center text-ink-soft" data-empty-state>
+      Niciun animal nu corespunde filtrelor alese momentan.
+    </p>
+  </section>
+</PageLayout>
+
+<style>
+  .filter-chip {
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .filter-chip[aria-pressed="true"] {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    border-color: var(--color-ink);
+  }
+  .filter-chip:hover:not([aria-pressed="true"]) {
+    border-color: var(--color-ink);
+  }
+</style>
+
+<script>
+  const speciesButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter="species"]');
+  const statusButton = document.querySelector<HTMLButtonElement>('[data-filter="status"]');
+  const items = document.querySelectorAll<HTMLElement>("[data-animal-item]");
+  const resultsCount = document.querySelector<HTMLElement>("[data-results-count]");
+  const emptyState = document.querySelector<HTMLElement>("[data-empty-state]");
+
+  let species = "all";
+  let onlyAvailable = false;
+
+  function applyFilters() {
+    let visible = 0;
+    items.forEach((item) => {
+      const matchesSpecies = species === "all" || item.dataset.species === species;
+      const matchesStatus = !onlyAvailable || item.dataset.status === "disponibil";
+      const show = matchesSpecies && matchesStatus;
+      item.classList.toggle("hidden", !show);
+      if (show) visible += 1;
+    });
+    if (resultsCount) {
+      resultsCount.textContent = `${visible} ${visible === 1 ? "animal găsit" : "animale găsite"}`;
+    }
+    emptyState?.classList.toggle("hidden", visible !== 0);
+  }
+
+  speciesButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      species = btn.dataset.value ?? "all";
+      speciesButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      applyFilters();
+    });
+  });
+
+  statusButton?.addEventListener("click", () => {
+    onlyAvailable = !onlyAvailable;
+    statusButton.setAttribute("aria-pressed", String(onlyAvailable));
+    applyFilters();
+  });
+
+  applyFilters();
+</script>

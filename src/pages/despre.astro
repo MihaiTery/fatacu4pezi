@@ -1,0 +1,92 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import RouteJourney from "../components/RouteJourney.astro";
+import RouteDivider from "../components/RouteDivider.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+
+const principles = [
+  {
+    title: "Salvarea vine întâi",
+    text: "Orice altceva — tratament, sterilizare, adopție — pornește de la a scoate un animal dintr-o situație de pericol imediat.",
+  },
+  {
+    title: "Sterilizarea nu este opțională",
+    text: "Fiecare animal aflat în grija noastră, indiferent dacă rămâne comunitar sau este adoptat, este sterilizat, nu doar tratat.",
+  },
+  {
+    title: "Adopția este un angajament, nu o tranzacție",
+    text: "Nu plasăm animale doar ca să eliberăm loc — verificăm potrivirea, pentru ca adopția să fie definitivă.",
+  },
+  {
+    title: "Banii sunt urmăriți, nu doar ceruți",
+    text: "Fiecare leu strâns are o destinație clară în activitatea noastră — de aceea publicăm informații de transparență.",
+  },
+];
+---
+
+<PageLayout
+  title="Despre noi"
+  description="Cine este Fata cu 4pezi, cum funcționează procesul de salvare și ce ne ghidează în activitatea din București și împrejurimi."
+  intro="O asociație de salvare a câinilor și pisicilor din București și Ilfov — organizată în jurul unui singur traseu, de la stradă la o familie responsabilă."
+>
+  <section class="mx-auto max-w-3xl px-4 py-4 sm:px-6 lg:px-8">
+    <div class="space-y-5 text-lg leading-relaxed text-ink-soft" data-reveal>
+      <p>
+        Fata cu 4pezi a pornit de la un tipar pe care îl vedem constant în cartierele Bucureștiului: câini și pisici lăsați pe cont propriu, uneori
+        loviți de mașini, uneori doar flămânzi și fără adăpost, aproape mereu fără cineva care să știe exact ce pași să urmeze.
+      </p>
+      <p>
+        Am construit asociația în jurul acelor pași — o rețea de intervenție rapidă, tratament veterinar și sterilizare, susținută de o
+        rețea de clinici partenere și de voluntari care oferă găzduire temporară — ca fiecare caz semnalat să aibă un traseu clar, nu o
+        soluție ad-hoc.
+      </p>
+      <p>
+        Lucrăm exclusiv cu câini și pisici, în București și zonele limitrofe (Ilfov). Nu promitem miracole și nu ascundem limitele — dar
+        fiecare animal aflat în grija noastră parcurge același proces organizat, indiferent de cât de mediatizat este cazul.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <RouteDivider class="mb-12" />
+    <div data-reveal>
+      <h2 class="font-display text-2xl font-bold text-ink sm:text-3xl">Cum arată, concret, o intervenție</h2>
+      <p class="mt-2 max-w-2xl text-ink-soft">Cinci etape, aceleași pentru fiecare animal aflat în grija noastră.</p>
+    </div>
+    <div class="mt-10">
+      <RouteJourney />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <RouteDivider class="mb-12" />
+    <h2 class="font-display text-2xl font-bold text-ink sm:text-3xl" data-reveal>Ce ne ghidează</h2>
+    <dl class="mt-8 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+      {
+        principles.map((p) => (
+          <div>
+            <dt class="flex items-center gap-2.5 font-display font-bold text-ink">
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green" aria-hidden="true" />
+              {p.title}
+            </dt>
+            <dd class="mt-2 pl-4 text-sm leading-relaxed text-ink-soft">{p.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+    <div class="flex flex-wrap gap-3 border-t border-ink/10 pt-10">
+      <Button href="/parteneri" variant="outline">
+        Rețeaua de parteneri
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </Button>
+      <Button href="/transparenta" variant="outline">
+        Transparență
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </Button>
+    </div>
+  </section>
+</PageLayout>

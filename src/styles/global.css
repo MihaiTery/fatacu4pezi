@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* Self-hosted brand type — no third-party font requests at runtime. */
+@import "@fontsource-variable/jost";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+
+@theme {
+  /* Brand palette — verbatim from mediakit.pdf */
+  --color-cream: #f9edd3;
+  --color-paper: #fffcf5;
+  --color-ink: #3e1d0d;
+  --color-ink-soft: #6b4a35;
+  --color-green: #324f40;
+  --color-green-dark: #24392e;
+  --color-green-soft: #dfe8df;
+  --color-blue: #c4e0f5;
+  --color-blue-soft: #e4f0f9;
+  --color-pink: #f2cfdc;
+  --color-pink-soft: #f8e4eb;
+  --color-line: #3e1d0d1f;
+
+  --font-display: "Jost Variable", "Jost", sans-serif;
+  --font-body: "Poppins", sans-serif;
+
+  --container-prose: 68ch;
+}
+
+@layer base {
+  html {
+    background: var(--color-cream);
+    color-scheme: light;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-green);
+    color: var(--color-cream);
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--color-green);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* A green focus ring is invisible on the green header/footer — swap to
+     cream wherever focus lands on those dark-green surfaces. */
+  header :focus-visible,
+  footer :focus-visible {
+    outline-color: var(--color-cream);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-ink) 25%, transparent);
+    border-radius: 999px;
+    border: 3px solid var(--color-cream);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-ink) 40%, transparent);
+  }
+
+  html {
+    scrollbar-color: color-mix(in srgb, var(--color-ink) 25%, transparent) var(--color-cream);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility prose-fatacu {
+  & > * + * {
+    margin-top: 1.25em;
+  }
+  & p {
+    line-height: 1.75;
+  }
+  & h2 {
+    margin-top: 2em;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--color-ink);
+  }
+  & h3 {
+    margin-top: 1.75em;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-ink);
+  }
+  & ul,
+  & ol {
+    margin-top: 1em;
+    padding-left: 1.4em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & a {
+    color: var(--color-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-ink) 35%, transparent);
+  }
+  & a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+  & strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+}
+
+@utility route-line {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-ink) 0,
+    var(--color-ink) 10px,
+    transparent 10px,
+    transparent 18px
+  );
+  opacity: 0.28;
+  height: 2px;
+}
+
+/* One motion grammar, reused everywhere: quiet fade + rise on first scroll into
+   view, driven by a single site-wide IntersectionObserver (see Layout.astro). */
+@layer base {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+  }
+
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+@utility card-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px -12px color-mix(in srgb, var(--color-ink) 25%, transparent);
+  }
+}
