@@ -27,15 +27,17 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div class="bg-green text-cream">
+  <div class="bg-mark-invert bg-green text-cream">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
       <a href={withBase("/")} class="flex shrink-0 items-center gap-2" aria-label="Fata cu 4pezi — acasă">
-        <Logo variant="bej" class="h-14 w-auto sm:h-16" priority />
+        <span class="flex aspect-square h-[5.6rem] shrink-0 items-center justify-center rounded-full bg-cream p-2.5 sm:h-[6.4rem]">
+          <Logo variant="maro" class="h-full w-full object-contain" priority />
+        </span>
       </a>
 
       <nav class="hidden items-center gap-6 lg:flex" aria-label="Navigație principală">
         {
-          nav.slice(0, 5).map((item) => (
+          nav.slice(0, 6).map((item) => (
             <a
               href={withBase(item.href)}
               class={`text-[0.95rem] font-medium transition-colors hover:text-cream ${
@@ -69,7 +71,7 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-cream/15 bg-green lg:hidden" data-menu-panel>
+  <div id="mobile-menu" class="hidden border-t border-cream/15 bg-mark-invert bg-green lg:hidden" data-menu-panel>
     <nav class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Navigație mobilă">
       {
         nav.map((item) => (

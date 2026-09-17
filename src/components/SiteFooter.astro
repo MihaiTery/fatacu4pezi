@@ -8,11 +8,11 @@ import { withBase } from "../lib/url";
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-green text-cream">
+<footer class="bg-mark-invert bg-green text-cream">
   <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
     <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
       <div class="flex flex-col gap-4">
-        <Logo variant="bej" class="h-24 w-auto self-start" />
+        <Logo variant="bej" class="h-48 w-auto self-start" />
         <p class="max-w-xs text-sm leading-relaxed text-cream/90">
           {site.shortDescription}
         </p>
@@ -40,6 +40,7 @@ const year = new Date().getFullYear();
           <li><a href={withBase("/doneaza")} class="text-cream/80 hover:text-cream">Donează</a></li>
           <li><a href={withBase("/redirectioneaza")} class="text-cream/80 hover:text-cream">Redirecționează 3,5%</a></li>
           <li><a href={withBase("/adopta")} class="text-cream/80 hover:text-cream">Adoptă</a></li>
+          <li><a href={withBase("/voluntari")} class="text-cream/80 hover:text-cream">Devino voluntar</a></li>
           <li><a href={withBase("/parteneri")} class="text-cream/80 hover:text-cream">Devino partener</a></li>
           <li><a href={withBase("/shop")} class="text-cream/80 hover:text-cream">Magazin (în curând)</a></li>
         </ul>

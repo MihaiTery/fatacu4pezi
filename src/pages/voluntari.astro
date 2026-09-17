@@ -1,0 +1,228 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Icon from "../components/Icon.astro";
+import { contact } from "../data/config";
+
+const roles = [
+  {
+    title: "Foster",
+    text: "Găzduiești temporar un animal până își găsește o familie definitivă — cel mai căutat tip de ajutor, mereu.",
+  },
+  {
+    title: "Fotograf / videograf",
+    text: "Poze și clipuri bune fac diferența dintre un animal ignorat în catalog și unul adoptat repede.",
+  },
+  {
+    title: "Transport & plimbare",
+    text: "Un drum până la veterinar sau până la un foster, sau o oră de plimbat un patruped care așteaptă o familie.",
+  },
+  {
+    title: "Social media & comunicare",
+    text: "Postări, texte, răspunsuri către comunitate — vocea asociației în online, atunci când echipa nu are timp de ea.",
+  },
+  {
+    title: "Evenimente & strângere de fonduri",
+    text: "Prezență la standuri, colecte sau evenimente de adopție — mâini în plus într-o zi aglomerată.",
+  },
+  {
+    title: "Altceva",
+    text: "Ai o abilitate care nu se regăsește mai sus? Spune-ne oricum — găsim aproape mereu un loc pentru ea.",
+  },
+];
+---
+
+<PageLayout
+  title="Voluntari"
+  description="Devino voluntar la Fata cu 4pezi — foster, fotograf, videograf, transport sau orice altă abilitate care poate ajuta animalele din București și Ilfov."
+  intro="Traseul de la stradă la o familie nouă are nevoie de oameni la fiecare etapă, nu doar de bani. Iată unde ne-ar ajuta cel mai mult timpul tău — și un formular scurt ca să ne spui cum te-ai implica."
+>
+  <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[1fr_380px]">
+      <div>
+        <h2 class="font-display text-xl font-bold text-ink">Cu ce ne-ai putea ajuta</h2>
+        <ul class="mt-6 flex flex-col gap-6">
+          {
+            roles.map((role, i) => (
+              <li class="flex gap-4">
+                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-ink/25 font-display text-sm font-bold text-ink">
+                  {i + 1}
+                </span>
+                <div>
+                  <p class="font-semibold text-ink">{role.title}</p>
+                  <p class="mt-1 text-sm leading-relaxed text-ink-soft">{role.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="mt-10 max-w-xl text-sm leading-relaxed text-ink-soft">
+          Nu trebuie să te încadrezi perfect la o singură categorie — bifează ce ți se potrivește în formular, sau
+          povestește-ne la secțiunea liberă cum crezi că te-ai putea implica, iar noi revenim cu propunerea potrivită.
+        </p>
+      </div>
+
+      <aside class="h-fit rounded-2xl border border-ink/10 bg-paper p-6">
+        <h2 class="font-display text-lg font-bold text-ink">Înscrie-te ca voluntar</h2>
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+          Se deschide clientul tău de e-mail, cu un mesaj completat automat din ce scrii mai jos — poți edita orice
+          înainte de a trimite.
+        </p>
+
+        <form class="mt-5 flex flex-col gap-4" data-volunteer-form data-mailto={contact.email} novalidate>
+          <div class="field">
+            <label for="v-name">Nume <span aria-hidden="true">*</span></label>
+            <input id="v-name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="field">
+            <label for="v-email">E-mail <span aria-hidden="true">*</span></label>
+            <input id="v-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="v-phone">Telefon <span class="opt">(opțional)</span></label>
+            <input id="v-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+
+          <div class="field">
+            <label for="v-area">Zonă / sector <span class="opt">(opțional)</span></label>
+            <input id="v-area" name="area" type="text" placeholder="ex. Sector 3, Ilfov" />
+          </div>
+
+          <fieldset class="field">
+            <legend>Cum te-ai oferi voluntar?</legend>
+            <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="Tip de voluntariat">
+              {
+                roles.map((role) => (
+                  <button type="button" class="role-chip" data-role-chip aria-pressed="false">
+                    {role.title}
+                  </button>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label for="v-message">Spune-ne mai multe <span class="opt">(opțional)</span></label>
+            <textarea
+              id="v-message"
+              name="message"
+              rows="4"
+              placeholder="Experiență, disponibilitate, orice ne ajută să te încadrăm potrivit."
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-green px-5 py-3 text-[0.95rem] font-semibold text-cream transition-colors duration-150 hover:bg-green-dark focus-visible:outline-2 focus-visible:outline-offset-3"
+          >
+            Trimite înscrierea
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </button>
+
+          <p class="text-xs text-ink-soft" data-form-hint>{contact.email}</p>
+          <p class="hidden text-xs font-medium text-green" data-form-confirm role="status">
+            S-a deschis clientul tău de e-mail cu mesajul completat — apasă „trimite” acolo ca să ajungă la noi.
+          </p>
+        </form>
+      </aside>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .field label,
+  .field legend {
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-ink);
+  }
+  .field .opt {
+    font-weight: 400;
+    color: var(--color-ink-soft);
+  }
+  .field input,
+  .field textarea {
+    border-radius: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+    background: var(--color-cream);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    color: var(--color-ink);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: color-mix(in srgb, var(--color-ink) 45%, transparent);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 5.5rem;
+  }
+
+  .role-chip {
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+    padding: 0.4rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .role-chip[aria-pressed="true"] {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    border-color: var(--color-ink);
+  }
+  .role-chip:hover:not([aria-pressed="true"]) {
+    border-color: var(--color-ink);
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-volunteer-form]");
+  const chips = document.querySelectorAll<HTMLButtonElement>("[data-role-chip]");
+  const confirmNote = document.querySelector<HTMLElement>("[data-form-confirm]");
+  const selectedRoles = new Set<string>();
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const isPressed = chip.getAttribute("aria-pressed") === "true";
+      chip.setAttribute("aria-pressed", String(!isPressed));
+      const label = chip.textContent?.trim() ?? "";
+      if (isPressed) selectedRoles.delete(label);
+      else selectedRoles.add(label);
+    });
+  });
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const lines = [
+      `Nume: ${data.get("name")}`,
+      `E-mail: ${data.get("email")}`,
+      `Telefon: ${data.get("phone") || "—"}`,
+      `Zonă / sector: ${data.get("area") || "—"}`,
+      `Cum vrea să ajute: ${selectedRoles.size ? [...selectedRoles].join(", ") : "—"}`,
+      "",
+      "Mesaj:",
+      String(data.get("message") || "—"),
+    ];
+
+    const mailto = form.dataset.mailto;
+    const subject = encodeURIComponent("Înscriere voluntar");
+    const body = encodeURIComponent(lines.join("\n"));
+    window.location.href = `mailto:${mailto}?subject=${subject}&body=${body}`;
+    confirmNote?.classList.remove("hidden");
+  });
+</script>

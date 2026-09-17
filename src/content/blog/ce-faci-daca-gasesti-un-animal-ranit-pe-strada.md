@@ -1,6 +1,6 @@
 ---
 title: "Ce faci dacă găsești un animal rănit pe stradă"
-description: "Pașii pe care îi poți urma, în ordine, când dai peste un câine sau o pisică rănită sau abandonată — și ce informații ne ajută cel mai mult atunci când ne contactezi."
+description: "Pașii pe care îi poți urma, în ordine, când dai peste un animal rănit sau abandonat — și ce informații ne ajută cel mai mult atunci când ne contactezi."
 publishDate: 2025-09-02
 author: "Echipa Fata cu 4pezi"
 cover: "_shared/cover-blue.svg"

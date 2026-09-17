@@ -6,7 +6,7 @@ export const site = {
   name: "Fata cu 4pezi",
   legalName: "Asociația Fata cu 4pezi", // PLACEHOLDER — confirm exact legal name
   shortDescription:
-    "Asociație de salvare a câinilor și pisicilor din Bucureşti şi împrejurimi.",
+    "Asociație de salvare a animalelor aflate în nevoie din Bucureşti şi împrejurimi.",
   url: "https://fatacu4pezi.ro", // PLACEHOLDER — real domain
   locale: "ro-RO",
   area: "București și Ilfov",
@@ -57,6 +57,7 @@ export const legalLinks = {
 export const nav = [
   { label: "Despre", href: "/despre" },
   { label: "Adoptă", href: "/adopta" },
+  { label: "Voluntari", href: "/voluntari" },
   { label: "Parteneri", href: "/parteneri" },
   { label: "Blog", href: "/blog" },
   { label: "Fă o sesizare", href: "/fa-o-sesizare" },
