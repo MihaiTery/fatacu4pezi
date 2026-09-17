@@ -3,7 +3,7 @@ import { withBase } from "../lib/url";
 
 interface Props {
   href: string;
-  variant?: "primary" | "outline" | "dark" | "ghost" | "cream" | "outline-light";
+  variant?: "primary" | "outline" | "dark" | "ghost" | "accent";
   size?: "sm" | "md" | "lg";
   class?: string;
   external?: boolean;
@@ -28,9 +28,10 @@ const variants = {
   outline: "border-2 border-ink text-ink hover:bg-ink hover:text-cream",
   dark: "bg-ink text-cream hover:bg-[#2a1108]",
   ghost: "text-ink underline decoration-2 underline-offset-4 decoration-[color-mix(in_srgb,var(--color-ink)_35%,transparent)] hover:decoration-ink px-0 py-0 rounded-none",
-  // On dark/green surfaces (header, footer) — inverted treatments for contrast.
-  cream: "bg-cream text-ink hover:bg-white",
-  "outline-light": "border-2 border-cream/60 text-cream hover:bg-cream hover:text-green hover:border-cream",
+  // The blue half of the "buttons/accents/details" pair (green is `primary`) —
+  // a lighter-commitment counterpart to primary, e.g. the header's
+  // Redirecționează 3,5% next to its green Donează.
+  accent: "border-2 border-blue text-ink hover:bg-blue",
 };
 
 const classes = [base, sizes[size], variants[variant], className].filter(Boolean).join(" ");

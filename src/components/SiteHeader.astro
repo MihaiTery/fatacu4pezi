@@ -19,7 +19,7 @@ const isActive = (href: string) => {
 <header class="sticky top-0 z-40">
   <!-- Transparent: no fill of its own, so it reads as a light utility row
        floating above the solid nav bar rather than one undifferentiated
-       green block. Whatever the page shows behind it (almost always cream)
+       pink block. Whatever the page shows behind it (almost always cream)
        shows through. -->
   <div class="border-b border-ink/10">
     <div class="mx-auto flex max-w-7xl items-center justify-end px-4 py-1.5 sm:px-6 lg:px-8">
@@ -27,10 +27,10 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div class="bg-mark-invert bg-green text-cream">
+  <div class="bg-mark bg-pink text-ink">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
       <a href={withBase("/")} class="flex shrink-0 items-center gap-2" aria-label="Fata cu 4pezi — acasă">
-        <span class="flex aspect-square h-[5.6rem] shrink-0 items-center justify-center rounded-full bg-cream p-2.5 sm:h-[6.4rem]">
+        <span class="flex aspect-square h-[5.6rem] shrink-0 items-center justify-center rounded-full border border-ink/10 bg-cream p-2.5 sm:h-[6.4rem]">
           <Logo variant="maro" class="h-full w-full object-contain" priority />
         </span>
       </a>
@@ -40,8 +40,8 @@ const isActive = (href: string) => {
           nav.slice(0, 6).map((item) => (
             <a
               href={withBase(item.href)}
-              class={`text-[0.95rem] font-medium transition-colors hover:text-cream ${
-                isActive(item.href) ? "text-cream underline decoration-2 underline-offset-8" : "text-cream/80"
+              class={`text-[0.95rem] font-medium transition-colors hover:text-ink ${
+                isActive(item.href) ? "text-ink underline decoration-2 underline-offset-8" : "text-ink/70"
               }`}
               aria-current={isActive(item.href) ? "page" : undefined}
             >
@@ -52,15 +52,15 @@ const isActive = (href: string) => {
       </nav>
 
       <div class="hidden items-center gap-2.5 lg:flex">
-        <Button href={redirect230.url} variant="outline-light" size="sm" external>
+        <Button href={redirect230.url} variant="accent" size="sm" external>
           Redirecționează 3,5%
         </Button>
-        <Button href="/doneaza" variant="cream" size="sm">Donează</Button>
+        <Button href="/doneaza" variant="primary" size="sm">Donează</Button>
       </div>
 
       <button
         type="button"
-        class="flex items-center justify-center rounded-full border border-cream/30 p-2.5 text-cream lg:hidden"
+        class="flex items-center justify-center rounded-full border border-ink/25 p-2.5 text-ink lg:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
         data-menu-toggle
@@ -71,14 +71,14 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-cream/15 bg-mark-invert bg-green lg:hidden" data-menu-panel>
+  <div id="mobile-menu" class="hidden border-t border-ink/10 bg-mark bg-pink lg:hidden" data-menu-panel>
     <nav class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Navigație mobilă">
       {
         nav.map((item) => (
           <a
             href={withBase(item.href)}
             class={`rounded-lg px-3 py-2.5 text-[0.95rem] font-medium ${
-              isActive(item.href) ? "bg-cream/15 text-cream" : "text-cream/85 hover:bg-cream/10"
+              isActive(item.href) ? "bg-ink/10 text-ink" : "text-ink/80 hover:bg-ink/5"
             }`}
             aria-current={isActive(item.href) ? "page" : undefined}
           >
@@ -86,9 +86,9 @@ const isActive = (href: string) => {
           </a>
         ))
       }
-      <div class="mt-3 flex flex-col gap-2.5 border-t border-cream/15 pt-4">
-        <Button href="/doneaza" variant="cream" size="md">Donează</Button>
-        <Button href={redirect230.url} variant="outline-light" size="md" external>
+      <div class="mt-3 flex flex-col gap-2.5 border-t border-ink/10 pt-4">
+        <Button href="/doneaza" variant="primary" size="md">Donează</Button>
+        <Button href={redirect230.url} variant="accent" size="md" external>
           Redirecționează 3,5%
         </Button>
       </div>
