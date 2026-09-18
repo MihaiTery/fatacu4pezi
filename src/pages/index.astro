@@ -8,6 +8,7 @@ import HeroChase from "../components/HeroChase.astro";
 import { site } from "../data/config";
 
 const stops = ["Sesizare", "Preluare", "Sterilizare", "Îngrijire", "Foster", "Adopție"];
+const stopRows = [stops.slice(0, 3), stops.slice(3, 6)];
 ---
 
 <Layout
@@ -34,19 +35,28 @@ const stops = ["Sesizare", "Preluare", "Sterilizare", "Îngrijire", "Foster", "A
           </p>
 
           <div
-            class="mt-8 flex max-w-2xl flex-wrap items-center gap-x-2 gap-y-3 text-sm font-medium text-ink-soft"
+            class="mt-7 flex max-w-md flex-col gap-1 font-medium text-ink-soft"
             aria-label="Traseul unui animal salvat, de la stradă la familie"
           >
             {
-              stops.map((stop, i) => (
+              stopRows.map((row, rowIndex) => (
                 <>
-                  <span class="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-paper px-3.5 py-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-green" aria-hidden="true" />
-                    {stop}
-                  </span>
-                  {i < stops.length - 1 && (
-                    <Icon name="arrow-right" class="h-4 w-4 shrink-0 text-ink/30" aria-hidden="true" />
+                  {rowIndex > 0 && (
+                    <Icon name="arrow-right" class="h-3 w-3 shrink-0 rotate-90 self-center text-ink/30" aria-hidden="true" />
                   )}
+                  <div class="flex items-center gap-1">
+                    {row.map((stop, i) => (
+                      <>
+                        <span class="inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-ink/15 bg-paper px-2 py-1.5 text-center text-xs leading-none">
+                          <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green" aria-hidden="true" />
+                          <span class="truncate">{stop}</span>
+                        </span>
+                        {i < row.length - 1 && (
+                          <Icon name="arrow-right" class="h-3 w-3 shrink-0 text-ink/30" aria-hidden="true" />
+                        )}
+                      </>
+                    ))}
+                  </div>
                 </>
               ))
             }
