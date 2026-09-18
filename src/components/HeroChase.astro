@@ -1,0 +1,203 @@
+---
+// The hero's right-side visual: a small, playful maze-chase easter egg that
+// replaces the earlier "dog runs home" route illustration. A cat and a dog
+// (native emoji) chase each other along the same dashed route-line grammar
+// used everywhere else in the system (RouteJourney, RouteDivider, the old
+// Hero Mark's path) — so the maze corridor IS the brand's route line, not a
+// new decorative device. The site's own favicon mark trails them Pac-Man
+// style; when it catches up, a heart emoji pops in at the meeting point and
+// the whole loop resets. This is a deliberate, scoped, client-approved
+// exception to two standing rules at once (no hearts; no emoji beyond the
+// hero's own dog face) — see DESIGN.md → Hero Chase for the record.
+import { withBase } from "../lib/url";
+
+const mazePath =
+  "M 60 396 C 60 340, 100 340, 120 300 C 145 250, 100 220, 140 180 C 175 145, 240 165, 270 120 C 300 75, 360 95, 400 55";
+
+// The point where the favicon's catch lands, ~90% along mazePath — read via
+// getPointAtLength() in the browser rather than eyeballed, so the heart
+// lands exactly where the chase does.
+const catchPoint = { x: 353, y: 80 };
+---
+
+<div class="hero-chase hidden lg:block" aria-hidden="true">
+  <svg viewBox="0 0 480 480" class="h-full w-full">
+    <defs>
+      <path id="hero-chase-path" d={mazePath} />
+    </defs>
+
+    <circle cx="372" cy="70" r="112" fill="none" stroke="var(--color-blue)" stroke-opacity="0.18" stroke-width="1.5" />
+    <circle cx="372" cy="70" r="82" fill="none" stroke="var(--color-pink)" stroke-opacity="0.22" stroke-width="1.5" />
+
+    <use href="#hero-chase-path" fill="none" stroke="var(--color-ink)" stroke-opacity="0.3" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" class="hero-chase-path" />
+
+    <circle cx="60" cy="396" r="7" fill="var(--color-ink)" class="hero-chase-pop" style="--n-delay: 0ms;" />
+
+    <!-- Heart: static position at the catch point, CSS keyframe pop that
+         repeats in step with the SMIL chase cycle below (same 9s length,
+         same 1.6s start delay). -->
+    <g transform={`translate(${catchPoint.x} ${catchPoint.y})`}>
+      <g class="hero-chase-heart">
+        <text font-size="32" text-anchor="middle" dominant-baseline="central">❤️</text>
+      </g>
+    </g>
+
+    <!-- Cat: leads the chase. -->
+    <g class="hero-chase-cat" opacity="0">
+      <animateMotion dur="9s" begin="1.6s" repeatCount="indefinite" keyPoints="0;0.88;0.9" keyTimes="0;0.58;1" calcMode="linear">
+        <mpath href="#hero-chase-path" />
+      </animateMotion>
+      <animate attributeName="opacity" dur="9s" begin="1.6s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.05;0.66;0.74;1" calcMode="linear" />
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="1;1.1;1" keyTimes="0;0.5;1" dur="0.5s" begin="1.6s" repeatCount="indefinite" additive="sum" />
+        <text font-size="30" text-anchor="middle" dominant-baseline="central">🐱</text>
+      </g>
+    </g>
+
+    <!-- Dog: trails the cat by a fixed head start, so the two always read as
+         chasing each other around the maze. -->
+    <g class="hero-chase-dog" opacity="0">
+      <animateMotion dur="9s" begin="1.6s" repeatCount="indefinite" keyPoints="0;0;0.88;0.9" keyTimes="0;0.04;0.62;1" calcMode="linear">
+        <mpath href="#hero-chase-path" />
+      </animateMotion>
+      <animate attributeName="opacity" dur="9s" begin="1.6s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.04;0.09;0.66;0.74;1" calcMode="linear" />
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="1;1.08;1" keyTimes="0;0.5;1" dur="0.45s" begin="1.6s" repeatCount="indefinite" additive="sum" />
+        <text font-size="30" text-anchor="middle" dominant-baseline="central">🐶</text>
+      </g>
+    </g>
+
+    <!-- Favicon: the Pac-Man-like chaser. Starts last, moves fastest, closes
+         the gap and lands on the cat and dog right as the heart pops in. -->
+    <g class="hero-chase-favicon" opacity="0">
+      <animateMotion dur="9s" begin="1.6s" repeatCount="indefinite" keyPoints="0;0;0.9;0.92" keyTimes="0;0.133;0.622;1" calcMode="linear">
+        <mpath href="#hero-chase-path" />
+      </animateMotion>
+      <animate attributeName="opacity" dur="9s" begin="1.6s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.1;0.15;0.7;0.78;1" calcMode="linear" />
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="1;1.12;1" keyTimes="0;0.5;1" dur="0.35s" begin="1.6s" repeatCount="indefinite" additive="sum" />
+        <image href={withBase("/favicon.svg")} x="-20" y="-20" width="40" height="40" />
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .hero-chase {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1;
+    margin-inline: auto;
+    animation: hero-chase-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.15s;
+  }
+
+  .hero-chase-path {
+    stroke-dasharray: 540;
+    stroke-dashoffset: 540;
+    animation: hero-chase-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.3s;
+  }
+
+  .hero-chase-pop {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hero-chase-pop-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.5s + var(--n-delay));
+  }
+
+  .hero-chase-heart {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: hero-chase-heart-pop 9s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    animation-delay: 1.6s;
+  }
+
+  @keyframes hero-chase-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes hero-chase-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes hero-chase-pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes hero-chase-heart-pop {
+    0%,
+    62% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    67%,
+    75% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    83%,
+    100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-chase,
+    .hero-chase-path,
+    .hero-chase-pop,
+    .hero-chase-heart {
+      animation: none;
+      opacity: 1;
+      stroke-dashoffset: 0;
+      transform: none;
+    }
+    .hero-chase-heart {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  // SMIL ignores the CSS reduced-motion rule above. As in the previous Hero
+  // Mark, a paused SMIL animation still owns its target attribute and
+  // overrides setAttribute() on it, so the animation elements are removed
+  // outright before the resting state is set directly — see HeroMark's own
+  // history for why pauseAnimations() alone isn't enough.
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) {
+    document.querySelectorAll<SVGSVGElement>(".hero-chase svg").forEach((svg) => {
+      svg.pauseAnimations();
+      const rest: [string, string][] = [
+        [".hero-chase-favicon", "translate(60, 396)"],
+        [".hero-chase-dog", "translate(123, 230)"],
+        [".hero-chase-cat", "translate(224, 150)"],
+      ];
+      rest.forEach(([selector, transform]) => {
+        const el = svg.querySelector<SVGGElement>(selector);
+        el?.querySelectorAll("animateMotion, animate, animateTransform").forEach((n) => n.remove());
+        el?.setAttribute("opacity", "1");
+        el?.setAttribute("transform", transform);
+      });
+    });
+  }
+</script>
