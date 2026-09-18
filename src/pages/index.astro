@@ -4,7 +4,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
-import HeroChase from "../components/HeroChase.astro";
+import HeroCat from "../components/HeroCat.astro";
 import { site } from "../data/config";
 
 const stops = ["Sesizare", "Preluare", "Sterilizare", "Îngrijire", "Foster", "Adopție"];
@@ -17,6 +17,11 @@ const stopRows = [stops.slice(0, 3), stops.slice(3, 6)];
   description="Fata cu 4pezi intervine, în limita resurselor disponibile, pentru salvarea, tratamentul veterinar, sterilizarea, găsirea unui foster și adopția animalelor de pe străzi, pe tot teritoriul României."
 >
   <div class="flex min-h-screen flex-col">
+    <!-- Header + main share this wrapper (not the footer) so the sticky
+         header's containing block ends where the footer begins — it
+         releases and scrolls away right there instead of staying pinned
+         on top of the footer for the rest of the page. -->
+    <div class="flex flex-1 flex-col">
     <SiteHeader />
 
     <main id="main" class="flex-1">
@@ -64,9 +69,10 @@ const stopRows = [stops.slice(0, 3), stops.slice(3, 6)];
           </div>
         </div>
 
-        <HeroChase />
+        <HeroCat />
       </section>
     </main>
+    </div>
 
     <SiteFooter />
   </div>

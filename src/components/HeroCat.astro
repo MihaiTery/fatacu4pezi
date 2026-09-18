@@ -1,0 +1,290 @@
+---
+// Replaces the previous Hero Chase (the emoji cat/dog maze loop) with the
+// site's own hand-drawn line-art mascot: one contour cat — outline, eyes,
+// nose, whiskers — built in the same 1.75-equivalent round-stroke language
+// as Icon.astro, not emoji. It carries three swappable facial expressions
+// (neutral/happy/concerned) and a rotating cast of short pro-animal
+// messages, each paired with the expression that fits its tone. Clicking
+// the mascot advances to the next message immediately and resets the
+// 15s auto-rotation clock.
+interface Message {
+  text: string;
+  expression: "neutral" | "happy" | "concerned";
+}
+
+const messages: Message[] = [
+  { text: "Un animal sterilizat înseamnă mai puține suferințe pe stradă, mâine.", expression: "neutral" },
+  { text: "Adopția salvează două vieți: a animalului adoptat și a celui care îi ia locul.", expression: "happy" },
+  { text: "Un animal abandonat nu a ales să ajungă pe stradă.", expression: "concerned" },
+  { text: "Fiecare sesizare contează, chiar dacă pare un gest mic.", expression: "neutral" },
+  { text: "Sterilizarea rămâne cea mai eficientă formă de prevenție.", expression: "neutral" },
+  { text: "Un foster temporar poate fi diferența dintre stradă și un cămin.", expression: "happy" },
+  { text: "Animalele de companie nu sunt cadouri sezoniere.", expression: "concerned" },
+  { text: "Un distribuit la momentul potrivit poate ajuta un animal să fie văzut.", expression: "neutral" },
+  { text: "Adoptă, nu cumpăra.", expression: "neutral" },
+  { text: "Un animal rănit are nevoie de ajutor rapid, nu de milă târzie.", expression: "concerned" },
+  { text: "Voluntariatul cere timp, nu bani — și contează la fel de mult.", expression: "happy" },
+  { text: "Un animal sterilizat trăiește, în medie, mai sănătos.", expression: "neutral" },
+  { text: "Fiecare familie adoptivă responsabilă înseamnă loc liber pentru următorul caz urgent.", expression: "happy" },
+  { text: "Cruzimea față de animale nu este o problemă privată.", expression: "concerned" },
+  { text: "Un gest mic de azi poate însemna o viață salvată mâine.", expression: "happy" },
+  { text: "Animalele de pe stradă nu își aleg circumstanțele în care se nasc.", expression: "concerned" },
+  { text: "Un cămin temporar sigur schimbă complet șansele unui animal.", expression: "happy" },
+  { text: "Educația despre sterilizare previne mai multe suferințe decât tratează.", expression: "neutral" },
+  { text: "În spatele fiecărui caz e cineva care a avut curajul să sune sau să scrie.", expression: "happy" },
+  { text: "Fiecare animal merită șansa la o viață fără frică.", expression: "concerned" },
+];
+---
+
+<div class="hero-cat hidden lg:flex lg:flex-col lg:items-center">
+  <button type="button" class="hero-cat-trigger" aria-label="Arată următorul mesaj despre animale" data-hero-cat>
+    <svg viewBox="0 0 360 330" class="hero-cat-face" aria-hidden="true">
+      <ellipse class="hero-cat-shadow" cx="180" cy="292" rx="94" ry="13" />
+      <path class="hero-cat-tail" d="M254 236c57 2 70-48 40-68-15-10-31 0-26 13 5 14 28 8 26-7" />
+      <g class="hero-cat-body">
+        <path d="M125 185c-20 28-26 67-12 99h134c14-32 8-71-12-99Z" fill="var(--color-pink)" />
+        <ellipse cx="180" cy="280" rx="38" ry="12" fill="var(--color-paper)" opacity=".78" />
+        <path d="M109 126 123 69l42 36h30l42-36 14 57c8 43-21 88-71 88s-79-45-71-88Z" fill="var(--color-pink)" />
+        <path d="m119 91 7-22 22 26Z" fill="var(--color-paper)" opacity=".8" />
+        <path d="m241 91-7-22-22 26Z" fill="var(--color-paper)" opacity=".8" />
+        <circle cx="151" cy="139" r="6" fill="var(--color-ink)" />
+        <circle cx="209" cy="139" r="6" fill="var(--color-ink)" />
+        <path d="m174 155 6-5 6 5-6 5Z" fill="var(--color-ink)" />
+        <g data-expression="neutral" class="hero-cat-expr" data-active="true">
+          <path d="M180 161v8m0 0c-8 8-16 1-16 1m16-1c8 8 16 1 16 1" />
+        </g>
+        <g data-expression="happy" class="hero-cat-expr">
+          <path d="M165 170c8 13 22 13 30 0" />
+        </g>
+        <g data-expression="concerned" class="hero-cat-expr">
+          <path d="M165 178c8-11 22-11 30 0" />
+        </g>
+        <path class="hero-cat-paw hero-cat-paw-left" d="M142 274v-31c0-11 17-11 17 0v31" />
+        <path class="hero-cat-paw hero-cat-paw-right" d="M201 274v-31c0-11 17-11 17 0v31" />
+      </g>
+      <path class="hero-cat-spark hero-cat-spark-one" d="M77 150v20m-10-10h20" />
+      <path class="hero-cat-spark hero-cat-spark-two" d="M280 109v16m-8-8h16" />
+    </svg>
+
+    <p class="hero-cat-message" aria-live="polite" data-hero-cat-message>
+      {messages[0].text}
+    </p>
+    <span class="hero-cat-hint">Apasă pentru încă un mesaj</span>
+  </button>
+</div>
+
+<style>
+  .hero-cat {
+    width: 100%;
+    max-width: 380px;
+    margin-inline: auto;
+    animation: hero-cat-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 0.15s;
+  }
+
+  .hero-cat-trigger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 1rem;
+  }
+
+  .hero-cat-face {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+  }
+
+  .hero-cat-shadow { fill: var(--color-ink); opacity: 0.08; }
+
+  .hero-cat-body {
+    transform-origin: 180px 284px;
+    animation: hero-cat-breathe 3.4s ease-in-out infinite;
+  }
+
+  .hero-cat-tail,
+  .hero-cat-paw,
+  .hero-cat-expr path,
+  .hero-cat-spark {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hero-cat-tail {
+    animation: hero-cat-tail 2.8s ease-in-out infinite;
+    transform-origin: 250px 236px;
+  }
+
+  .hero-cat-paw-right { animation: hero-cat-wave 3.4s ease-in-out infinite; transform-origin: 209px 274px; }
+  .hero-cat-spark { stroke: var(--color-blue); stroke-width: 3; opacity: .7; }
+  .hero-cat-spark-one { animation: hero-cat-spark 2.8s ease-in-out infinite; }
+  .hero-cat-spark-two { animation: hero-cat-spark 2.8s .4s ease-in-out infinite; }
+
+  .hero-cat-expr {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .hero-cat-expr[data-active="true"] {
+    opacity: 1;
+  }
+
+  .hero-cat-message {
+    position: relative;
+    margin-top: -0.25rem;
+    max-width: 22rem;
+    border-radius: 1.25rem;
+    border: 2px solid color-mix(in srgb, var(--color-ink) 13%, transparent);
+    background: var(--color-paper);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--color-ink) 7%, transparent);
+    padding: 1rem 1.25rem;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .hero-cat-message::before,
+  .hero-cat-message::after {
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    content: "";
+    transform: translateX(-50%);
+    border-inline: 13px solid transparent;
+  }
+
+  .hero-cat-message::before {
+    top: -14px;
+    border-bottom: 14px solid color-mix(in srgb, var(--color-ink) 13%, transparent);
+  }
+
+  .hero-cat-message::after {
+    top: -11px;
+    border-bottom: 13px solid var(--color-paper);
+  }
+
+  .hero-cat-message.is-swapping {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  .hero-cat-hint {
+    margin-top: 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+    opacity: 0.7;
+  }
+
+  @keyframes hero-cat-in {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes hero-cat-breathe {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(2px) scale(1.015, .985); }
+  }
+
+  @keyframes hero-cat-tail {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(7deg); }
+  }
+
+  @keyframes hero-cat-wave {
+    0%, 76%, 100% { transform: rotate(0deg); }
+    84%, 92% { transform: rotate(-12deg); }
+  }
+
+  @keyframes hero-cat-spark {
+    0%, 100% { opacity: .2; transform: scale(.8); transform-origin: center; }
+    50% { opacity: .8; transform: scale(1); transform-origin: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-cat {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .hero-cat-expr,
+    .hero-cat-message {
+      transition: none;
+    }
+    .hero-cat-body,
+    .hero-cat-tail,
+    .hero-cat-paw-right,
+    .hero-cat-spark {
+      animation: none;
+    }
+  }
+</style>
+
+<script define:vars={{ messages }}>
+  const trigger = document.querySelector("[data-hero-cat]");
+  const messageEl = document.querySelector("[data-hero-cat-message]");
+  const exprGroups = document.querySelectorAll(".hero-cat-expr");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (trigger && messageEl && exprGroups.length) {
+    let index = Math.floor(Math.random() * messages.length);
+    let timer;
+
+    function setExpression(name) {
+      exprGroups.forEach((el) => {
+        el.setAttribute("data-active", String(el.dataset.expression === name));
+      });
+    }
+
+    function render() {
+      const msg = messages[index];
+      messageEl.textContent = msg.text;
+      setExpression(msg.expression);
+    }
+
+    function swapTo(nextIndex) {
+      index = nextIndex;
+      if (reduceMotion) {
+        render();
+        return;
+      }
+      messageEl.classList.add("is-swapping");
+      window.setTimeout(() => {
+        render();
+        messageEl.classList.remove("is-swapping");
+      }, 200);
+    }
+
+    function scheduleNext() {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        swapTo((index + 1) % messages.length);
+        scheduleNext();
+      }, 15000);
+    }
+
+    trigger.addEventListener("click", () => {
+      swapTo((index + 1) % messages.length);
+      scheduleNext();
+    });
+
+    render();
+    scheduleNext();
+  }
+</script>

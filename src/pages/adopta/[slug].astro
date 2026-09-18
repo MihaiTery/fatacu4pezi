@@ -79,6 +79,11 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
   noindex={isDemoContent}
 >
   <div class="flex min-h-screen flex-col">
+    <!-- Header + main share this wrapper (not the footer) so the sticky
+         header's containing block ends where the footer begins — it
+         releases and scrolls away right there instead of staying pinned
+         on top of the footer for the rest of the page. -->
+    <div class="flex flex-1 flex-col">
     <SiteHeader />
     <main id="main" class="flex-1">
   <div class="mx-auto max-w-5xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14 lg:px-8">
@@ -183,6 +188,7 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
     </div>
   </div>
     </main>
+    </div>
     <SiteFooter />
   </div>
 </Layout>

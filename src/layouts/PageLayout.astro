@@ -20,14 +20,20 @@ const { title, seoTitle, description, image, intro, noindex, ogType } = Astro.pr
 
 <Layout title={title} seoTitle={seoTitle} description={description} image={image} noindex={noindex} ogType={ogType}>
   <div class="flex min-h-screen flex-col">
-    <SiteHeader />
-    <main id="main" class="flex-1">
-      <div class="mx-auto max-w-7xl px-4 pb-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
-        <h1 class="max-w-3xl font-display text-4xl font-bold text-ink sm:text-5xl">{title}</h1>
-        {intro && <p class="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">{intro}</p>}
-      </div>
-      <slot />
-    </main>
+    <!-- Header + main share this wrapper (not the footer) so the sticky
+         header's containing block ends where the footer begins — it
+         releases and scrolls away right there instead of staying pinned
+         on top of the footer for the rest of the page. -->
+    <div class="flex flex-1 flex-col">
+      <SiteHeader />
+      <main id="main" class="flex-1">
+        <div class="mx-auto max-w-7xl px-4 pb-4 pt-10 sm:px-6 sm:pt-14 lg:px-8">
+          <h1 class="max-w-3xl font-display text-4xl font-bold text-ink sm:text-5xl">{title}</h1>
+          {intro && <p class="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">{intro}</p>}
+        </div>
+        <slot />
+      </main>
+    </div>
     <SiteFooter />
   </div>
 </Layout>

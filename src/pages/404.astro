@@ -13,25 +13,31 @@ import Icon from "../components/Icon.astro";
   noindex
 >
   <div class="flex min-h-screen flex-col">
-    <SiteHeader />
-    <main id="main" class="flex flex-1 items-center">
-      <div class="mx-auto max-w-xl px-4 py-24 text-center sm:px-6 lg:px-8">
-        <p class="font-display text-6xl font-bold text-ink/20">404</p>
-        <h1 class="mt-4 font-display text-2xl font-bold text-ink">Pagina nu a fost găsită</h1>
-        <p class="mt-3 text-ink-soft">Este posibil ca adresa să fie greșită sau ca pagina să fi fost mutată. Poți reveni la început sau poți explora paginile de mai jos.</p>
-        <div class="mt-7 flex flex-wrap justify-center gap-3">
-          <Button href="/" variant="primary" size="md">Acasă</Button>
-          <Button href="/adopta" variant="outline" size="md">
-            Animale pentru adopție
-            <Icon name="arrow-right" class="h-4 w-4" />
-          </Button>
-          <Button href="/fa-o-sesizare" variant="outline" size="md">
-            Fă o sesizare
-            <Icon name="arrow-right" class="h-4 w-4" />
-          </Button>
+    <!-- Header + main share this wrapper (not the footer) so the sticky
+         header's containing block ends where the footer begins — it
+         releases and scrolls away right there instead of staying pinned
+         on top of the footer for the rest of the page. -->
+    <div class="flex flex-1 flex-col">
+      <SiteHeader />
+      <main id="main" class="flex flex-1 items-center">
+        <div class="mx-auto max-w-xl px-4 py-24 text-center sm:px-6 lg:px-8">
+          <p class="font-display text-6xl font-bold text-ink/20">404</p>
+          <h1 class="mt-4 font-display text-2xl font-bold text-ink">Pagina nu a fost găsită</h1>
+          <p class="mt-3 text-ink-soft">Este posibil ca adresa să fie greșită sau ca pagina să fi fost mutată. Poți reveni la început sau poți explora paginile de mai jos.</p>
+          <div class="mt-7 flex flex-wrap justify-center gap-3">
+            <Button href="/" variant="primary" size="md">Acasă</Button>
+            <Button href="/adopta" variant="outline" size="md">
+              Animale pentru adopție
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </Button>
+            <Button href="/fa-o-sesizare" variant="outline" size="md">
+              Fă o sesizare
+              <Icon name="arrow-right" class="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
     <SiteFooter />
   </div>
 </Layout>
