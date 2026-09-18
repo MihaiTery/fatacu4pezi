@@ -99,5 +99,32 @@ const ogImageURL = new URL(withBase(image), Astro.site ?? site.url);
         revealables.forEach((el) => el.classList.add("is-revealed"));
       }
     </script>
+
+    <script>
+      // Every "Donează" link, header/hero/footer alike, gets the same
+      // celebratory burst before it takes the visitor to the donate page —
+      // delegated at document level so no per-usage markup is needed and
+      // any future "Donează" link picks it up automatically.
+      import { fireConfetti } from "../lib/confetti";
+
+      const reduceMotionForDonate = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      document.addEventListener("click", (event) => {
+        const mouseEvent = event as MouseEvent;
+        if (mouseEvent.button !== 0 || mouseEvent.metaKey || mouseEvent.ctrlKey || mouseEvent.shiftKey || mouseEvent.altKey) return;
+
+        const link = (event.target as HTMLElement).closest<HTMLAnchorElement>('a[href$="/doneaza"]');
+        if (!link || event.defaultPrevented) return;
+
+        event.preventDefault();
+        fireConfetti(link);
+        window.setTimeout(
+          () => {
+            window.location.href = link.href;
+          },
+          reduceMotionForDonate ? 0 : 450
+        );
+      });
+    </script>
   </body>
 </html>

@@ -139,8 +139,11 @@ const year = new Date().getFullYear();
   // TODO(newsletter-provider): once an ESP (Mailchimp, Brevo, etc.) is
   // chosen, point this form at its signup endpoint instead. Until then it
   // falls back to a mailto request, same pattern as the volunteer form.
+  import { fireConfetti } from "../lib/confetti";
+
   const form = document.querySelector<HTMLFormElement>("[data-newsletter-form]");
   const confirmNote = document.querySelector<HTMLElement>("[data-newsletter-confirm]");
+  const submitButton = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
 
   form?.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -152,5 +155,6 @@ const year = new Date().getFullYear();
     const body = encodeURIComponent(`Vreau să mă abonez la newsletter cu adresa: ${email}`);
     window.location.href = `mailto:${mailto}?subject=${subject}&body=${body}`;
     confirmNote?.classList.remove("hidden");
+    if (submitButton) fireConfetti(submitButton);
   });
 </script>
