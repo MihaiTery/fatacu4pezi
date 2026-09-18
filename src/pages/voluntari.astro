@@ -5,41 +5,42 @@ import { contact } from "../data/config";
 
 const roles = [
   {
-    title: "Foster",
-    text: "Găzduiești temporar un animal până își găsește o familie definitivă — cel mai căutat tip de ajutor, mereu.",
+    title: "Găzduire temporară (foster)",
+    text: "Oferă unui animal un spațiu sigur pentru o perioadă limitată, până când este identificată o soluție de adopție sau îngrijire potrivită.",
   },
   {
-    title: "Fotograf / videograf",
-    text: "Poze și clipuri bune fac diferența dintre un animal ignorat în catalog și unul adoptat repede.",
+    title: "Fotografie și video",
+    text: "Ajută-ne să prezentăm animalele prin fotografii și materiale video care surprind cât mai bine personalitatea și nevoile lor.",
   },
   {
-    title: "Transport & plimbare",
-    text: "Un drum până la veterinar sau până la un foster, sau o oră de plimbat un patruped care așteaptă o familie.",
+    title: "Transport și îngrijire",
+    text: "Poți ajuta cu transportul către cabinetul veterinar, mutarea între spații de găzduire sau alte activități adaptate disponibilității tale.",
   },
   {
-    title: "Social media & comunicare",
-    text: "Postări, texte, răspunsuri către comunitate — vocea asociației în online, atunci când echipa nu are timp de ea.",
+    title: "Social media și comunicare",
+    text: "Ajută-ne să redactăm texte, să pregătim materiale și să facem cunoscute animalele care au nevoie de sprijin.",
   },
   {
-    title: "Evenimente & strângere de fonduri",
-    text: "Prezență la standuri, colecte sau evenimente de adopție — mâini în plus într-o zi aglomerată.",
+    title: "Evenimente și strângere de fonduri",
+    text: "Implică-te în organizarea evenimentelor, campaniilor și activităților prin care comunitatea poate susține asociația.",
   },
   {
-    title: "Altceva",
-    text: "Ai o abilitate care nu se regăsește mai sus? Spune-ne oricum — găsim aproape mereu un loc pentru ea.",
+    title: "Alte moduri de a ajuta",
+    text: "Ai experiență într-un alt domeniu sau o idee de implicare? Spune-ne ce poți oferi și vom discuta despre posibilitățile de colaborare.",
   },
 ];
 ---
 
 <PageLayout
-  title="Voluntari"
-  description="Devino voluntar la Fata cu 4pezi — foster, fotograf, videograf, transport sau orice altă abilitate care poate ajuta animalele din București și Ilfov."
-  intro="Traseul de la stradă la o familie nouă are nevoie de oameni la fiecare etapă, nu doar de bani. Iată unde ne-ar ajuta cel mai mult timpul tău — și un formular scurt ca să ne spui cum te-ai implica."
+  title="Devino voluntar"
+  seoTitle="Voluntariat pentru salvarea animalelor | Fata cu 4pezi"
+  description="Devino voluntar la Fata cu 4pezi în București și Ilfov. Poți ajuta prin găzduire temporară, transport, comunicare, evenimente și alte activități."
+  intro="Salvarea animalelor are nevoie de oameni cu abilități și disponibilități diferite. Descoperă cum te poți implica și spune-ne ce fel de ajutor ai putea oferi."
 >
   <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_380px]">
       <div>
-        <h2 class="font-display text-xl font-bold text-ink">Cu ce ne-ai putea ajuta</h2>
+        <h2 class="font-display text-xl font-bold text-ink">Cum te poți implica</h2>
         <ul class="mt-6 flex flex-col gap-6">
           {
             roles.map((role, i) => (
@@ -57,16 +58,15 @@ const roles = [
         </ul>
 
         <p class="mt-10 max-w-xl text-sm leading-relaxed text-ink-soft">
-          Nu trebuie să te încadrezi perfect la o singură categorie — bifează ce ți se potrivește în formular, sau
-          povestește-ne la secțiunea liberă cum crezi că te-ai putea implica, iar noi revenim cu propunerea potrivită.
+          Nu trebuie să ai experiență anterioară în voluntariat. Spune-ne ce știi să faci, cât timp ai disponibil și în ce activități
+          ți-ar plăcea să te implici.
         </p>
       </div>
 
       <aside class="h-fit rounded-2xl border border-ink/10 bg-paper p-6">
         <h2 class="font-display text-lg font-bold text-ink">Înscrie-te ca voluntar</h2>
         <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-          Se deschide clientul tău de e-mail, cu un mesaj completat automat din ce scrii mai jos — poți edita orice
-          înainte de a trimite.
+          Completează câteva informații despre tine. La final, se va pregăti un mesaj în aplicația ta de e-mail, pe care va trebui să îl trimiți.
         </p>
 
         <form class="mt-5 flex flex-col gap-4" data-volunteer-form data-mailto={contact.email} novalidate>
@@ -76,7 +76,7 @@ const roles = [
           </div>
 
           <div class="field">
-            <label for="v-email">E-mail <span aria-hidden="true">*</span></label>
+            <label for="v-email">Adresă de e-mail <span aria-hidden="true">*</span></label>
             <input id="v-email" name="email" type="email" autocomplete="email" required />
           </div>
 
@@ -86,12 +86,12 @@ const roles = [
           </div>
 
           <div class="field">
-            <label for="v-area">Zonă / sector <span class="opt">(opțional)</span></label>
+            <label for="v-area">Localitate / sector <span class="opt">(opțional)</span></label>
             <input id="v-area" name="area" type="text" placeholder="ex. Sector 3, Ilfov" />
           </div>
 
           <fieldset class="field">
-            <legend>Cum te-ai oferi voluntar?</legend>
+            <legend>Cum ai vrea să ajuți?</legend>
             <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="Tip de voluntariat">
               {
                 roles.map((role) => (
@@ -109,7 +109,7 @@ const roles = [
               id="v-message"
               name="message"
               rows="4"
-              placeholder="Experiență, disponibilitate, orice ne ajută să te încadrăm potrivit."
+              placeholder="Povestește-ne despre disponibilitatea ta, experiența relevantă sau felul în care ai vrea să te implici."
             />
           </div>
 
@@ -117,13 +117,13 @@ const roles = [
             type="submit"
             class="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-green px-5 py-3 text-[0.95rem] font-semibold text-cream transition-colors duration-150 hover:bg-green-dark focus-visible:outline-2 focus-visible:outline-offset-3"
           >
-            Trimite înscrierea
+            Pregătește înscrierea
             <Icon name="arrow-right" class="h-4 w-4" />
           </button>
 
           <p class="text-xs text-ink-soft" data-form-hint>{contact.email}</p>
           <p class="hidden text-xs font-medium text-green" data-form-confirm role="status">
-            S-a deschis clientul tău de e-mail cu mesajul completat — apasă „trimite” acolo ca să ajungă la noi.
+            Dacă s-a deschis aplicația de e-mail, verifică mesajul pregătit și apasă „Trimite”. Formularul nu expediază automat înscrierea.
           </p>
         </form>
       </aside>

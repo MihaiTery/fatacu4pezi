@@ -6,15 +6,29 @@ const animals = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      species: z.enum(["caine", "pisica"]),
+      // Free text, not an enum: the association rescues every species, not
+      // only dogs and cats, so this must accept new values without a code
+      // change. "caine"/"pisica" get dedicated icons and grammar elsewhere
+      // (see speciesLabel() in src/lib/animals.ts); anything else falls back
+      // to a generic rendering.
+      species: z.string(),
       sex: z.enum(["mascul", "femela"]),
       ageLabel: z.string(), // e.g. "aprox. 2 ani" — free text, since exact birthdates are rarely known
       ageMonthsEstimate: z.number(), // used for sorting/filtering by rough age band
       size: z.enum(["mic", "mediu", "mare"]).optional(), // mostly relevant for dogs
       status: z.enum(["disponibil", "in_tratament", "rezervat", "adoptat"]),
-      sterilized: z.boolean(),
-      vaccinated: z.boolean(),
-      dewormed: z.boolean().default(true),
+      // Whether adoption is even a legal/possible outcome for this record.
+      // Defaults to true (every animal published so far is a dog or cat).
+      // Set to false for species that cannot be legally rehomed as pets —
+      // the profile page then talks about care/recovery instead of adoption,
+      // regardless of `status`.
+      adoptable: z.boolean().default(true),
+      // Optional, not boolean-with-default: a missing value means "not known
+      // / not tracked for this species," which must render differently from
+      // a confirmed `false` (see medicalFacts in adopta/[slug].astro).
+      sterilized: z.boolean().optional(),
+      vaccinated: z.boolean().optional(),
+      dewormed: z.boolean().optional(),
       goodWith: z.array(z.enum(["copii", "alți câini", "alte pisici"])).default([]),
       personality: z.array(z.string()).max(4),
       photo: image(),

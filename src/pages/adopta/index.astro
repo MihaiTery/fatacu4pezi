@@ -2,52 +2,74 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import AnimalCard from "../../components/AnimalCard.astro";
 import { getCollection } from "astro:content";
+import { isDemoContent } from "../../data/config";
 
 const allAnimals = (await getCollection("animals")).sort((a, b) => {
   // Available first, then in treatment/reserved, adopted last — but nothing is hidden.
   const order = { disponibil: 0, in_tratament: 1, rezervat: 2, adoptat: 3 };
   return order[a.data.status] - order[b.data.status];
 });
+const hasAnimals = allAnimals.length > 0;
+const knownSpecies = new Set(["caine", "pisica"]);
 ---
 
 <PageLayout
-  title="Adoptă"
-  description="Câini și pisici disponibili pentru adopție la Fata cu 4pezi, în București și împrejurimi — profiluri complete, cu stare medicală și temperament."
-  intro="Fiecare profil arată exact ce trebuie să știi înainte să decizi: stare medicală, temperament și cu cine se înțelege bine."
+  title="Animale pentru adopție"
+  seoTitle="Animale pentru adopție în București și Ilfov | Fata cu 4pezi"
+  description="Descoperă animalele pentru adopție de la Fata cu 4pezi. Consultă profilurile, află informații despre nevoile lor și descoperă cum poți adopta responsabil."
+  intro="Fiecare animal are o poveste și nevoi diferite. Descoperă animalele aflate în grija noastră și află care dintre ele ar putea fi potrivit pentru familia ta."
+  noindex={isDemoContent}
 >
   <section class="mx-auto max-w-7xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
-    <div
-      class="sticky top-[calc(4.2rem+1px)] z-20 -mx-4 mb-8 flex flex-wrap items-center gap-2 border-b border-ink/10 bg-cream px-4 py-4 sm:static sm:mx-0 sm:border-none sm:bg-transparent sm:px-0 sm:py-0"
-      data-filters
-    >
-      <button type="button" class="filter-chip" data-filter="species" data-value="all" aria-pressed="true">Toate</button>
-      <button type="button" class="filter-chip" data-filter="species" data-value="caine" aria-pressed="false">Câini</button>
-      <button type="button" class="filter-chip" data-filter="species" data-value="pisica" aria-pressed="false">Pisici</button>
-      <span class="mx-1 hidden h-5 w-px bg-ink/15 sm:block" aria-hidden="true"></span>
-      <button type="button" class="filter-chip" data-filter="status" data-value="disponibil" aria-pressed="false">Doar disponibile</button>
-    </div>
+    {
+      isDemoContent && hasAnimals && (
+        <p class="-mt-2 mb-6 text-xs text-ink-soft">
+          Profiluri demonstrative, deocamdată — vor fi înlocuite cu animalele reale aflate în grija asociației.
+        </p>
+      )
+    }
 
-    <p class="mb-6 text-sm text-ink-soft" data-results-count role="status"></p>
-
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-animal-grid>
-      {
-        allAnimals.map((animal, i) => (
+    {
+      hasAnimals ? (
+        <>
           <div
-            data-animal-item
-            data-species={animal.data.species}
-            data-status={animal.data.status}
-            data-reveal
-            style={`--reveal-delay: ${(i % 3) * 90}`}
+            class="sticky top-[calc(4.2rem+1px)] z-20 -mx-4 mb-8 flex flex-wrap items-center gap-2 border-b border-ink/10 bg-cream px-4 py-4 sm:static sm:mx-0 sm:border-none sm:bg-transparent sm:px-0 sm:py-0"
+            data-filters
           >
-            <AnimalCard animal={animal} />
+            <button type="button" class="filter-chip" data-filter="species" data-value="all" aria-pressed="true">Toate animalele</button>
+            <button type="button" class="filter-chip" data-filter="species" data-value="caine" aria-pressed="false">Câini</button>
+            <button type="button" class="filter-chip" data-filter="species" data-value="pisica" aria-pressed="false">Pisici</button>
+            <button type="button" class="filter-chip" data-filter="species" data-value="altele" aria-pressed="false">Alte animale</button>
+            <span class="mx-1 hidden h-5 w-px bg-ink/15 sm:block" aria-hidden="true"></span>
+            <button type="button" class="filter-chip" data-filter="status" data-value="disponibil" aria-pressed="false">Doar disponibile</button>
           </div>
-        ))
-      }
-    </div>
 
-    <p class="hidden py-16 text-center text-ink-soft" data-empty-state>
-      Niciun animal nu corespunde filtrelor alese momentan.
-    </p>
+          <p class="mb-6 text-sm text-ink-soft" data-results-count role="status" />
+
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-animal-grid>
+            {allAnimals.map((animal, i) => (
+              <div
+                data-animal-item
+                data-species={knownSpecies.has(animal.data.species) ? animal.data.species : "altele"}
+                data-status={animal.data.status}
+                data-reveal
+                style={`--reveal-delay: ${(i % 3) * 90}`}
+              >
+                <AnimalCard animal={animal} />
+              </div>
+            ))}
+          </div>
+
+          <p class="hidden py-16 text-center text-ink-soft" data-empty-state>
+            Momentan nu există animale care să corespundă filtrelor selectate. Încearcă o altă selecție.
+          </p>
+        </>
+      ) : (
+        <p class="py-16 text-center text-ink-soft">
+          Profilurile animalelor pentru adopție vor fi disponibile aici în curând.
+        </p>
+      )
+    }
   </section>
 </PageLayout>
 

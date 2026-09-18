@@ -3,13 +3,16 @@
 // styled like a route-stop marker, echoing the site's journey device.
 interface Props {
   status: "disponibil" | "in_tratament" | "rezervat" | "adoptat";
+  // False for species that cannot legally be rehomed as pets — reframes the
+  // "disponibil" label so it never reads as a promise of adoption.
+  adoptable?: boolean;
   class?: string;
 }
 
-const { status, class: className } = Astro.props;
+const { status, adoptable = true, class: className } = Astro.props;
 
 const labels: Record<Props["status"], string> = {
-  disponibil: "Disponibil pentru adopție",
+  disponibil: adoptable ? "Disponibil pentru adopție" : "Recuperat — nu poate fi adoptat",
   in_tratament: "În tratament veterinar",
   rezervat: "Rezervat",
   adoptat: "Adoptat",

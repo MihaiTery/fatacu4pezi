@@ -5,13 +5,18 @@ import { withBase } from "../lib/url";
 
 interface Props {
   title: string;
+  // Full SEO <title>, used exactly as given (no automatic brand suffix).
+  // Falls back to `title` (brand-suffixed) when omitted — see PageLayout.astro,
+  // which keeps `title` driving the page's visible H1 either way.
+  seoTitle?: string;
   description: string;
   image?: string;
   noindex?: boolean;
+  ogType?: "website" | "article";
 }
 
-const { title, description, image = "/og-image.png", noindex = false } = Astro.props;
-const pageTitle = title === site.name ? title : `${title} · ${site.name}`;
+const { title, seoTitle, description, image = "/og-image.png", noindex = false, ogType = "website" } = Astro.props;
+const pageTitle = seoTitle ?? (title === site.name ? title : `${title} · ${site.name}`);
 // Astro.url.pathname already includes the deploy base (it's the real served
 // path), so the canonical URL needs no extra prefixing — only the image
 // path (a plain string prop/default) does.
@@ -34,7 +39,7 @@ const ogImageURL = new URL(withBase(image), Astro.site ?? site.url);
     <link rel="canonical" href={canonicalURL} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />

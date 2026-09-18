@@ -2,23 +2,23 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
-import { donations, contact, redirect230 } from "../data/config";
+import { donations, contact } from "../data/config";
 ---
 
 <PageLayout
-  title="Donează"
-  description="Susține Asociația Fata cu 4pezi printr-o donație — plata online cu cardul este în pregătire; între timp, poți dona prin transfer bancar."
-  intro="O donație acoperă direct tratamente veterinare, sterilizări și hrană pentru animalele aflate în grija noastră."
+  title="Susține salvarea animalelor"
+  seoTitle="Donează pentru salvarea animalelor | Fata cu 4pezi"
+  description="Susține salvarea animalelor din București și Ilfov. Donațiile către Fata cu 4pezi pot sprijini tratamente veterinare, hrană, recuperare și alte nevoi de îngrijire."
+  intro="O donație ne ajută să acoperim nevoi precum tratamente veterinare, hrană, recuperare și îngrijire pentru animalele aflate în dificultate."
 >
   <section class="mx-auto max-w-3xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="rounded-2xl border-2 border-dashed border-ink/25 bg-paper p-7">
       <p class="inline-flex items-center gap-2 rounded-full bg-blue px-3 py-1 text-xs font-semibold text-ink">
-        Plata online cu cardul — în pregătire
+        Donații cu cardul — în pregătire
       </p>
-      <h2 class="mt-4 font-display text-xl font-bold text-ink">Așa va arăta donația cu cardul</h2>
+      <h2 class="mt-4 font-display text-xl font-bold text-ink">Pregătim donațiile online</h2>
       <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
-        Lucrăm la integrarea unui procesator de plăți pentru donații recurente și punctuale cu cardul. Sumele de mai
-        jos sunt un exemplu — nu sunt încă funcționale.
+        Lucrăm la introducerea donațiilor cu cardul. Această opțiune nu este încă disponibilă.
       </p>
       <ul class="mt-5 flex flex-wrap gap-2.5" aria-hidden="true">
         {
@@ -27,6 +27,7 @@ import { donations, contact, redirect230 } from "../data/config";
           ))
         }
       </ul>
+      <p class="mt-3 text-xs text-ink-soft">Sume orientative. Donațiile cu cardul nu sunt încă active.</p>
       <Button href="#alternative" variant="dark" size="md" class="mt-5 pointer-events-none opacity-50" aria-disabled="true">
         Continuă către plată — indisponibil momentan
       </Button>
@@ -35,29 +36,45 @@ import { donations, contact, redirect230 } from "../data/config";
     </div>
 
     <div id="alternative" class="mt-10 scroll-mt-24 rounded-2xl border border-ink/10 bg-paper p-7">
-      <h2 class="font-display text-xl font-bold text-ink">Poți dona acum, prin transfer bancar</h2>
-      <p class="mt-2 text-sm leading-relaxed text-ink-soft">Transferă direct în contul asociației, indicând „Donație” la detalii.</p>
-
-      <dl class="mt-5 grid gap-4 sm:grid-cols-[auto_1fr] sm:gap-x-8">
-        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">Titular</dt>
-        <dd class="text-sm text-ink">{contact.bankName}</dd>
-        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">IBAN</dt>
-        <dd class="flex flex-wrap items-center gap-3">
-          <code class="rounded-lg bg-ink/5 px-3 py-1.5 text-sm text-ink" data-iban>{contact.bankAccount}</code>
-          <button type="button" class="inline-flex items-center gap-1.5 text-sm font-semibold text-green hover:text-green-dark" data-copy-iban>
-            <Icon name="check" class="h-4 w-4" data-copy-icon hidden />
-            <span data-copy-label>Copiază</span>
-          </button>
-        </dd>
-      </dl>
+      {
+        contact.bankAccountConfigured ? (
+          <>
+            <h2 class="font-display text-xl font-bold text-ink">Donează prin transfer bancar</h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Poți susține activitatea asociației printr-un transfer bancar. Folosește datele confirmate de mai jos și menționează „Donație” în detaliile plății.
+            </p>
+            <dl class="mt-5 grid gap-4 sm:grid-cols-[auto_1fr] sm:gap-x-8">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">Titular</dt>
+              <dd class="text-sm text-ink">{contact.bankName}</dd>
+              <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">IBAN</dt>
+              <dd class="flex flex-wrap items-center gap-3">
+                <code class="rounded-lg bg-ink/5 px-3 py-1.5 text-sm text-ink" data-iban>{contact.bankAccount}</code>
+                <button type="button" class="inline-flex items-center gap-1.5 text-sm font-semibold text-green hover:text-green-dark" data-copy-iban>
+                  <span data-copy-icon hidden>
+                    <Icon name="check" class="h-4 w-4" />
+                  </span>
+                  <span data-copy-label>Copiază</span>
+                </button>
+              </dd>
+            </dl>
+          </>
+        ) : (
+          <>
+            <h2 class="font-display text-xl font-bold text-ink">Datele pentru transfer bancar sunt în pregătire</h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Vom publica aici informațiile bancare după confirmarea lor. Îți mulțumim pentru interesul de a susține animalele aflate în grija noastră.
+            </p>
+          </>
+        )
+      }
     </div>
 
     <div class="mt-10 flex flex-col gap-3 border-t border-ink/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
       <p class="max-w-sm text-sm leading-relaxed text-ink-soft">
-        Nu costă nimic din buzunar: poți redirecționa 3,5% din impozitul pe venit către asociație.
+        Poți sprijini asociația și prin redirecționarea a până la 3,5% din impozitul pe venit, dacă îndeplinești condițiile legale. Aceasta nu presupune o plată suplimentară.
       </p>
-      <Button href={redirect230.url} variant="outline" size="md" external>
-        Redirecționează 3,5%
+      <Button href="/redirectioneaza" variant="outline" size="md">
+        Află cum redirecționezi 3,5%
         <Icon name="arrow-right" class="h-4 w-4" />
       </Button>
     </div>

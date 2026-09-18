@@ -39,7 +39,7 @@ const year = new Date().getFullYear();
         <ul class="mt-4 flex flex-col gap-2.5 text-sm">
           <li><a href={withBase("/doneaza")} class="text-ink/70 hover:text-ink">Donează</a></li>
           <li><a href={withBase("/redirectioneaza")} class="text-ink/70 hover:text-ink">Redirecționează 3,5%</a></li>
-          <li><a href={withBase("/adopta")} class="text-ink/70 hover:text-ink">Adoptă</a></li>
+          <li><a href={withBase("/adopta")} class="text-ink/70 hover:text-ink">Adoptă un animal</a></li>
           <li><a href={withBase("/voluntari")} class="text-ink/70 hover:text-ink">Devino voluntar</a></li>
           <li><a href={withBase("/parteneri")} class="text-ink/70 hover:text-ink">Devino partener</a></li>
           <li><a href={withBase("/shop")} class="text-ink/70 hover:text-ink">Magazin (în curând)</a></li>
@@ -49,14 +49,22 @@ const year = new Date().getFullYear();
       <div>
         <p class="font-display text-sm font-bold uppercase tracking-wide text-ink/70">Contact</p>
         <ul class="mt-4 flex flex-col gap-3 text-sm text-ink/80">
-          <li class="flex items-start gap-2.5">
-            <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
-            <a href={`mailto:${contact.email}`} class="hover:text-ink">{contact.email}</a>
-          </li>
-          <li class="flex items-start gap-2.5">
-            <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
-            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="hover:text-ink">{contact.phone}</a>
-          </li>
+          {
+            contact.emailConfigured && (
+              <li class="flex items-start gap-2.5">
+                <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
+                <a href={`mailto:${contact.email}`} class="hover:text-ink">{contact.email}</a>
+              </li>
+            )
+          }
+          {
+            contact.phoneConfigured && (
+              <li class="flex items-start gap-2.5">
+                <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
+                <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="hover:text-ink">{contact.phone}</a>
+              </li>
+            )
+          }
           <li class="flex items-start gap-2.5">
             <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
             <span>{site.area}</span>
@@ -65,11 +73,19 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="mt-12 flex flex-col gap-3 border-t border-ink/15 pt-6 text-xs text-ink/60 sm:flex-row sm:items-center sm:justify-between">
+    <p class="mt-10 text-xs text-ink/60">Website în construcție — o parte din conținut este demonstrativ, până la publicarea datelor reale.</p>
+
+    <div class="mt-4 flex flex-col gap-3 border-t border-ink/15 pt-6 text-xs text-ink/60 sm:flex-row sm:items-center sm:justify-between">
       <p>© {year} {site.legalName}. Toate drepturile rezervate.</p>
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
         <a href={withBase(legalLinks.privacyPolicy)} class="hover:text-ink">Politica de confidențialitate</a>
-        <span>CIF {contact.cif} · Înreg. {contact.registrationNumber}</span>
+        {(contact.cifConfigured || contact.registrationNumberConfigured) && (
+          <span>
+            {contact.cifConfigured && `CIF ${contact.cif}`}
+            {contact.cifConfigured && contact.registrationNumberConfigured && " · "}
+            {contact.registrationNumberConfigured && `Înreg. ${contact.registrationNumber}`}
+          </span>
+        )}
         <a href={credits.studioUrl} target="_blank" rel="noopener noreferrer" class="hover:text-ink">
           Design de {credits.studioName}
         </a>

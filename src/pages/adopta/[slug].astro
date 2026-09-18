@@ -7,8 +7,9 @@ import StatusPill from "../../components/StatusPill.astro";
 import Icon from "../../components/Icon.astro";
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import { contact } from "../../data/config";
+import { contact, isDemoContent } from "../../data/config";
 import { withBase } from "../../lib/url";
+import { speciesLabel as getSpeciesLabel, agreementSuffix } from "../../lib/animals";
 
 export async function getStaticPaths() {
   const animals = await getCollection("animals");
@@ -23,25 +24,59 @@ const a = animal.data;
 const { Content } = await render(animal);
 
 const sexLabel = a.sex === "mascul" ? "Mascul" : "Femelă";
-const speciesLabel = a.species === "caine" ? "Câine" : "Pisică";
+const speciesLabelText = getSpeciesLabel(a.species);
+const suffix = agreementSuffix(a.sex); // grammatical agreement for {name} a fost adoptat{ă} etc.
 
-const medicalFacts = [
-  { label: "Sterilizat", value: a.sterilized },
-  { label: "Vaccinat", value: a.vaccinated },
-  { label: "Deparazitat", value: a.dewormed },
+// Medical facts are shown per species and only when known. A `false` value
+// only reads as "în curs" while the animal is actively in treatment —
+// otherwise (or when the value is missing entirely) it's genuinely
+// unknown/not tracked, which must not be presented as "in progress".
+type MedicalState = "done" | "in_progress" | "unknown";
+function medicalState(value: boolean | undefined): MedicalState {
+  if (value === true) return "done";
+  if (value === false && a.status === "in_tratament") return "in_progress";
+  return "unknown";
+}
+const medicalFacts: { label: string; state: MedicalState }[] = [
+  { label: "Sterilizat", state: medicalState(a.sterilized) },
+  { label: "Vaccinat", state: medicalState(a.vaccinated) },
+  { label: "Deparazitat", state: medicalState(a.dewormed) },
 ];
 
-const canAdopt = a.status === "disponibil";
+const canAdopt = a.adoptable && a.status === "disponibil";
+
+const seoTitleByStatus = !a.adoptable
+  ? `${a.name} — în îngrijire | Fata cu 4pezi`
+  : a.status === "adoptat"
+    ? `${a.name} a fost adoptat${suffix} | Fata cu 4pezi`
+    : a.status === "rezervat"
+      ? `${a.name} – adopție în curs | Fata cu 4pezi`
+      : a.status === "in_tratament"
+        ? `${a.name} – în îngrijire | Fata cu 4pezi`
+        : `${a.name} – ${speciesLabelText.toLowerCase()} pentru adopție | Fata cu 4pezi`;
+
+const descriptionByStatus = !a.adoptable
+  ? `${a.name} se află în grija Asociației Fata cu 4pezi. Descoperă informațiile disponibile despre starea sa și celelalte animale aflate în îngrijirea noastră.`
+  : a.status === "adoptat"
+    ? `${a.name} și-a găsit o familie. Descoperă povestea sa și cunoaște celelalte animale aflate în grija Asociației Fata cu 4pezi.`
+    : a.status === "rezervat"
+      ? `Procesul de adopție pentru ${a.name} este în desfășurare. Descoperă celelalte animale care își caută o familie la Fata cu 4pezi.`
+      : a.status === "in_tratament"
+        ? `${a.name} se află în îngrijire. Află informațiile disponibile despre recuperarea sa și descoperă celelalte animale de la Fata cu 4pezi.`
+        : `${a.name}: ${speciesLabelText.toLowerCase()}, ${a.ageLabel}. Descoperă informațiile disponibile despre starea de sănătate, nevoile sale și pașii pentru adopție la Fata cu 4pezi.`;
+
 const mailSubject = encodeURIComponent(`Adopție — ${a.name}`);
 const mailBody = encodeURIComponent(
-  `Bună,\n\nAș dori să aflu mai multe despre procesul de adopție pentru ${a.name} (${speciesLabel.toLowerCase()}).\n\nNume:\nZonă/localitate:\nExperiență anterioară cu animale:\n\nMulțumesc!`
+  `Bună,\n\nAș dori să aflu mai multe despre procesul de adopție pentru ${a.name} (${speciesLabelText.toLowerCase()}).\n\nNume:\nZonă/localitate:\nExperiență anterioară cu animale:\n\nMulțumesc!`
 );
 const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBody}`;
 ---
 
 <Layout
-  title={`${a.name} — ${speciesLabel.toLowerCase()} pentru adopție`}
-  description={`${a.name}, ${speciesLabel.toLowerCase()} ${sexLabel.toLowerCase()}, ${a.ageLabel}. ${a.photoAlt}`}
+  title={`${a.name} — ${speciesLabelText.toLowerCase()} pentru adopție`}
+  seoTitle={seoTitleByStatus}
+  description={descriptionByStatus}
+  noindex={isDemoContent}
 >
   <div class="flex min-h-screen flex-col">
     <SiteHeader />
@@ -56,12 +91,12 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
       <div>
         <div class="relative overflow-hidden rounded-2xl">
           <Image src={a.photo} alt={a.photoAlt} width={800} height={600} class="aspect-[4/3] w-full object-cover" />
-          <StatusPill status={a.status} class="absolute left-4 top-4 shadow-sm" />
+          <StatusPill status={a.status} adoptable={a.adoptable} class="absolute left-4 top-4 shadow-sm" />
         </div>
 
         <div class="mt-8 flex flex-wrap items-baseline gap-x-4 gap-y-1">
           <h1 class="font-display text-4xl font-bold text-ink">{a.name}</h1>
-          <p class="text-lg text-ink-soft">{speciesLabel} · {sexLabel} · {a.ageLabel}</p>
+          <p class="text-lg text-ink-soft">{speciesLabelText} · {sexLabel} · {a.ageLabel}</p>
         </div>
         <p class="mt-1 text-sm text-ink-soft">{a.arrivedLabel}</p>
 
@@ -79,12 +114,16 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
                 <li class="flex items-center gap-2.5 text-sm">
                   <span
                     class={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
-                      fact.value ? "bg-green text-cream" : "border border-ink/25 text-ink/40"
+                      fact.state === "done" ? "bg-green text-cream" : "border border-ink/25 text-ink/40"
                     }`}
                   >
-                    {fact.value && <Icon name="check" class="h-3 w-3" />}
+                    {fact.state === "done" && <Icon name="check" class="h-3 w-3" />}
                   </span>
-                  <span class={fact.value ? "text-ink" : "text-ink-soft"}>{fact.label}{!fact.value && " — în curs"}</span>
+                  <span class={fact.state === "done" ? "text-ink" : "text-ink-soft"}>
+                    {fact.label}
+                    {fact.state === "in_progress" && " — în curs"}
+                    {fact.state === "unknown" && " — informație indisponibilă momentan"}
+                  </span>
                 </li>
               ))
             }
@@ -110,17 +149,30 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
         </div>
 
         {
-          canAdopt ? (
-            <Button href={mailtoHref} variant="primary" size="lg" class="w-full">
-              Vreau să adopt pe {a.name}
-            </Button>
+          !a.adoptable ? (
+            <div class="rounded-2xl border border-ink/10 bg-paper p-5 text-sm text-ink-soft">
+              {`${a.name} nu poate fi oferit${agreementSuffix(a.sex)} spre adopție, conform reglementărilor legale pentru această specie. Urmărim identificarea unei soluții adecvate de îngrijire sau recuperare.`}
+              <Button href="/adopta" variant="ghost" class="mt-3">
+                Vezi alte animale
+              </Button>
+            </div>
+          ) : canAdopt ? (
+            contact.emailConfigured ? (
+              <Button href={mailtoHref} variant="primary" size="lg" class="w-full">
+                Întreabă despre adopția lui {a.name}
+              </Button>
+            ) : (
+              <div class="rounded-2xl border border-ink/10 bg-paper p-5 text-sm text-ink-soft">
+                Contactul pentru adopție va fi disponibil în curând.
+              </div>
+            )
           ) : (
             <div class="rounded-2xl border border-ink/10 bg-paper p-5 text-sm text-ink-soft">
               {a.status === "adoptat"
-                ? `${a.name} a fost deja adoptat${a.sex === "femela" ? "ă" : ""} — profilul rămâne vizibil pentru transparență.`
+                ? `${a.name} a fost deja adoptat${agreementSuffix(a.sex)} — profilul rămâne vizibil pentru transparență.`
                 : a.status === "rezervat"
-                  ? `${a.name} este rezervat${a.sex === "femela" ? "ă" : ""} — procesul de adopție este deja în desfășurare cu o altă familie.`
-                  : `${a.name} este momentan în tratament veterinar. Va deveni disponibil${a.sex === "femela" ? "ă" : ""} imediat ce este pregătit${a.sex === "femela" ? "ă" : ""}.`}
+                  ? `${a.name} este rezervat${agreementSuffix(a.sex)} — procesul de adopție este deja în desfășurare cu o altă familie.`
+                  : `${a.name} este momentan în tratament veterinar. Va deveni disponibil${agreementSuffix(a.sex)} imediat ce este pregătit${agreementSuffix(a.sex)}.`}
               <Button href="/adopta" variant="ghost" class="mt-3">
                 Vezi alte animale disponibile
               </Button>

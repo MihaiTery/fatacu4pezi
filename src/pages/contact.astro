@@ -6,39 +6,59 @@ import Button from "../components/Button.astro";
 import { site, contact } from "../data/config";
 
 const quickLinks = [
-  { title: "Ai găsit un animal în dificultate?", href: "/fa-o-sesizare", cta: "Fă o sesizare" },
-  { title: "Vrei să adopți?", href: "/adopta", cta: "Vezi animalele disponibile" },
-  { title: "Reprezinți o clinică veterinară?", href: "/parteneri", cta: "Vezi rețeaua de parteneri" },
+  { title: "Ai găsit un animal în pericol?", href: "/fa-o-sesizare", cta: "Trimite o sesizare" },
+  { title: "Vrei să adopți un animal?", href: "/adopta", cta: "Vezi animalele pentru adopție" },
+  { title: "Vrei să devii partener?", href: "/parteneri", cta: "Descoperă cum putem colabora" },
 ];
+
+const hasAnyContactDetail =
+  contact.emailConfigured || contact.phoneConfigured || contact.addressConfigured;
 ---
 
 <PageLayout
   title="Contact"
-  description="Datele de contact ale Asociației Fata cu 4pezi — București și Ilfov."
-  intro="Pentru sesizări sau adopții, paginile dedicate de mai jos ajung mai rapid la echipa potrivită. Pentru orice altceva, ne găsești aici."
+  seoTitle="Contact Fata cu 4pezi | București și Ilfov"
+  description="Contactează Asociația Fata cu 4pezi pentru informații despre adopții, sesizări, voluntariat, parteneriate și sprijinirea animalelor din București și Ilfov."
+  intro="Ai o întrebare despre asociație sau vrei să ne scrii? Alege mai jos subiectul potrivit, iar pentru întrebări generale folosește datele de contact disponibile."
 >
   <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_1fr]">
       <div class="rounded-2xl border border-ink/10 bg-paper p-7">
         <h2 class="font-display text-lg font-bold text-ink">{site.legalName}</h2>
-        <ul class="mt-5 flex flex-col gap-4 text-sm">
-          <li class="flex items-start gap-3">
-            <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
-            <a href={`mailto:${contact.email}`} class="text-ink hover:text-green">{contact.email}</a>
-          </li>
-          <li class="flex items-start gap-3">
-            <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
-            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="text-ink hover:text-green">{contact.phone}</a>
-          </li>
-          <li class="flex items-start gap-3">
-            <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
-            <span class="text-ink">{contact.address}</span>
-          </li>
-        </ul>
-        <div class="mt-6 border-t border-ink/10 pt-5 text-xs text-ink-soft">
-          <p>CIF {contact.cif}</p>
-          <p class="mt-1">Nr. înregistrare {contact.registrationNumber}</p>
-        </div>
+        {
+          hasAnyContactDetail ? (
+            <ul class="mt-5 flex flex-col gap-4 text-sm">
+              {contact.emailConfigured && (
+                <li class="flex items-start gap-3">
+                  <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
+                  <a href={`mailto:${contact.email}`} class="text-ink hover:text-green">{contact.email}</a>
+                </li>
+              )}
+              {contact.phoneConfigured && (
+                <li class="flex items-start gap-3">
+                  <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
+                  <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="text-ink hover:text-green">{contact.phone}</a>
+                </li>
+              )}
+              {contact.addressConfigured && (
+                <li class="flex items-start gap-3">
+                  <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
+                  <span class="text-ink">{contact.address}</span>
+                </li>
+              )}
+            </ul>
+          ) : (
+            <p class="mt-5 text-sm text-ink-soft">Datele de contact vor fi publicate aici după confirmare.</p>
+          )
+        }
+        {
+          (contact.cifConfigured || contact.registrationNumberConfigured) && (
+            <div class="mt-6 border-t border-ink/10 pt-5 text-xs text-ink-soft">
+              {contact.cifConfigured && <p>CIF {contact.cif}</p>}
+              {contact.registrationNumberConfigured && <p class="mt-1">Nr. înregistrare {contact.registrationNumber}</p>}
+            </div>
+          )
+        }
         <SocialBadge size="md" class="mt-6" />
       </div>
 

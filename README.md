@@ -1,6 +1,6 @@
 # Fata cu 4pezi
 
-Site-ul Asociației Fata cu 4pezi (salvare câini și pisici, București și Ilfov). Astro + Tailwind CSS, static.
+Site-ul Asociației Fata cu 4pezi (salvarea animalelor de toate speciile, București și Ilfov). Astro + Tailwind CSS, static.
 
 **Live:** https://mihaitery.github.io/fatacu4pezi/
 

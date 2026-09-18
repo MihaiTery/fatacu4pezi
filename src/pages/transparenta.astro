@@ -1,72 +1,72 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import Icon from "../components/Icon.astro";
 import { site, contact } from "../data/config";
+import { withBase } from "../lib/url";
 
-const documentTypes = [
-  "Raport anual de activitate",
-  "Situație financiară anuală",
-  "Utilizarea sumelor din redirecționarea a 3,5%",
-];
-
-const years = [2025, 2024, 2023];
+// No real documents exist for any year yet — an empty array here (rather
+// than a hardcoded list of years rendered as permanent "În curând" rows)
+// means the section below honestly shows nothing until a real year/document
+// is added, instead of implying 2023–2025 reports are all in progress.
+const publishedDocumentsByYear: { year: number; documents: string[] }[] = [];
 
 const legalFacts = [
-  { label: "Denumire legală", value: site.legalName },
-  { label: "CIF", value: contact.cif },
-  { label: "Număr de înregistrare", value: contact.registrationNumber },
-  { label: "Cont bancar pentru donații", value: contact.bankAccount },
-];
+  { label: "Denumire legală", value: site.legalName, configured: true },
+  { label: "CIF", value: contact.cif, configured: contact.cifConfigured },
+  { label: "Număr de înregistrare", value: contact.registrationNumber, configured: contact.registrationNumberConfigured },
+  { label: "Cont bancar pentru donații", value: contact.bankAccount, configured: contact.bankAccountConfigured },
+].filter((fact) => fact.configured);
 ---
 
 <PageLayout
   title="Transparență"
-  description="Rapoarte de activitate, situații financiare și date de înregistrare ale Asociației Fata cu 4pezi."
-  intro="Publicăm aici, pe măsură ce sunt finalizate, rapoartele de activitate și situațiile financiare ale asociației."
+  seoTitle="Transparență și informații despre asociație | Fata cu 4pezi"
+  description="Consultă informațiile de identificare și documentele publicate de Asociația Fata cu 4pezi, precum și detaliile disponibile despre activitatea organizației."
+  intro="Aici reunim informațiile oficiale și documentele disponibile despre activitatea asociației, pentru ca cei care ne susțin să poată consulta date clare și verificabile."
 >
   <section class="mx-auto max-w-4xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="rounded-2xl border border-ink/10 bg-paper p-6">
-      <h2 class="font-display text-lg font-bold text-ink">Documente</h2>
-      <p class="mt-1 text-sm text-ink-soft">Site-ul este nou — documentele de mai jos urmează să fie încărcate pe măsură ce sunt finalizate.</p>
-
-      <div class="mt-6 flex flex-col divide-y divide-ink/10">
-        {
-          years.map((year) => (
-            <div class="py-4">
-              <p class="font-display font-bold text-ink">{year}</p>
-              <ul class="mt-3 flex flex-col gap-2.5">
-                {documentTypes.map((doc) => (
-                  <li class="flex items-center justify-between gap-4 text-sm">
-                    <span class="text-ink-soft">{doc}</span>
-                    <span class="shrink-0 rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-ink-soft">În curând</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
+      <h2 class="font-display text-lg font-bold text-ink">Documente și rapoarte</h2>
+      {
+        publishedDocumentsByYear.length > 0 ? (
+          <div class="mt-6 flex flex-col divide-y divide-ink/10">
+            {publishedDocumentsByYear.map(({ year, documents }) => (
+              <div class="py-4">
+                <p class="font-display font-bold text-ink">{year}</p>
+                <ul class="mt-3 flex flex-col gap-2.5">
+                  {documents.map((doc) => (
+                    <li class="text-sm text-ink-soft">{doc}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p class="mt-1 text-sm text-ink-soft">Documentele oficiale vor fi publicate aici după verificare și finalizare.</p>
+        )
+      }
     </div>
 
     <div class="mt-8 rounded-2xl border border-ink/10 bg-paper p-6">
       <h2 class="font-display text-lg font-bold text-ink">Date de identificare</h2>
-      <dl class="mt-4 grid gap-4 sm:grid-cols-2">
-        {
-          legalFacts.map((fact) => (
-            <div>
-              <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft">{fact.label}</dt>
-              <dd class="mt-1 text-sm text-ink">{fact.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
-      <p class="mt-4 text-xs text-ink-soft">Datele de mai sus sunt marcate ca informații provizorii, până la confirmarea celor finale.</p>
+      {
+        legalFacts.length > 0 ? (
+          <dl class="mt-4 grid gap-4 sm:grid-cols-2">
+            {legalFacts.map((fact) => (
+              <div>
+                <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft">{fact.label}</dt>
+                <dd class="mt-1 text-sm text-ink">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : (
+          <p class="mt-1 text-sm text-ink-soft">Datele oficiale de identificare vor fi publicate după confirmare.</p>
+        )
+      }
     </div>
 
-    <p class="mt-8 flex items-start gap-2.5 text-sm leading-relaxed text-ink-soft">
-      <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0" />
-      Ai o întrebare despre modul în care folosim fondurile? Scrie-ne la{" "}
-      <a href={`mailto:${contact.email}`} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">{contact.email}</a>.
+    <p class="mt-8 text-sm leading-relaxed text-ink-soft">
+      Pentru întrebări despre activitatea și documentele asociației, ne poți contacta folosind datele disponibile în pagina{" "}
+      <a href={withBase("/contact")} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Contact</a>.
     </p>
   </section>
 </PageLayout>

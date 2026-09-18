@@ -7,20 +7,20 @@ import { withBase } from "../lib/url";
 
 const checklist = [
   {
-    title: "Locația cât mai exactă",
-    text: "O adresă, o intersecție, un reper vizibil sau, ideal, coordonate GPS din telefon.",
+    title: "Locația animalului",
+    text: "Trimite o adresă, un reper ușor de identificat sau coordonate GPS, dacă le ai.",
   },
   {
-    title: "Câteva fotografii",
-    text: "Ne ajută să estimăm starea animalului înainte să ajungem la fața locului.",
+    title: "Fotografii, dacă le poți face în siguranță",
+    text: "Câteva imagini ne pot ajuta să înțelegem situația. Nu te apropia de un animal speriat sau rănit doar pentru a obține fotografii.",
   },
   {
     title: "Ce ai observat",
-    text: "De cât timp este acolo, dacă pare rănit, speriat, foarte tânăr sau are un comportament neobișnuit.",
+    text: "Spune-ne dacă animalul pare rănit, blocat, slăbit sau expus unui pericol și de cât timp se află în acel loc, dacă știi.",
   },
   {
-    title: "Datele tale de contact",
-    text: "Un număr de telefon sau e-mail la care să revenim, dacă avem nevoie de clarificări.",
+    title: "Cum te putem contacta",
+    text: "Lasă o adresă de e-mail sau un număr de telefon la care putem reveni dacă sunt necesare informații suplimentare.",
   },
 ];
 
@@ -32,14 +32,15 @@ const mailtoHref = `mailto:${contact.reportEmail}?subject=${subject}&body=${body
 ---
 
 <PageLayout
-  title="Fă o sesizare"
-  description="Ai găsit un animal în dificultate în București sau Ilfov? Iată ce informații ne ajută să intervenim rapid."
-  intro="Dacă ai găsit un animal în dificultate în București sau Ilfov, spune-ne. Cu cât sesizarea este mai completă, cu atât putem răspunde mai rapid."
+  title="Ai găsit un animal în pericol?"
+  seoTitle="Ai găsit un animal în pericol? Semnalează cazul | Fata cu 4pezi"
+  description="Ai găsit un animal rănit, abandonat sau aflat în pericol în București ori Ilfov? Află ce informații sunt utile pentru o sesizare către Fata cu 4pezi."
+  intro="Dacă ai observat un animal rănit, abandonat sau aflat în dificultate în București ori Ilfov, ne poți semnala situația. Informațiile cât mai clare ne ajută să evaluăm cazul."
 >
   <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_320px]">
       <div>
-        <h2 class="font-display text-xl font-bold text-ink">Ce ne ajută să pregătim înainte să scrii</h2>
+        <h2 class="font-display text-xl font-bold text-ink">Ce informații ne sunt utile</h2>
         <ul class="mt-6 flex flex-col gap-6">
           {
             checklist.map((item, i) => (
@@ -57,24 +58,39 @@ const mailtoHref = `mailto:${contact.reportEmail}?subject=${subject}&body=${body
         </ul>
 
         <p class="mt-10 max-w-xl text-sm leading-relaxed text-ink-soft">
-          Nu este nevoie să ai toate informațiile ca să ne scrii — trimite ce ai, iar noi revenim cu întrebări dacă e nevoie.
-          Pentru context suplimentar, poți citi și{" "}
+          Nu trebuie să ai toate informațiile pentru a trimite o sesizare. Comunică ceea ce știi și evită să te pui în pericol.
+        </p>
+        <p class="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
+          Dacă animalul are nevoie de ajutor medical urgent, contactează un medic veterinar sau serviciile competente. Trimiterea unui
+          e-mail către asociație nu garantează o intervenție imediată.
+        </p>
+        <p class="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
           <a href={withBase("/blog/ce-faci-daca-gasesti-un-animal-ranit-pe-strada")} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">
-            ghidul nostru despre ce faci când găsești un animal rănit
-          </a>.
+            Citește ghidul pentru animale găsite în dificultate.
+          </a>
         </p>
       </div>
 
       <aside class="h-fit rounded-2xl border border-ink/10 bg-paper p-6">
-        <h2 class="font-display text-lg font-bold text-ink">Trimite sesizarea</h2>
-        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-          Se deschide clientul tău de e-mail, cu un model completat pe care îl poți edita înainte de a trimite.
-        </p>
-        <Button href={mailtoHref} variant="primary" size="md" class="mt-5 w-full">
-          <Icon name="mail" class="h-4 w-4" />
-          Trimite un e-mail
-        </Button>
-        <p class="mt-3 text-xs text-ink-soft">{contact.reportEmail}</p>
+        <h2 class="font-display text-lg font-bold text-ink">Trimite o sesizare</h2>
+        {
+          contact.reportEmailConfigured ? (
+            <>
+              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+                Butonul deschide aplicația ta de e-mail și pregătește un mesaj pe care îl poți completa înainte de trimitere.
+              </p>
+              <Button href={mailtoHref} variant="primary" size="md" class="mt-5 w-full">
+                <Icon name="mail" class="h-4 w-4" />
+                Pregătește sesizarea prin e-mail
+              </Button>
+              <p class="mt-3 text-xs text-ink-soft">{contact.reportEmail}</p>
+            </>
+          ) : (
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Adresa dedicată sesizărilor va fi disponibilă în curând.
+            </p>
+          )
+        }
       </aside>
     </div>
   </section>

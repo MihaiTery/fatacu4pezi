@@ -5,7 +5,8 @@ import { site, contact } from "../data/config";
 
 <PageLayout
   title="Politica de confidențialitate"
-  description="Ce date colectează site-ul Fata cu 4pezi și cum sunt folosite."
+  seoTitle="Politica de confidențialitate | Fata cu 4pezi"
+  description="Află informații despre prelucrarea datelor personale și utilizarea site-ului Asociației Fata cu 4pezi."
 >
   <section class="mx-auto max-w-3xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="prose-fatacu max-w-prose text-ink-soft">
@@ -17,10 +18,12 @@ import { site, contact } from "../data/config";
 
       <h2>Ce date colectăm</h2>
       <p>
-        Site-ul, în forma sa actuală, nu folosește cookie-uri de analiză sau de publicitate și nu are un formular
-        propriu de colectare a datelor. Acțiuni precum „Fă o sesizare”, „Vreau să adopt” sau contactul cu un
-        partener deschid direct clientul tău de e-mail — informațiile pe care alegi să le trimiți ajung în căsuța
-        de e-mail a asociației, nu sunt stocate de acest site.
+        Site-ul, în forma sa actuală, nu folosește cookie-uri de analiză sau de publicitate. Acțiuni precum „Fă o
+        sesizare”, „Vreau să adopt” sau contactul cu un partener deschid direct clientul tău de e-mail —
+        informațiile pe care alegi să le trimiți ajung în căsuța de e-mail a asociației, nu sunt stocate de acest
+        site. Formularul de înscriere pentru voluntariat funcționează la fel: completează un mesaj pe care
+        aplicația ta de e-mail îl deschide spre trimitere, iar datele introduse nu sunt stocate de acest site — ele
+        ajung la asociație doar dacă alegi să trimiți e-mailul.
       </p>
 
       <h2>Cookie-uri</h2>
@@ -39,8 +42,16 @@ import { site, contact } from "../data/config";
 
       <h2>Contact</h2>
       <p>
-        Pentru întrebări legate de confidențialitate, ne poți scrie la{" "}
-        <a href={`mailto:${contact.email}`}>{contact.email}</a>.
+        {
+          contact.emailConfigured ? (
+            <>
+              Pentru întrebări legate de confidențialitate, ne poți scrie la{" "}
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>.
+            </>
+          ) : (
+            <>Pentru întrebări legate de confidențialitate, ne poți contacta folosind datele disponibile în pagina Contact.</>
+          )
+        }
       </p>
     </div>
   </section>

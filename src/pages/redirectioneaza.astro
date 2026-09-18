@@ -7,24 +7,25 @@ import { withBase } from "../lib/url";
 
 const steps = [
   {
-    title: "Nu costă nimic în plus",
-    text: "3,5% din impozitul pe venit merge oricum la stat — tu decizi doar cine îl primește: statul sau o cauză precum a noastră.",
+    title: "Verifică dacă ești eligibil",
+    text: "Formularul 230 se adresează persoanelor care îndeplinesc condițiile prevăzute de legislația fiscală. Verifică și termenul aplicabil perioadei pentru care depui cererea.",
   },
   {
-    title: "Completezi Formularul 230",
-    text: "Online, în câteva minute, prin platforma formular230.ro — sau descarci și trimiți formularul tipărit.",
+    title: "Completează Formularul 230",
+    text: "Introdu datele tale și datele organizației beneficiare, folosind formularul și instrucțiunile valabile pentru perioada respectivă.",
   },
   {
-    title: "Se aplică anual",
-    text: "Redirecționarea este valabilă pentru anul fiscal la care se referă formularul — poți repeta gestul în fiecare an.",
+    title: "Depune formularul",
+    text: "Transmite cererea prin una dintre modalitățile acceptate de ANAF, în termenul legal.",
   },
 ];
 ---
 
 <PageLayout
-  title="Redirecționează 3,5%"
-  description="Redirecționează 3,5% din impozitul pe venit către Asociația Fata cu 4pezi, prin Formularul 230 — fără niciun cost suplimentar."
-  intro="Poți susține asociația fără să scoți niciun ban din buzunar — redirecționând 3,5% din impozitul pe venit, prin Formularul 230."
+  title="Redirecționează 3,5% din impozitul pe venit"
+  seoTitle="Redirecționează 3,5% prin Formularul 230 | Fata cu 4pezi"
+  description="Află cum poți susține Asociația Fata cu 4pezi prin redirecționarea a până la 3,5% din impozitul pe venit, folosind Formularul 230."
+  intro="Dacă îndeplinești condițiile legale, poți direcționa către Fata cu 4pezi până la 3,5% din impozitul pe venit deja datorat. Nu este o donație suplimentară din buzunarul tău."
 >
   <section class="mx-auto max-w-3xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <ol class="flex flex-col gap-6">
@@ -44,16 +45,28 @@ const steps = [
     </ol>
 
     <div class="mt-10 rounded-2xl border border-ink/10 bg-paper p-7">
-      <h2 class="font-display text-lg font-bold text-ink">Completează formularul</h2>
-      <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
-        Te redirecționăm către formular230.ro, platforma dedicată acestui proces. Ai nevoie doar de datele tale
-        fiscale de bază.
-      </p>
-      <Button href={redirect230.url} variant="primary" size="lg" class="mt-5" external>
-        Mergi la formular230.ro
-        <Icon name="external" class="h-4 w-4" />
-      </Button>
-      <p class="mt-3 text-xs text-ink-soft">{redirect230.deadlineNote}</p>
+      <h2 class="font-display text-lg font-bold text-ink">Completează Formularul 230</h2>
+      {
+        redirect230.configured ? (
+          <>
+            <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
+              Te redirecționăm către formular230.ro, platforma dedicată acestui proces. Ai nevoie doar de datele tale fiscale de bază.
+            </p>
+            <Button href={redirect230.url} variant="primary" size="lg" class="mt-5" external>
+              Completează Formularul 230
+              <Icon name="external" class="h-4 w-4" />
+            </Button>
+            {redirect230.deadlineNote && <p class="mt-3 text-xs text-ink-soft">{redirect230.deadlineNote}</p>}
+          </>
+        ) : (
+          <>
+            <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
+              Vom publica aici linkul dedicat Asociației Fata cu 4pezi, după confirmarea datelor necesare și activarea formularului.
+            </p>
+            <p class="mt-4 text-sm font-medium text-ink-soft">Formularul dedicat asociației nu este disponibil momentan.</p>
+          </>
+        )
+      }
     </div>
 
     <p class="mt-8 text-sm leading-relaxed text-ink-soft">

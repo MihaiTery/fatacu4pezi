@@ -3,7 +3,7 @@ import Logo from "./Logo.astro";
 import Button from "./Button.astro";
 import SocialBadge from "./SocialBadge.astro";
 import Icon from "./Icon.astro";
-import { nav, redirect230 } from "../data/config";
+import { nav } from "../data/config";
 import { withBase } from "../lib/url";
 
 const currentPath = Astro.url.pathname;
@@ -52,7 +52,7 @@ const isActive = (href: string) => {
       </nav>
 
       <div class="hidden items-center gap-2.5 lg:flex">
-        <Button href={redirect230.url} variant="accent" size="sm" external>
+        <Button href="/redirectioneaza" variant="accent" size="sm">
           Redirecționează 3,5%
         </Button>
         <Button href="/doneaza" variant="primary" size="sm">Donează</Button>
@@ -88,7 +88,7 @@ const isActive = (href: string) => {
       }
       <div class="mt-3 flex flex-col gap-2.5 border-t border-ink/10 pt-4">
         <Button href="/doneaza" variant="primary" size="md">Donează</Button>
-        <Button href={redirect230.url} variant="accent" size="md" external>
+        <Button href="/redirectioneaza" variant="accent" size="md">
           Redirecționează 3,5%
         </Button>
       </div>

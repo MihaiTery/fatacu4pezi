@@ -13,7 +13,7 @@ delegated: Astro (TypeScript, content collections) + Tailwind CSS, static output
 ## Users
 
 - **Donors / 3.5% redirectors** — people who already trust the cause and want to act in under a minute: donate by card or redirect 3.5% of income tax. They need the two actions to be obvious and fast from anywhere on the site.
-- **Prospective adopters** — people looking for a dog or cat to adopt in Bucharest and surrounding areas. They need a real catalogue with enough information (age, sex, medical/sterilization status, temperament, status) to make a responsible decision, and a clear way to start the adoption conversation.
+- **Prospective adopters** — people looking to adopt a rescued animal (any species, though dogs and cats make up the catalogue today) in Bucharest and surrounding areas. They need a real catalogue with enough information (age, sex, medical/sterilization status, temperament, status) to make a responsible decision, and a clear way to start the adoption conversation.
 - **People who found an animal in danger** — need to immediately understand how to report it (Fă o sesizare) and what information to have ready.
 - **Credibility evaluators** — journalists, potential partners (vet clinics), larger donors, or cautious first-time visitors who want to verify the organization is legitimate, organized and transparent before engaging (About, Partners, Transparency).
 - **Existing partners** (mostly veterinary clinics/professionals) — want their collaboration represented with dignity, not as a logo strip.
@@ -29,7 +29,7 @@ Not a shelter with a website bolted on, and not a generic charity template. The 
 ## Operating Context
 
 - Geographic scope: Bucharest and surrounding areas (județul Ilfov / greater Bucharest), not national.
-- Species scope: dogs and cats only.
+- Species scope: all species, not dogs and cats only — the association rescues any animal in need. The catalogue's content-collection schema accepts any species as free text (see `src/content.config.ts`); every animal published so far happens to be a dog or a cat. For species that cannot legally be rehomed as pets, the `adoptable` field is set to `false` so the profile talks about care/recovery instead of promising adoption.
 - No CMS/admin: the dev team edits content collection files directly (animals, blog posts, partners are structured content, not hardcoded markup).
 - No backend exists or is planned at this stage: "Fă o sesizare" opens a mailto flow (no submission backend); adoption CTA leads to a placeholder contact flow; donation is UI + isolated payment-provider placeholder, no live transactions.
 - Future integrations arrive later without a redesign: card payment provider, https://formular230.ro/ for 3.5% redirection, a real report-an-animal email address, and a Cloudflare-based shop.
@@ -63,7 +63,7 @@ Not a shelter with a website bolted on, and not a generic charity template. The 
 2. **Two speeds of commitment, kept distinct.** Donate/redirect-3.5% is a fast, low-friction, always-reachable action; adopt is a deliberate, information-heavy journey. Don't force them into identical visual treatment or identical prominence.
 3. **Competence carries the emotional weight, not melodrama.** Trust comes from clarity, organization, and (eventually) real photography — not decorative animal motifs, guilt framing, or generic shelter-template visual clichés.
 4. **Replaceability by design.** Every placeholder (animals, articles, partners, contact/legal facts, external links) lives in structured content/config so the org's own team can swap it in without touching layout code.
-5. **Bucharest-area, dogs-and-cats specificity stays visible.** The site should never read as a generic national or all-species charity.
+5. **Bucharest-area specificity stays visible.** The site should never read as a generic national charity — it rescues animals of any species, but always within Bucharest and Ilfov.
 
 ## Accessibility & Inclusion
 

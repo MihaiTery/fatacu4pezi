@@ -5,16 +5,20 @@ import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title: string;
+  // Full SEO <title> — see Layout.astro. `title` itself keeps driving the H1
+  // below regardless of whether this is set.
+  seoTitle?: string;
   description: string;
   image?: string;
   intro?: string;
   noindex?: boolean;
+  ogType?: "website" | "article";
 }
 
-const { title, description, image, intro, noindex } = Astro.props;
+const { title, seoTitle, description, image, intro, noindex, ogType } = Astro.props;
 ---
 
-<Layout title={title} description={description} image={image} noindex={noindex}>
+<Layout title={title} seoTitle={seoTitle} description={description} image={image} noindex={noindex} ogType={ogType}>
   <div class="flex min-h-screen flex-col">
     <SiteHeader />
     <main id="main" class="flex-1">

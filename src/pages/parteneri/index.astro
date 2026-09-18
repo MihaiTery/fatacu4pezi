@@ -4,7 +4,7 @@ import PartnerCard from "../../components/PartnerCard.astro";
 import Button from "../../components/Button.astro";
 import Icon from "../../components/Icon.astro";
 import { getCollection } from "astro:content";
-import { contact } from "../../data/config";
+import { contact, isDemoContent } from "../../data/config";
 
 const partners = (await getCollection("partners")).sort(
   (a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0)
@@ -12,11 +12,21 @@ const partners = (await getCollection("partners")).sort(
 ---
 
 <PageLayout
-  title="Parteneri"
-  description="Clinicile veterinare, furnizorii și organizațiile care fac posibilă, alături de Fata cu 4pezi, salvarea și tratarea animalelor din București și Ilfov."
-  intro="Fiecare intervenție reușită are, aproape mereu, un partener în spate — un cabinet veterinar, un furnizor, un voluntar de foster. Iată rețeaua noastră."
+  title="Partenerii noștri"
+  seoTitle="Parteneri pentru salvarea animalelor | Fata cu 4pezi"
+  description="Descoperă partenerii Asociației Fata cu 4pezi și modul în care colaborările cu specialiști și organizații pot sprijini salvarea și îngrijirea animalelor."
+  intro="Salvarea și îngrijirea animalelor presupun colaborare. Medicii veterinari, organizațiile, companiile și oamenii care aleg să se implice pot contribui la găsirea unor soluții pentru fiecare caz."
+  noindex={isDemoContent}
 >
   <section class="mx-auto max-w-4xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
+    {
+      isDemoContent && partners.length > 0 && (
+        <p class="-mt-2 mb-6 text-xs text-ink-soft">
+          Partenerii prezentați momentan sunt exemple demonstrative. Vom publica aici colaborările confirmate ale asociației.
+        </p>
+      )
+    }
+
     <div class="flex flex-col gap-5">
       {
         partners.map((partner, i) => (
@@ -30,13 +40,19 @@ const partners = (await getCollection("partners")).sort(
     <div class="card-lift mt-14 rounded-2xl border border-ink/10 bg-paper p-7" data-reveal>
       <h2 class="font-display text-xl font-bold text-ink">Vrei să devii partener?</h2>
       <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
-        Colaborăm mai ales cu clinici și cabinete veterinare, dar suntem deschiși oricărei forme de sprijin constant —
-        materiale, logistică, găzduire temporară sau expertiză. Scrie-ne și povestește-ne cum ai putea contribui.
+        Dacă reprezinți o clinică veterinară, o companie sau o organizație și vrei să susții salvarea animalelor, ne-ar plăcea să discutăm.
+        Sprijinul poate însemna servicii veterinare, materiale, logistică, găzduire temporară sau alte resurse.
       </p>
-      <Button href={`mailto:${contact.email}?subject=${encodeURIComponent("Propunere de parteneriat")}`} variant="outline" size="sm" class="mt-4">
-        Contactează-ne
-        <Icon name="arrow-right" class="h-4 w-4" />
-      </Button>
+      {
+        contact.emailConfigured ? (
+          <Button href={`mailto:${contact.email}?subject=${encodeURIComponent("Propunere de parteneriat")}`} variant="outline" size="sm" class="mt-4">
+            Propune un parteneriat
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </Button>
+        ) : (
+          <p class="mt-4 text-sm text-ink-soft">Contactul pentru parteneriate va fi disponibil în curând.</p>
+        )
+      }
     </div>
   </section>
 </PageLayout>
