@@ -6,15 +6,16 @@
 // prefers-reduced-motion skips the stagger and renders already-lit.
 const stops = [
   { label: "Sesizare", text: "Primim informații despre un animal aflat în dificultate și încercăm să înțelegem situația, locația și gradul de urgență." },
-  { label: "Evaluare și salvare", text: "Evaluăm posibilitățile de intervenție și căutăm cea mai sigură soluție pentru animal și pentru persoanele implicate." },
-  { label: "Îngrijire", text: "În funcție de nevoi, animalul poate avea nevoie de tratament veterinar, hrană, adăpost sau alte forme de sprijin." },
-  { label: "Recuperare", text: "Urmărim ca animalul să primească îngrijirea necesară și să fie pregătit pentru etapa următoare, în ritmul potrivit situației sale." },
-  { label: "Un viitor potrivit", text: "Căutăm o familie adoptivă responsabilă atunci când adopția este posibilă. Pentru cazurile speciale, identificăm alte soluții adecvate și legale." },
+  { label: "Preluare", text: "Facem legătura cu persoana care a găsit animalul și, în limita resurselor disponibile, coordonăm transportul către un cabinet veterinar partener." },
+  { label: "Sterilizare", text: "Susținem sterilizarea animalului, atunci când este indicată din punct de vedere medical, pentru a preveni alte cazuri similare." },
+  { label: "Îngrijire", text: "În funcție de nevoi, animalul poate primi tratament veterinar, hrană sau alte forme de sprijin, prin rețeaua noastră de parteneri." },
+  { label: "Foster", text: "Căutăm o soluție de găzduire temporară printre voluntarii foster, până este identificată o soluție permanentă." },
+  { label: "Adopție", text: "Căutăm o familie adoptivă responsabilă. Pentru cazurile speciale, identificăm alte soluții adecvate și legale." },
 ];
 ---
 
 <div class="route-journey" data-route-journey>
-  <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
+  <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-6 lg:gap-4">
     {
       stops.map((stop, i) => (
         <li class="route-stop relative flex flex-col gap-3 lg:pt-10" style={`--i:${i}`}>

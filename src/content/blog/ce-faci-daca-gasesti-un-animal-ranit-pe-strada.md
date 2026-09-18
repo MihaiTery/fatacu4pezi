@@ -46,7 +46,7 @@ Pentru animalele sălbatice, poate fi necesară intervenția unui specialist sau
 
 ## 5. Trimite o sesizare cât mai clară
 
-Dacă animalul se află în București sau Ilfov, poți folosi pagina noastră de sesizări pentru a comunica informațiile disponibile.
+Indiferent de zona din România în care te afli, poți folosi pagina noastră de sesizări pentru a comunica informațiile disponibile.
 
 Include locația, ce ai observat, eventualele fotografii și o modalitate prin care poți fi contactat.
 

@@ -3,25 +3,17 @@ import Layout from "../layouts/Layout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Button from "../components/Button.astro";
-import AnimalCard from "../components/AnimalCard.astro";
 import Icon from "../components/Icon.astro";
 import HeroChase from "../components/HeroChase.astro";
-import { getCollection } from "astro:content";
-import { site, isDemoContent } from "../data/config";
+import { site } from "../data/config";
 
-const allAnimals = await getCollection("animals");
-const featured = allAnimals
-  .filter((a) => a.data.status === "disponibil")
-  .sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0))
-  .slice(0, 3);
-
-const stops = ["Sesizare", "Salvare", "Îngrijire", "Adopție"];
+const stops = ["Sesizare", "Preluare", "Sterilizare", "Îngrijire", "Foster", "Adopție"];
 ---
 
 <Layout
   title={site.name}
-  seoTitle="Salvare și adopție animale în București și Ilfov | Fata cu 4pezi"
-  description="Fata cu 4pezi salvează animale de toate speciile din București și Ilfov. Descoperă animalele pentru adopție și află cum poți ajuta prin donații sau voluntariat."
+  seoTitle="Salvare, tratament veterinar și sterilizare animale de pe stradă | Fata cu 4pezi"
+  description="Fata cu 4pezi intervine, în limita resurselor disponibile, pentru salvarea, tratamentul veterinar, sterilizarea, găsirea unui foster și adopția animalelor de pe străzi, pe tot teritoriul României."
 >
   <div class="flex min-h-screen flex-col">
     <SiteHeader />
@@ -31,10 +23,14 @@ const stops = ["Sesizare", "Salvare", "Îngrijire", "Adopție"];
       <section class="mx-auto grid max-w-7xl gap-10 px-4 pb-16 pt-14 sm:px-6 sm:pt-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-6 lg:px-8">
         <div>
           <h1 class="font-black text-[2.6rem] leading-[1.08] text-ink sm:text-6xl">
-            Salvăm animale. Le oferim șansa unui nou început.
+            Pentru animalele de pe străzi, fiecare secundă contează!
           </h1>
           <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
-            În București și Ilfov, Fata cu 4pezi salvează animale abandonate sau aflate în pericol, indiferent de specie. Le oferim îngrijire și căutăm pentru ele soluții de adopție responsabilă.
+            Fata cu 4pezi intervine, în limita resurselor disponibile, pentru salvarea, tratamentul veterinar, sterilizarea, găsirea unui foster și adopția animalelor de pe străzi.
+          </p>
+          <p class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-soft">
+            <Icon name="map-pin" class="h-4 w-4 text-ink/50" aria-hidden="true" />
+            România
           </p>
 
           <div
@@ -58,69 +54,11 @@ const stops = ["Sesizare", "Salvare", "Îngrijire", "Adopție"];
 
           <div class="mt-10 flex flex-wrap items-center gap-3">
             <Button href="/doneaza" variant="primary" size="lg">Donează</Button>
-            <Button href="/adopta" variant="dark" size="lg">Adoptă un animal</Button>
             <Button href="/redirectioneaza" variant="outline" size="lg">Redirecționează 3,5%</Button>
           </div>
         </div>
 
         <HeroChase />
-      </section>
-
-      <!-- Featured animals -->
-      <section class="alt-band border-y border-ink/10 py-16">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
-            <div>
-              <h2 class="font-display text-2xl font-bold text-ink sm:text-3xl">Ei își caută o familie. Poate chiar pe tine.</h2>
-              {
-                isDemoContent && (
-                  <p class="mt-1.5 text-xs text-ink-soft">
-                    Profiluri demonstrative, deocamdată — vor fi înlocuite cu animalele reale aflate în grija asociației.
-                  </p>
-                )
-              }
-            </div>
-            <Button href="/adopta" variant="ghost">
-              Vezi animalele pentru adopție
-              <Icon name="arrow-right" class="h-4 w-4" />
-            </Button>
-          </div>
-          <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {
-              featured.map((animal, i) => (
-                <div data-reveal style={`--reveal-delay: ${i * 100}`}>
-                  <AnimalCard animal={animal} />
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      <!-- Closing band: urgent report + credibility -->
-      <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div class="grid gap-6 sm:grid-cols-2">
-          <div class="card-lift rounded-2xl border border-ink/10 bg-paper p-7" data-reveal>
-            <h2 class="font-display text-xl font-bold text-ink">Ai găsit un animal în pericol?</h2>
-            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-              Spune-ne unde se află și ce ai observat. Informațiile tale ne ajută să înțelegem situația și să evaluăm cum putem ajuta.
-            </p>
-            <Button href="/fa-o-sesizare" variant="outline" size="sm" class="mt-4">
-              Semnalează un animal
-              <Icon name="arrow-right" class="h-4 w-4" />
-            </Button>
-          </div>
-          <div class="card-lift rounded-2xl border border-ink/10 bg-paper p-7" data-reveal style="--reveal-delay: 100">
-            <h2 class="font-display text-xl font-bold text-ink">Cunoaște asociația din spatele salvărilor.</h2>
-            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-              Află cine suntem, cum ajutăm animalele și ce rol au voluntarii și partenerii în activitatea noastră.
-            </p>
-            <Button href="/despre" variant="outline" size="sm" class="mt-4">
-              Despre Fata cu 4pezi
-              <Icon name="arrow-right" class="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
       </section>
     </main>
 

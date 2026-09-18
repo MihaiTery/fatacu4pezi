@@ -6,10 +6,10 @@ export const site = {
   name: "Fata cu 4pezi",
   legalName: "Asociația Fata cu 4pezi", // PLACEHOLDER — confirm exact legal name
   shortDescription:
-    "Fata cu 4pezi salvează animale de toate speciile din București și Ilfov și caută pentru ele soluții de îngrijire și adopție responsabilă.",
+    "Fata cu 4pezi intervine, în limita resurselor disponibile, pentru salvarea, tratamentul veterinar, sterilizarea, găsirea unui foster și adopția animalelor de pe străzi, pe tot teritoriul României.",
   url: "https://fatacu4pezi.ro", // PLACEHOLDER — real domain
   locale: "ro-RO",
-  area: "București și Ilfov",
+  area: "România",
 };
 
 // The animal, partner and blog data currently in the repository is
@@ -73,6 +73,13 @@ export const redirect230 = {
 
 export const legalLinks = {
   privacyPolicy: "/politica-de-confidentialitate",
+};
+
+// Newsletter: no email service provider (Mailchimp, Brevo, etc.) is wired up
+// yet, so the signup box in the footer falls back to a mailto request until
+// one is chosen — nothing else about the form needs to change once it is.
+export const newsletter = {
+  provider: null as null | { name: string; formAction: string },
 };
 
 export const nav = [

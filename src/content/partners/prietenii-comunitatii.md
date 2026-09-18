@@ -8,4 +8,4 @@ since: "Partener din 2020"
 featured: false
 ---
 
-Colaborarea cu Fundația Prietenii Comunității ne extinde raza de acțiune dincolo de București, acolo unde resursele locale pentru animale comunitare sunt și mai limitate.
+Colaborarea cu Fundația Prietenii Comunității ne ajută să intervenim și în Ilfov, acolo unde resursele locale pentru animale comunitare sunt și mai limitate.

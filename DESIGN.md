@@ -1,6 +1,6 @@
 ---
 name: Fata cu 4pezi
-description: A Bucharest animal-rescue NGO site organized as a legible rescue route — line, stops, and roundels doing the work decoration would otherwise do.
+description: A nationwide Romanian animal-rescue NGO site organized as a legible rescue route — line, stops, and roundels doing the work decoration would otherwise do.
 colors:
   green: "#324f40"
   green-dark: "#24392e"
@@ -118,7 +118,7 @@ components:
 
 **Creative North Star: "The Route Line"**
 
-The site is built as a rescue route made visible: a thin dashed line and small numbered roundels carry the organization's real mechanism (stradă → prim ajutor → tratament → sterilizare → familie nouă) into every layer of the interface, from the hero's stop chips to the adoption-status pill to the `/despre` journey diagram. It borrows the *grammar* of Bucharest transit and wayfinding signage — line, stop, roundel, unambiguous state — without ever drawing a bus, tram, or transit glyph. The effect is meant to read as an organized, multi-stage operation, not a one-off act of sympathy: structure carries the emotional weight instead of melodrama.
+The site is built as a rescue route made visible: a thin dashed line and small numbered roundels carry the organization's real mechanism (sesizare → preluare → sterilizare → îngrijire → foster → adopție) into every layer of the interface, from the hero's stop chips to the adoption-status pill to the `/despre` journey diagram. It borrows the *grammar* of transit and wayfinding signage — line, stop, roundel, unambiguous state — without ever drawing a bus, tram, or transit glyph. The effect is meant to read as an organized, multi-stage operation, not a one-off act of sympathy: structure carries the emotional weight instead of melodrama.
 
 The palette commits rather than hedges: cream is the one ground most of the site sits on, ink is the one line/text color, and blush pink is now the single saturated, surface-owning color — used deliberately large (header, footer) rather than as a diluted accent, a client-directed swap from an earlier all-green surface. Deep green and sky blue are the button/accent pair on top of that pink (and on cream) — green for the faster-commitment action, blue for the lighter one — never a section or card fill themselves. Jost's geometric, wide-tracked, Black-weight (800/900) display letterforms stand in for the brand's unlicensed Futura-Black Bold; Poppins, the brand's own second face, carries everything read at length. Confirmed visual rejections, still standing everywhere except the two named exceptions below: no hearts, no blobs, no literal transit iconography, no hard offset shadows, no kicker/eyebrow labels, no glyph icon libraries, no gradient text, no glass/blur decoration. The exceptions: the brief originally avoided decorative animal motifs sitewide, but the client later directed a literal running-dog illustration for the homepage hero specifically, and separately supplied a new favicon mark whose four squiggles read as paw-adjacent — both are confined to their one mark/texture and are not license to add animal or paw decoration elsewhere.
 

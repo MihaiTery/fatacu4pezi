@@ -27,7 +27,7 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div class="bg-mark bg-pink text-ink">
+  <div class="bg-pink text-ink">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
       <a href={withBase("/")} class="flex shrink-0 items-center gap-2" aria-label="Fata cu 4pezi — acasă">
         <span class="flex aspect-square h-[5.6rem] shrink-0 items-center justify-center rounded-full border border-ink/10 bg-cream p-2.5 sm:h-[6.4rem]">
@@ -52,6 +52,7 @@ const isActive = (href: string) => {
       </nav>
 
       <div class="hidden items-center gap-2.5 lg:flex">
+        <Button href="#newsletter" variant="outline" size="sm">Newsletter</Button>
         <Button href="/redirectioneaza" variant="accent" size="sm">
           Redirecționează 3,5%
         </Button>
@@ -71,7 +72,7 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-ink/10 bg-mark bg-pink lg:hidden" data-menu-panel>
+  <div id="mobile-menu" class="hidden border-t border-ink/10 bg-pink lg:hidden" data-menu-panel>
     <nav class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Navigație mobilă">
       {
         nav.map((item) => (
@@ -91,6 +92,7 @@ const isActive = (href: string) => {
         <Button href="/redirectioneaza" variant="accent" size="md">
           Redirecționează 3,5%
         </Button>
+        <Button href="#newsletter" variant="outline" size="md">Newsletter</Button>
       </div>
     </nav>
   </div>
@@ -112,5 +114,15 @@ const isActive = (href: string) => {
       panel?.classList.add("hidden");
       toggle.focus();
     }
+  });
+
+  // A link to another page reloads and closes the panel implicitly. An
+  // in-page anchor (the newsletter box) doesn't, so every panel link gets
+  // an explicit close on click.
+  panel?.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      toggle?.setAttribute("aria-expanded", "false");
+      panel.classList.add("hidden");
+    });
   });
 </script>
