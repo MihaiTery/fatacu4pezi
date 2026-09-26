@@ -1,14 +1,16 @@
 ---
-// Social links as small circular monogram badges — the same route-stop
-// roundel language used for status pills and placeholder art, instead of
-// redrawn brand logos.
+// Social links as small circular badges carrying each network's
+// recognizable mark, redrawn as single-color line art in the same 24×24,
+// 1.75-stroke, round-cap language as Icon.astro — so they read as Instagram
+// / Facebook / TikTok / YouTube at a glance, but in ink like every other
+// icon on the site, never in the networks' own brand colors.
 import { social } from "../data/config";
 
 const links = [
-  { key: "instagram", label: "Instagram", mono: "IG", href: social.instagram },
-  { key: "facebook", label: "Facebook", mono: "FB", href: social.facebook },
-  { key: "tiktok", label: "TikTok", mono: "TT", href: social.tiktok },
-  { key: "youtube", label: "YouTube", mono: "YT", href: social.youtube },
+  { key: "instagram", label: "Instagram", href: social.instagram },
+  { key: "facebook", label: "Facebook", href: social.facebook },
+  { key: "tiktok", label: "TikTok", href: social.tiktok },
+  { key: "youtube", label: "YouTube", href: social.youtube },
 ] as const;
 
 interface Props {
@@ -17,11 +19,12 @@ interface Props {
   tone?: "ink" | "cream";
 }
 const { class: className, size = "sm", tone = "ink" } = Astro.props;
-const dims = size === "sm" ? "h-6 w-6 text-[0.6rem]" : "h-9 w-9 text-xs";
+const dims = size === "sm" ? "h-6 w-6" : "h-9 w-9";
+const iconDims = size === "sm" ? "h-3.5 w-3.5" : "h-[1.125rem] w-[1.125rem]";
 const toneClasses =
   tone === "ink"
-    ? "border-ink/25 text-ink/70 hover:border-ink hover:text-ink"
-    : "border-cream/30 text-cream/75 hover:border-cream hover:text-cream";
+    ? "border-ink/25 bg-cream text-ink/70 hover:border-ink hover:bg-ink hover:text-cream"
+    : "border-cream/30 text-cream/75 hover:border-cream hover:bg-cream hover:text-ink";
 ---
 
 <ul class={`flex items-center gap-2 ${className ?? ""}`}>
@@ -33,9 +36,41 @@ const toneClasses =
           target="_blank"
           rel="noopener noreferrer"
           aria-label={link.label}
-          class={`flex ${dims} items-center justify-center rounded-full border font-display font-semibold transition-colors ${toneClasses}`}
+          class={`flex ${dims} items-center justify-center rounded-full border transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 ${toneClasses}`}
         >
-          {link.mono}
+          <svg
+            viewBox="0 0 24 24"
+            class={iconDims}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            {link.key === "instagram" && (
+              <>
+                <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                <circle cx="12" cy="12" r="3.9" />
+                <circle cx="17.1" cy="6.9" r="0.9" fill="currentColor" stroke="none" />
+              </>
+            )}
+            {link.key === "facebook" && (
+              <>
+                <path d="M15.5 3.5h-2.2a3.3 3.3 0 0 0-3.3 3.3v13.7" />
+                <line x1="7" y1="10.5" x2="14.5" y2="10.5" />
+              </>
+            )}
+            {link.key === "tiktok" && (
+              <path d="M13 3.5v11.8a3.7 3.7 0 1 1-3.7-3.7M13 3.5c.4 2.8 2.5 4.9 5.5 5.1" />
+            )}
+            {link.key === "youtube" && (
+              <>
+                <rect x="2.5" y="5.5" width="19" height="13" rx="4" />
+                <path d="m10.3 9.3 4.6 2.7-4.6 2.7Z" fill="currentColor" />
+              </>
+            )}
+          </svg>
         </a>
       </li>
     ))
