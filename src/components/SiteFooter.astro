@@ -12,7 +12,11 @@ const year = new Date().getFullYear();
   <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
     <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
       <div class="flex flex-col gap-4">
-        <Logo variant="maro" class="h-48 w-auto self-start" />
+        <!-- Same cream roundel as the header badge, scaled up, so the logo
+             sits on a clean ground instead of over the animal pattern. -->
+        <span class="flex aspect-square h-52 shrink-0 items-center justify-center self-start rounded-full border border-ink/10 bg-cream p-5">
+          <Logo variant="maro" class="h-full w-full -translate-y-[10%] object-contain" />
+        </span>
         <p class="max-w-xs text-sm leading-relaxed text-ink/80">
           {site.shortDescription}
         </p>
