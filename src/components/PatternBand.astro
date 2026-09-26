@@ -3,19 +3,19 @@
 // used as a breather between sections of a long page. Purely decorative —
 // hidden from assistive tech, carries no content. Full-strength ink lines on
 // cream (the designer's cream/maro colorway), so it reads as illustration,
-// never as a texture behind text. Repeats horizontally only, so the strip
-// shows one clean row of the tile (bag cat, yarn, turtle, hamster, lying
-// cat) instead of half-cut animals wrapping in from the row above.
+// never as a texture behind text. The tile is centered vertically in the
+// strip, so the band reads as a window cut out of a larger pattern:
+// animals are cropped at both the top and bottom edges on purpose.
 interface Props {
   class?: string;
   offset?: string;
 }
 
-const { class: className, offset = "-40px 12px" } = Astro.props;
+const { class: className, offset = "-40px center" } = Astro.props;
 ---
 
 <div
-  class:list={["bg-animals h-28 bg-cream [--animals-ink:var(--color-ink)] [--animals-size:260px] [--animals-repeat:repeat-x]", className]}
+  class:list={["bg-animals h-28 bg-cream [--animals-ink:var(--color-ink)] [--animals-size:260px]", className]}
   style={`--animals-offset: ${offset}`}
   aria-hidden="true"
 >
