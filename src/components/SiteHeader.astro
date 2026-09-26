@@ -2,7 +2,6 @@
 import Logo from "./Logo.astro";
 import Button from "./Button.astro";
 import SocialBadge from "./SocialBadge.astro";
-import Icon from "./Icon.astro";
 import { nav } from "../data/config";
 import { withBase } from "../lib/url";
 
@@ -59,15 +58,26 @@ const isActive = (href: string) => {
         <Button href="/doneaza" variant="primary" size="sm">Donează</Button>
       </div>
 
+      <!-- Mobile menu toggle: a labelled cream pill (same register as the
+           other header buttons) instead of a bare icon. The three lines are
+           deliberately uneven, like the hand-drawn line art elsewhere, and
+           fold into an X while the panel is open; the pill inverts to ink
+           so the open state reads at a glance. State is driven purely by
+           aria-expanded, which the script below already toggles. -->
       <button
         type="button"
-        class="flex items-center justify-center rounded-full border border-ink/25 p-2.5 text-ink lg:hidden"
+        class="group inline-flex min-h-11 min-w-28 items-center justify-between gap-2.5 rounded-full border border-ink/20 bg-cream py-2 pl-4 pr-3.5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-3 aria-expanded:border-ink aria-expanded:bg-ink aria-expanded:text-cream lg:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
         data-menu-toggle
       >
-        <span class="sr-only">Deschide meniul</span>
-        <Icon name="menu" class="h-5 w-5" />
+        <span class="group-aria-expanded:hidden">Meniu</span>
+        <span class="hidden group-aria-expanded:inline">Închide</span>
+        <span class="relative block h-3.5 w-[18px]" aria-hidden="true">
+          <span class="absolute right-0 top-0 h-[2px] w-[18px] rounded-full bg-current transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-aria-expanded:translate-y-[6px] group-aria-expanded:rotate-45 motion-reduce:transition-none"></span>
+          <span class="absolute right-0 top-[6px] h-[2px] w-3 rounded-full bg-current transition-[opacity,transform] duration-200 group-aria-expanded:scale-x-0 group-aria-expanded:opacity-0 motion-reduce:transition-none"></span>
+          <span class="absolute right-0 top-[12px] h-[2px] w-[14px] rounded-full bg-current transition-[transform,width] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-aria-expanded:w-[18px] group-aria-expanded:-translate-y-[6px] group-aria-expanded:-rotate-45 motion-reduce:transition-none"></span>
+        </span>
       </button>
     </div>
   </div>
