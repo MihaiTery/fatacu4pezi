@@ -1,0 +1,57 @@
+---
+// A small thank-you for anyone who supports the association: the client's
+// illustrated animal pattern as full-size phone wallpapers (1080×1920, the
+// artboards' native format). Plain download links to static files in
+// public/wallpapers — no backend, no email gate. Linked from the newsletter
+// confirmation note as /doneaza#wallpapere.
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+import { withBase } from "../lib/url";
+import rozMaro from "../assets/patterns/wallpaper-roz-maro-thumb.jpg";
+import cremVerde from "../assets/patterns/wallpaper-crem-verde-thumb.jpg";
+import albastruMaro from "../assets/patterns/wallpaper-albastru-maro-thumb.jpg";
+import cremMaro from "../assets/patterns/wallpaper-crem-maro-thumb.jpg";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const wallpapers = [
+  { slug: "roz-maro", label: "Roz și maro", thumb: rozMaro },
+  { slug: "crem-verde", label: "Crem și verde", thumb: cremVerde },
+  { slug: "albastru-maro", label: "Albastru și maro", thumb: albastruMaro },
+  { slug: "crem-maro", label: "Crem și maro", thumb: cremMaro },
+];
+---
+
+<div id="wallpapere" class:list={["scroll-mt-24", className]}>
+  <h2 class="font-display text-xl font-bold text-ink">Un mic mulțumesc: wallpapere pentru telefon</h2>
+  <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
+    Pisicile, câinele, hamsterul și țestoasa din desenele asociației, pregătite pentru ecranul telefonului. Sunt gratuite, pentru
+    oricine ne susține sau pur și simplu iubește animalele.
+  </p>
+  <ul class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+    {
+      wallpapers.map((w) => (
+        <li>
+          <a
+            href={withBase(`/wallpapers/fata-cu-4pezi-wallpaper-${w.slug}.jpg`)}
+            download
+            class="group flex flex-col gap-2.5 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            <span class="card-lift block overflow-hidden rounded-2xl border border-ink/10">
+              <Image src={w.thumb} alt="" width={216} height={384} class="aspect-[9/16] h-auto w-full object-cover" />
+            </span>
+            <span class="flex items-center justify-between gap-2 text-sm font-medium text-ink-soft group-hover:text-ink">
+              {w.label}
+              <Icon name="download" class="h-4 w-4 shrink-0" />
+            </span>
+            <span class="sr-only">— descarcă wallpaperul (JPG, 1080×1920)</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

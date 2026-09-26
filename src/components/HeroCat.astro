@@ -38,7 +38,9 @@ const messages: Message[] = [
 
 <div class="hero-cat hidden lg:flex lg:flex-col lg:items-center">
   <button type="button" class="hero-cat-trigger" aria-label="Arată următorul mesaj despre animale" data-hero-cat>
-    <svg viewBox="0 0 360 330" class="hero-cat-face" aria-hidden="true">
+    <span class="hero-cat-stage">
+      <span class="hero-cat-disc bg-animals" aria-hidden="true"></span>
+      <svg viewBox="0 0 360 330" class="hero-cat-face" aria-hidden="true">
       <ellipse class="hero-cat-shadow" cx="180" cy="292" rx="94" ry="13" />
       <path class="hero-cat-tail" d="M254 236c57 2 70-48 40-68-15-10-31 0-26 13 5 14 28 8 26-7" />
       <g class="hero-cat-body">
@@ -64,7 +66,8 @@ const messages: Message[] = [
       </g>
       <path class="hero-cat-spark hero-cat-spark-one" d="M77 150v20m-10-10h20" />
       <path class="hero-cat-spark hero-cat-spark-two" d="M280 109v16m-8-8h16" />
-    </svg>
+      </svg>
+    </span>
 
     <p class="hero-cat-message" aria-live="polite" data-hero-cat-message>
       {messages[0].text}
@@ -91,9 +94,34 @@ const messages: Message[] = [
     border-radius: 1rem;
   }
 
-  .hero-cat-face {
+  .hero-cat-stage {
+    position: relative;
+    display: block;
     width: 100%;
     max-width: 330px;
+  }
+
+  /* The client's animal pattern in its blue/cream tonal colorway, cut to a
+     disc behind the mascot — the one place the pattern touches the home
+     page, and only at lg+ (the whole mascot is hidden below that). */
+  .hero-cat-disc {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    width: 80%;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-blue);
+    --animals-ink: var(--color-paper);
+    --animals-size: 190px;
+    --animals-offset: -20px -30px;
+  }
+
+  .hero-cat-face {
+    position: relative;
+    display: block;
+    width: 100%;
     height: auto;
   }
 

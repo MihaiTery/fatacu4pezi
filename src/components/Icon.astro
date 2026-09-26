@@ -14,6 +14,7 @@ interface Props {
     | "phone"
     | "map-pin"
     | "check"
+    | "download"
     | "circle-dot"
     | "filter"
     | "dog"
@@ -99,6 +100,15 @@ const { name, class: className } = Astro.props;
   name === "check" && (
     <svg viewBox="0 0 24 24" class={className} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <polyline points="4.5 12.5 9.5 17.5 19.5 6.5" />
+    </svg>
+  )
+}
+{
+  name === "download" && (
+    <svg viewBox="0 0 24 24" class={className} fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="12" y1="4" x2="12" y2="15" />
+      <polyline points="7.5 10.5 12 15 16.5 10.5" />
+      <path d="M4.5 16.5v2a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-2" />
     </svg>
   )
 }

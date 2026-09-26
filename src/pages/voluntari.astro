@@ -1,6 +1,7 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import Icon from "../components/Icon.astro";
+import PatternBand from "../components/PatternBand.astro";
 import { contact } from "../data/config";
 
 const roles = [
@@ -37,7 +38,9 @@ const roles = [
   description="Devino voluntar la Fata cu 4pezi, oriunde în România. Poți ajuta prin găzduire temporară (foster), transport, comunicare, evenimente și alte activități."
   intro="Salvarea animalelor are nevoie de oameni cu abilități și disponibilități diferite. Descoperă cum te poți implica și spune-ne ce fel de ajutor ai putea oferi."
 >
-  <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
+  <PatternBand class="mt-8 hidden border-y border-ink/10 sm:block" offset="-170px 12px" />
+
+  <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 sm:pt-14 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_380px]">
       <div>
         <h2 class="font-display text-xl font-bold text-ink">Cum te poți implica</h2>

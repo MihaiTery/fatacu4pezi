@@ -60,14 +60,21 @@ const knownSpecies = new Set(["caine", "pisica"]);
             ))}
           </div>
 
-          <p class="hidden py-16 text-center text-ink-soft" data-empty-state>
-            Momentan nu există animale care să corespundă filtrelor selectate. Încearcă o altă selecție.
-          </p>
+          <div
+            class="bg-animals hidden rounded-2xl border border-ink/10 px-4 py-14 sm:py-20 [--animals-ink:var(--color-green)] [--animals-size:280px]"
+            data-empty-state
+          >
+            <p class="mx-auto max-w-md rounded-2xl border border-ink/10 bg-paper p-6 text-center text-ink-soft">
+              Momentan nu există animale care să corespundă filtrelor selectate. Încearcă o altă selecție.
+            </p>
+          </div>
         </>
       ) : (
-        <p class="py-16 text-center text-ink-soft">
-          Profilurile animalelor pentru adopție vor fi disponibile aici în curând.
-        </p>
+        <div class="bg-animals rounded-2xl border border-ink/10 px-4 py-14 sm:py-20 [--animals-ink:var(--color-green)] [--animals-size:280px]">
+          <p class="mx-auto max-w-md rounded-2xl border border-ink/10 bg-paper p-6 text-center text-ink-soft">
+            Profilurile animalelor pentru adopție vor fi disponibile aici în curând.
+          </p>
+        </div>
       )
     }
   </section>

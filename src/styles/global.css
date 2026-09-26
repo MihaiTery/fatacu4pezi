@@ -32,7 +32,7 @@
    (public/favicon.svg — four small squiggles forming a "4," badge circle
    dropped) — reused wherever a section needs to feel like brand paper
    rather than a flat fill. Every surface it appears on is light now (pink
-   header/footer, paper alt-bands), so a single ink tint covers the whole
+   header, paper alt-bands — the footer uses bg-animals instead), so a single ink tint covers the whole
    site — there is no dark surface left to need a cream-tinted variant.
    Each tile carries two copies of the mark, offset by half a tile on both
    axes, so the repeat reads as a staggered/brick grid rather than a plain
@@ -218,7 +218,7 @@
 
 /* The favicon-mark texture, applied — never as page-wide wallpaper, only to
    the surfaces that are already the "alternate" tone: paper section bands
-   and the pink header/footer. Cream stays the one flat, quiet ground so the
+   and the pink header. Cream stays the one flat, quiet ground so the
    pattern reads as a property of paper and pink, not noise sprinkled
    everywhere. Render size (170px) tightened from an earlier 200px/260px on
    an explicit client request for it "mai des" (denser) — pair any future
@@ -239,4 +239,31 @@
   background-image: var(--pattern-mark-ink);
   background-repeat: repeat;
   background-size: 170px 170px;
+}
+
+/* The client's illustrated animal pattern (cats, dog, hamster, turtle,
+   yarn) — one seamless tile cut from the supplied artboards (`/patterns`)
+   and stored as a white-on-transparent alpha mask, so a single 32KB file
+   serves every colorway: the line color is whatever `--animals-ink` says,
+   the ground is the element's own background. Drawn on a ::before layer
+   behind the element's content (isolation keeps it from escaping), so the
+   element can carry text/cards on top. Never set body text directly on
+   the full-strength variant — put it on a paper card over the pattern.
+   See DESIGN.md → The Illustrated Animal Pattern for where it may appear. */
+@utility bg-animals {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: inherit;
+    background-color: var(--animals-ink, var(--color-ink));
+    mask-image: url("../assets/patterns/animals-tile.webp");
+    mask-repeat: var(--animals-repeat, repeat);
+    mask-size: var(--animals-size, 300px) auto;
+    mask-position: var(--animals-offset, 0 0);
+  }
 }

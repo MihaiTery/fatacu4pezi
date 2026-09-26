@@ -8,7 +8,7 @@ import { withBase } from "../lib/url";
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-mark bg-pink text-ink">
+<footer class="bg-animals bg-pink text-ink [--animals-ink:var(--color-cream)] [--animals-size:340px]">
   <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
     <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
       <div class="flex flex-col gap-4">
@@ -108,7 +108,8 @@ const year = new Date().getFullYear();
             <a href={withBase(legalLinks.privacyPolicy)} class="underline hover:text-ink">politicii de confidențialitate</a>.
           </label>
           <p class="hidden text-xs font-medium text-green" data-newsletter-confirm role="status">
-            Dacă s-a deschis aplicația de e-mail, apasă „Trimite” pentru a confirma abonarea.
+            Dacă s-a deschis aplicația de e-mail, apasă „Trimite” pentru a confirma abonarea. Mulțumim! Între timp,
+            <a href={withBase("/doneaza#wallpapere")} class="underline underline-offset-2 hover:text-green-dark">descarcă un wallpaper</a>.
           </p>
         </form>
       </div>
