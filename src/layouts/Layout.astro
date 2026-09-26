@@ -124,7 +124,10 @@ const ogImageURL = new URL(withBase(image), Astro.site ?? site.url);
           },
           reduceMotionForDonate ? 0 : 450
         );
-      });
+        // Capture phase: runs before a link's own click handler — the mobile
+        // menu's links close (hide) the panel on click, and a hidden link
+        // would hand the confetti a 0×0 rect in the top-left corner.
+      }, true);
     </script>
   </body>
 </html>

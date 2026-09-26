@@ -20,13 +20,37 @@ interface ConfettiOptions {
   colors?: string[];
 }
 
+// Last pointer/touch position, kept as a fallback origin: on mobile the
+// element that triggered the burst can already be hidden by the time we
+// measure it (a link inside the hamburger panel closes the panel on the same
+// tap), and a hidden element reports a 0×0 rect at the top-left corner.
+let lastPointer: { x: number; y: number; time: number } | null = null;
+if (typeof window !== "undefined") {
+  window.addEventListener(
+    "pointerdown",
+    (event) => {
+      lastPointer = { x: event.clientX, y: event.clientY, time: performance.now() };
+    },
+    { capture: true, passive: true },
+  );
+}
+
+function resolveOrigin(origin: Element): { x: number; y: number } {
+  const rect = origin.getBoundingClientRect();
+  if (rect.width > 0 && rect.height > 0) {
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+  }
+  if (lastPointer && performance.now() - lastPointer.time < 1500) {
+    return { x: lastPointer.x, y: lastPointer.y };
+  }
+  return { x: window.innerWidth / 2, y: window.innerHeight * 0.6 };
+}
+
 export function fireConfetti(origin: Element, options: ConfettiOptions = {}): void {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const { particleCount = 26, spread = 70, startVelocity = 420, colors = BRAND_COLORS } = options;
-  const rect = origin.getBoundingClientRect();
-  const originX = rect.left + rect.width / 2;
-  const originY = rect.top + rect.height / 2;
+  const { x: originX, y: originY } = resolveOrigin(origin);
 
   const layer = document.createElement("div");
   layer.style.position = "fixed";

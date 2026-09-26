@@ -165,8 +165,17 @@ const year = new Date().getFullYear();
     const mailto = form.dataset.mailto;
     const subject = encodeURIComponent("Abonare newsletter");
     const body = encodeURIComponent(`Vreau să mă abonez la newsletter cu adresa: ${email}`);
-    window.location.href = `mailto:${mailto}?subject=${subject}&body=${body}`;
+    // Burst first, while the button is still measurable on screen, then hand
+    // off to the mail app — on mobile, opening the mailto link right away can
+    // pull the page out from under the animation before it is placed.
     confirmNote?.classList.remove("hidden");
     if (submitButton) fireConfetti(submitButton);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.setTimeout(
+      () => {
+        window.location.href = `mailto:${mailto}?subject=${subject}&body=${body}`;
+      },
+      reduceMotion ? 0 : 450
+    );
   });
 </script>
