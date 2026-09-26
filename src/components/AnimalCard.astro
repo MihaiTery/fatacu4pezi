@@ -13,10 +13,18 @@ interface Props {
 const { animal } = Astro.props;
 const a = animal.data;
 const sexLabel = a.sex === "mascul" ? "Mascul" : "Femelă";
+// Cards for animals with an Instagram post open that post (new tab) —
+// that's where the association keeps each case's photos, updates and
+// comments; the rest still open their on-site profile.
+const external = Boolean(a.instagram);
+const href = a.instagram ?? withBase(`/adopta/${animal.id}`);
 ---
 
 <a
-  href={withBase(`/adopta/${animal.id}`)}
+  href={href}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+  aria-label={external ? `${a.name} — vezi postarea pe Instagram (se deschide într-o filă nouă)` : undefined}
   class="card-lift group flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-paper transition-colors hover:border-ink/30"
 >
   <div class="relative aspect-[4/3] overflow-hidden">
@@ -42,5 +50,13 @@ const sexLabel = a.sex === "mascul" ? "Mascul" : "Femelă";
         ))
       }
     </ul>
+    {
+      external && (
+        <p class="flex items-center gap-1.5 border-t border-ink/10 pt-3 text-sm font-semibold text-ink/80 group-hover:text-ink">
+          Vezi pe Instagram
+          <Icon name="external" class="h-4 w-4" />
+        </p>
+      )
+    }
   </div>
 </a>

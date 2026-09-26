@@ -2,7 +2,7 @@
 import PageLayout from "../../layouts/PageLayout.astro";
 import AnimalCard from "../../components/AnimalCard.astro";
 import { getCollection } from "astro:content";
-import { isDemoContent } from "../../data/config";
+import { animalsAreDemo } from "../../data/config";
 
 const allAnimals = (await getCollection("animals")).sort((a, b) => {
   // Available first, then in treatment/reserved, adopted last — but nothing is hidden.
@@ -18,11 +18,11 @@ const knownSpecies = new Set(["caine", "pisica"]);
   seoTitle="Animale pentru adopție din toată România | Fata cu 4pezi"
   description="Descoperă animalele pentru adopție de la Fata cu 4pezi. Consultă profilurile, află informații despre nevoile lor și descoperă cum poți adopta responsabil."
   intro="Fiecare animal are o poveste și nevoi diferite. Descoperă animalele aflate în grija noastră și află care dintre ele ar putea fi potrivit pentru familia ta."
-  noindex={isDemoContent}
+  noindex={animalsAreDemo}
 >
   <section class="mx-auto max-w-7xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     {
-      isDemoContent && hasAnimals && (
+      animalsAreDemo && hasAnimals && (
         <p class="-mt-2 mb-6 text-xs text-ink-soft">
           Profiluri demonstrative, deocamdată — vor fi înlocuite cu animalele reale aflate în grija asociației.
         </p>

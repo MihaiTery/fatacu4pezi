@@ -21,6 +21,12 @@ export const site = {
 // that reads it will stop applying noindex automatically.
 export const isDemoContent = true;
 
+// The adoption catalogue graduated first: its entries are now real animals
+// taken from the association's Instagram posts (September 2026), so the
+// adopta pages no longer carry the demo notice or noindex. Partners and
+// blog posts are still demonstrative and keep following isDemoContent.
+export const animalsAreDemo = false;
+
 export const contact = {
   email: "contact@fatacu4pezi.ro", // PLACEHOLDER
   emailConfigured: false, // set true once this is a real, monitored inbox

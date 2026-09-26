@@ -35,6 +35,10 @@ const animals = defineCollection({
       photoAlt: z.string(),
       arrivedLabel: z.string(), // e.g. "În grija noastră din februarie 2025"
       featured: z.boolean().default(false),
+      // The animal's own Instagram post (the association shares every case
+      // there). When set, the catalogue card opens this post in a new tab
+      // instead of the on-site profile, and the profile page links to it.
+      instagram: z.string().url().optional(),
     }),
 });
 

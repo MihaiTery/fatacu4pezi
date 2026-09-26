@@ -7,7 +7,7 @@ import StatusPill from "../../components/StatusPill.astro";
 import Icon from "../../components/Icon.astro";
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import { contact, isDemoContent } from "../../data/config";
+import { contact, animalsAreDemo } from "../../data/config";
 import { withBase } from "../../lib/url";
 import { speciesLabel as getSpeciesLabel, agreementSuffix } from "../../lib/animals";
 
@@ -76,7 +76,7 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
   title={`${a.name} — ${speciesLabelText.toLowerCase()} pentru adopție`}
   seoTitle={seoTitleByStatus}
   description={descriptionByStatus}
-  noindex={isDemoContent}
+  noindex={animalsAreDemo}
 >
   <div class="flex min-h-screen flex-col">
     <!-- Header + main share this wrapper (not the footer) so the sticky
@@ -164,7 +164,7 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
           ) : canAdopt ? (
             contact.emailConfigured ? (
               <Button href={mailtoHref} variant="primary" size="lg" class="w-full">
-                Întreabă despre adopția lui {a.name}
+                Întreabă despre adopție
               </Button>
             ) : (
               <div class="rounded-2xl border border-ink/10 bg-paper p-5 text-sm text-ink-soft">
@@ -182,6 +182,15 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
                 Vezi alte animale disponibile
               </Button>
             </div>
+          )
+        }
+
+        {
+          a.instagram && (
+            <Button href={a.instagram} variant="outline" size="md" class="w-full" external>
+              Vezi postarea pe Instagram
+              <Icon name="external" class="h-4 w-4" />
+            </Button>
           )
         }
       </aside>
