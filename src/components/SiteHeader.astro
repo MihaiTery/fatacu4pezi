@@ -2,9 +2,12 @@
 import Logo from "./Logo.astro";
 import Button from "./Button.astro";
 import SocialBadge from "./SocialBadge.astro";
-import { nav } from "../data/config";
+import { nav, social } from "../data/config";
 import { withBase } from "../lib/url";
 
+// The social row exists only to hold the social badges — skip it entirely
+// while no official profile URL is confirmed.
+const hasSocial = social.some((s) => s.url);
 const currentPath = Astro.url.pathname;
 // Astro.url.pathname includes the deploy base ("/fatacu4pezi/adopta"), so
 // the comparison target needs the same prefix — comparing against the bare
@@ -20,11 +23,15 @@ const isActive = (href: string) => {
        floating above the solid nav bar rather than one undifferentiated
        pink block. Whatever the page shows behind it (almost always cream)
        shows through. -->
-  <div class="border-b border-ink/10">
-    <div class="mx-auto flex max-w-7xl items-center justify-end px-4 py-1.5 sm:px-6 lg:px-8">
-      <SocialBadge tone="ink" />
-    </div>
-  </div>
+  {
+    hasSocial && (
+      <div class="border-b border-ink/10">
+        <div class="mx-auto flex max-w-7xl items-center justify-end px-4 py-1.5 sm:px-6 lg:px-8">
+          <SocialBadge tone="ink" />
+        </div>
+      </div>
+    )
+  }
 
   <div class="bg-pink text-ink">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">

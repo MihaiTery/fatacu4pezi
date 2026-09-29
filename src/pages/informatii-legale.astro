@@ -1,0 +1,88 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site, legal, contact, bank, legalLinks } from "../data/config";
+import { withBase } from "../lib/url";
+
+---
+
+<LegalLayout
+  title="Informații legale"
+  seoTitle="Informații legale | Fata cu 4pezi"
+  description="Datele de identificare ale Asociației Fata cu 4pezi, operatorul acestui site: denumire, CUI, sediu social, cod CAEN și date bancare pentru donații."
+  intro={`Acesta este site-ul oficial de prezentare al Asociației Fata cu 4pezi (${site.domains.join(" / ")}). Mai jos găsești datele de identificare ale asociației, care operează site-ul.`}
+  showUpdated={false}
+>
+  <h2>Operatorul site-ului</h2>
+  <dl>
+    <dt>Denumire</dt>
+    <dd>{site.legalName}</dd>
+    <dt>CUI</dt>
+    <dd>{legal.cif}</dd>
+    {
+      legal.registrationNumber && (
+        <>
+          <dt>Nr. Registrul Asociațiilor și Fundațiilor</dt>
+          <dd>{legal.registrationNumber}</dd>
+        </>
+      )
+    }
+    <dt>Sediu social</dt>
+    <dd>{legal.address}</dd>
+    <dt>Data înființării</dt>
+    <dd>{legal.foundedDate}</dd>
+    <dt>CAEN principal</dt>
+    <dd>{legal.caen.code} – {legal.caen.label}</dd>
+    <dt>Website</dt>
+    <dd>{site.domains.join(" / ")}</dd>
+  </dl>
+
+  <h2>Contact</h2>
+  {
+    contact.email || contact.phone ? (
+      <dl>
+        {contact.email && (
+          <>
+            <dt>E-mail</dt>
+            <dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
+          </>
+        )}
+        {contact.phone && (
+          <>
+            <dt>Telefon</dt>
+            <dd>
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`}>{contact.phone}</a>
+            {contact.phoneContactName && ` (${contact.phoneContactName})`}
+          </dd>
+          </>
+        )}
+      </dl>
+    ) : (
+      <p>
+        Adresa de e-mail și numărul de telefon ale asociației vor fi publicate aici după confirmare. Până atunci, ne poți trimite o
+        solicitare scrisă la sediul social de mai sus.
+      </p>
+    )
+  }
+
+  <h2>Date bancare pentru donații</h2>
+  <dl>
+    <dt>Titular</dt>
+    <dd>{bank.accountHolder}</dd>
+    <dt>IBAN</dt>
+    <dd><code>{bank.iban}</code></dd>
+    <dt>SWIFT/BIC</dt>
+    <dd>{bank.swift}</dd>
+    <dt>Bancă</dt>
+    <dd>{bank.name}</dd>
+  </dl>
+  <p>
+    Mai multe despre cum poți susține asociația găsești în pagina <a href={withBase("/doneaza")}>Donează</a>.
+  </p>
+
+  <h2>Documente juridice</h2>
+  <ul>
+    <li><a href={withBase(legalLinks.privacyPolicy)}>Politica de confidențialitate</a></li>
+    <li><a href={withBase(legalLinks.cookiePolicy)}>Politica de cookies</a></li>
+    <li><a href={withBase(legalLinks.terms)}>Termeni de utilizare</a></li>
+  </ul>
+</LegalLayout>

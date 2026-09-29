@@ -7,7 +7,7 @@ import StatusPill from "../../components/StatusPill.astro";
 import Icon from "../../components/Icon.astro";
 import { Image } from "astro:assets";
 import { getCollection, render } from "astro:content";
-import { contact, animalsAreDemo } from "../../data/config";
+import { contact, legalLinks, animalsAreDemo } from "../../data/config";
 import { withBase } from "../../lib/url";
 import { speciesLabel as getSpeciesLabel, agreementSuffix } from "../../lib/animals";
 
@@ -69,7 +69,7 @@ const mailSubject = encodeURIComponent(`Adopție — ${a.name}`);
 const mailBody = encodeURIComponent(
   `Bună,\n\nAș dori să aflu mai multe despre procesul de adopție pentru ${a.name} (${speciesLabelText.toLowerCase()}).\n\nNume:\nZonă/localitate:\nExperiență anterioară cu animale:\n\nMulțumesc!`
 );
-const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBody}`;
+const mailtoHref = contact.email ? `mailto:${contact.email}?subject=${mailSubject}&body=${mailBody}` : null;
 ---
 
 <Layout
@@ -162,10 +162,17 @@ const mailtoHref = `mailto:${contact.email}?subject=${mailSubject}&body=${mailBo
               </Button>
             </div>
           ) : canAdopt ? (
-            contact.emailConfigured ? (
-              <Button href={mailtoHref} variant="primary" size="lg" class="w-full">
-                Întreabă despre adopție
-              </Button>
+            mailtoHref ? (
+              <div class="flex flex-col gap-3">
+                <Button href={mailtoHref} variant="primary" size="lg" class="w-full">
+                  Întreabă despre adopție
+                </Button>
+                <p class="text-xs leading-relaxed text-ink-soft">
+                  Butonul pregătește un e-mail în aplicația ta. Datele pe care alegi să ni le trimiți sunt folosite exclusiv pentru procesul
+                  de adopție și, dacă adopția are loc, pentru contractul de adopție — nu le vindem și nu le folosim în alt scop. Detalii în{" "}
+                  <a href={`${withBase(legalLinks.privacyPolicy)}#adoptie`} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Politica de confidențialitate</a>.
+                </p>
+              </div>
             ) : (
               <div class="rounded-2xl border border-ink/10 bg-paper p-5 text-sm text-ink-soft">
                 Contactul pentru adopție va fi disponibil în curând.

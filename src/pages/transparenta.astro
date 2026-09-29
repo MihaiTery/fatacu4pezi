@@ -1,6 +1,6 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import { site, contact } from "../data/config";
+import { site, legal, bank, legalLinks } from "../data/config";
 import { withBase } from "../lib/url";
 
 // No real documents exist for any year yet — an empty array here (rather
@@ -9,12 +9,16 @@ import { withBase } from "../lib/url";
 // is added, instead of implying 2023–2025 reports are all in progress.
 const publishedDocumentsByYear: { year: number; documents: string[] }[] = [];
 
+// Only verified values — a null field (e.g. the association-registry number,
+// not yet provided) is dropped rather than shown with a placeholder.
 const legalFacts = [
-  { label: "Denumire legală", value: site.legalName, configured: true },
-  { label: "CIF", value: contact.cif, configured: contact.cifConfigured },
-  { label: "Număr de înregistrare", value: contact.registrationNumber, configured: contact.registrationNumberConfigured },
-  { label: "Cont bancar pentru donații", value: contact.bankAccount, configured: contact.bankAccountConfigured },
-].filter((fact) => fact.configured);
+  { label: "Denumire legală", value: site.legalName },
+  { label: "CUI", value: legal.cif },
+  { label: "Nr. Registrul Asociațiilor și Fundațiilor", value: legal.registrationNumber },
+  { label: "Sediu social", value: legal.address },
+  { label: "Data înființării", value: legal.foundedDate },
+  { label: "IBAN pentru donații", value: `${bank.iban} (${bank.name})` },
+].filter((fact): fact is { label: string; value: string } => fact.value !== null);
 ---
 
 <PageLayout
@@ -54,7 +58,7 @@ const legalFacts = [
             {legalFacts.map((fact) => (
               <div>
                 <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft">{fact.label}</dt>
-                <dd class="mt-1 text-sm text-ink">{fact.value}</dd>
+                <dd class="mt-1 text-sm text-ink [overflow-wrap:anywhere]">{fact.value}</dd>
               </div>
             ))}
           </dl>
@@ -66,7 +70,9 @@ const legalFacts = [
 
     <p class="mt-8 text-sm leading-relaxed text-ink-soft">
       Pentru întrebări despre activitatea și documentele asociației, ne poți contacta folosind datele disponibile în pagina{" "}
-      <a href={withBase("/contact")} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Contact</a>.
+      <a href={withBase("/contact")} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Contact</a>. Toate datele
+      de identificare sunt reunite și în pagina{" "}
+      <a href={withBase(legalLinks.legalInfo)} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Informații legale</a>.
     </p>
   </section>
 </PageLayout>

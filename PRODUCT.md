@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-delegated: Astro (TypeScript, content collections) + Tailwind CSS, static output. Chosen because the site is content-driven (animals, articles, partners) with no need for a backend/CMS, must be very fast (Core Web Vitals treated as a hard requirement), needs clean shareable URLs per animal/article, and should deploy cleanly on Cloudflare (Cloudflare is the client's named target for the future shop). Content lives in typed collections so the dev team can replace placeholder animals/articles/partners by editing files, no code changes required.
+delegated: Astro (TypeScript, content collections) + Tailwind CSS, static output. Chosen because the site is content-driven (animals, articles, partners) with no need for a backend/CMS, must be very fast (Core Web Vitals treated as a hard requirement), needs clean shareable URLs per animal/article, and deploys as static files (currently GitHub Pages). Content lives in typed collections so the dev team can replace placeholder animals/articles/partners by editing files, no code changes required.
 
 ## Users
 
@@ -32,15 +32,16 @@ Not a shelter with a website bolted on, and not a generic charity template. The 
 - Species scope: all species, not dogs and cats only — the association rescues any animal in need. The catalogue's content-collection schema accepts any species as free text (see `src/content.config.ts`); every animal published so far happens to be a dog or a cat. For species that cannot legally be rehomed as pets, the `adoptable` field is set to `false` so the profile talks about care/recovery instead of promising adoption.
 - No CMS/admin: the dev team edits content collection files directly (animals, blog posts, partners are structured content, not hardcoded markup).
 - No backend exists or is planned at this stage: "Fă o sesizare" opens a mailto flow (no submission backend); adoption CTA leads to a placeholder contact flow; donation is UI + isolated payment-provider placeholder, no live transactions.
-- Future integrations arrive later without a redesign: card payment provider, https://formular230.ro/ for 3.5% redirection, a real report-an-animal email address, and a Cloudflare-based shop.
+- Future integrations arrive later without a redesign: card payment provider, https://formular230.ro/ for 3.5% redirection, and a real report-an-animal email address.
 
 ## Capabilities and Constraints
 
 - Romanian only, no language switcher, correct diacritics required throughout.
 - No lorem ipsum anywhere; all placeholder copy must be realistic, in Romanian, and obviously fictional where it states facts (names, numbers, legal data).
 - Logo: illustrated crest (girl + cats + dog line art) with the "ASOCIAȚIA" arc and "Fata cu 4pezi" wordmark baked into the artwork itself, supplied as raster PNG/JPG and vector SVG/PDF in six colorways (albastru/blue, bej/beige, maro/brown, negru/black, roz/pink, verde/green). The SVG's arc text ("ASOCIAȚIA") is live `<text>` using an unlicensed custom font (Daffiys) and is missing the correct "Ț" glyph — the raster PNGs are the reliable source for on-screen use; SVGs are reserved for contexts needing vector scaling where the arc-text risk is acceptable or re-authored. Logo must not be redrawn or altered, only recolored via the provided colorways and resized.
-- No shop yet — architecture must allow adding one later without disruption; nav/homepage must not feature it prominently now. A `/shop` "În curând" placeholder is acceptable.
-- No cookie banner unless a non-essential cookie is actually introduced (none is, at this stage).
+- No shop: the association does not sell anything online and the site is not e-commerce. The earlier `/shop` placeholder was removed (September 2026). Do not add return/delivery/warranty/sales terms or ANPC/SAL e-commerce notices — donations are not sales.
+- No cookie banner unless a non-essential technology is actually introduced (none is, at this stage) — see "Cookie-uri și tracking" in `README.md` for the rule that applies before one is.
+- Legal pages: `/politica-de-confidentialitate`, `/politica-de-cookies`, `/termeni-de-utilizare`, `/informatii-legale`, all built on `LegalLayout.astro` and reading legal facts from `src/data/config.ts`. They describe the site's real behaviour — update them before changing it (payment processor, newsletter service, analytics, embeds, a backend).
 - All currently-unavailable external integrations (payment provider, Formular 230 destination, report email, social URLs, legal/contact facts) must be isolated in a small number of config/content files, not scattered inline.
 
 ## Brand Commitments

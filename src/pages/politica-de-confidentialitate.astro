@@ -1,58 +1,412 @@
 ---
-import PageLayout from "../layouts/PageLayout.astro";
-import { site, contact } from "../data/config";
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site, legal, contact, legalLinks, donations } from "../data/config";
+import { withBase } from "../lib/url";
+
+// Written against the site's actual behaviour (audited September 2026):
+// static pages on GitHub Pages, no server-side forms, every form/CTA builds
+// a mailto message, no cookies/analytics/pixels/embeds. Revisit this text
+// before any of that changes (payment processor, newsletter service,
+// analytics, embeds, a real backend).
+const toc = [
+  { id: "operator", label: "Cine este operatorul" },
+  { id: "pe-scurt", label: "Pe scurt" },
+  { id: "formulare", label: "Cum funcționează formularele de pe site" },
+  { id: "date-si-scopuri", label: "Ce date prelucrăm, în ce scop și pe ce temei" },
+  { id: "alte-persoane", label: "Date despre alte persoane" },
+  { id: "destinatari", label: "Cui pot fi comunicate datele" },
+  { id: "transferuri", label: "Transferuri în afara SEE" },
+  { id: "pastrare", label: "Cât timp păstrăm datele" },
+  { id: "securitate", label: "Securitatea datelor" },
+  { id: "drepturi", label: "Drepturile tale" },
+  { id: "minori", label: "Minori" },
+  { id: "cookies", label: "Cookie-uri" },
+  { id: "modificari", label: "Modificări ale acestei politici" },
+];
+
+const cardPaymentsLive = donations.provider !== null;
 ---
 
-<PageLayout
+<LegalLayout
   title="Politica de confidențialitate"
   seoTitle="Politica de confidențialitate | Fata cu 4pezi"
-  description="Află informații despre prelucrarea datelor personale și utilizarea site-ului Asociației Fata cu 4pezi."
+  description="Cum prelucrează Asociația Fata cu 4pezi datele personale: sesizări, adopții, voluntariat, newsletter, donații prin transfer bancar și vizitarea site-ului. Drepturile tale conform GDPR."
+  intro="Această politică explică ce date personale pot ajunge la Asociația Fata cu 4pezi atunci când folosești acest site sau ne contactezi, de ce le folosim și ce drepturi ai."
+  toc={toc}
 >
-  <section class="mx-auto max-w-3xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
-    <div class="prose-fatacu max-w-prose text-ink-soft">
-      <p>
-        Această pagină descrie, pe scurt, modul în care {site.legalName} tratează datele persoanelor care
-        vizitează acest site. Conținutul de mai jos este o versiune inițială și va fi completat cu textul legal
-        definitiv, verificat juridic, înainte de lansarea publică a site-ului.
-      </p>
+  <h2 id="operator">1. Cine este operatorul</h2>
+  <p>Operatorul datelor tale personale este:</p>
+  <dl>
+    <dt>Denumire</dt>
+    <dd>{site.legalName}</dd>
+    <dt>CUI</dt>
+    <dd>{legal.cif}</dd>
+    <dt>Sediu social</dt>
+    <dd>{legal.address}</dd>
+    {
+      contact.email && (
+        <>
+          <dt>E-mail</dt>
+          <dd><a href={`mailto:${contact.email}`}>{contact.email}</a></dd>
+        </>
+      )
+    }
+    {
+      contact.phone && (
+        <>
+          <dt>Telefon</dt>
+          <dd>
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`}>{contact.phone}</a>
+            {contact.phoneContactName && ` (${contact.phoneContactName})`}
+          </dd>
+        </>
+      )
+    }
+  </dl>
+  <p>
+    În această politică, „asociația”, „noi” sau „Fata cu 4pezi” se referă la operatorul de mai sus. Pentru orice întrebare despre
+    datele tale ne poți contacta {contact.email ? "la adresa de e-mail de mai sus sau" : ""} printr-o solicitare scrisă trimisă
+    la sediul social. Datele de contact actualizate sunt disponibile și în pagina{" "}
+    <a href={withBase("/contact")}>Contact</a>.
+  </p>
 
-      <h2>Ce date colectăm</h2>
-      <p>
-        Site-ul, în forma sa actuală, nu folosește cookie-uri de analiză sau de publicitate. Acțiuni precum „Fă o
-        sesizare”, „Vreau să adopt” sau contactul cu un partener deschid direct clientul tău de e-mail —
-        informațiile pe care alegi să le trimiți ajung în căsuța de e-mail a asociației, nu sunt stocate de acest
-        site. Formularul de înscriere pentru voluntariat funcționează la fel: completează un mesaj pe care
-        aplicația ta de e-mail îl deschide spre trimitere, iar datele introduse nu sunt stocate de acest site — ele
-        ajung la asociație doar dacă alegi să trimiți e-mailul.
-      </p>
+  <h2 id="pe-scurt">2. Pe scurt</h2>
+  <ul>
+    <li>Site-ul este static: nu are conturi de utilizator și nu salvează pe un server datele pe care le introduci în formulare.</li>
+    <li>
+      Formularele și butoanele de contact pregătesc un e-mail în aplicația ta de e-mail. Datele ajung la noi numai dacă alegi să
+      trimiți acel e-mail.
+    </li>
+    <li>Nu folosim cookie-uri de analiză, publicitate sau profilare și nu folosim instrumente de tracking.</li>
+    <li>Folosim datele doar pentru a răspunde solicitării tale și pentru activitatea asociației, nu le vindem și nu le închiriem.</li>
+    <li>
+      Datele pe care ni le dai pentru o adopție sunt folosite exclusiv pentru procesul de adopție și pentru contractul de adopție
+      (<a href="#adoptie">detalii</a>).
+    </li>
+  </ul>
 
-      <h2>Cookie-uri</h2>
-      <p>
-        Nu folosim în prezent cookie-uri care necesită consimțământ. Dacă vom introduce, în viitor, instrumente de
-        analiză a traficului sau alte funcționalități care presupun cookie-uri neesențiale, vom actualiza această
-        pagină și vom afișa un banner de consimțământ înainte de activarea lor.
-      </p>
+  <h2 id="formulare">3. Cum funcționează formularele de pe site</h2>
+  <p>
+    Formularele de pe acest site (înscrierea ca voluntar, abonarea la newsletter) și butoanele de tipul „Pregătește sesizarea prin
+    e-mail”, „Întreabă despre adopție” sau „Propune un parteneriat” nu trimit nimic automat. Ele construiesc, direct în browserul
+    tău, un mesaj de e-mail precompletat și îl deschid în aplicația ta de e-mail.
+  </p>
+  <p>
+    Până când nu apeși „Trimite” în aplicația ta de e-mail, informațiile introduse rămân pe dispozitivul tău și nu ne sunt
+    transmise. Poți verifica, modifica sau șterge orice informație din mesaj înainte de trimitere. Odată trimis, e-mailul ajunge în
+    căsuța asociației și este prelucrat conform acestei politici.
+  </p>
 
-      <h2>Donații și plăți online</h2>
-      <p>
-        Integrarea unui procesator de plăți pentru donații cu cardul este în pregătire. Odată activă, datele de
-        plată vor fi procesate direct de furnizorul de plăți ales, nu vor tranzita sau fi stocate de acest site, iar
-        politica va fi actualizată cu detaliile relevante.
-      </p>
+  <h2 id="date-si-scopuri">4. Ce date prelucrăm, în ce scop și pe ce temei</h2>
+  <p>
+    Prelucrăm numai datele pe care alegi să ni le trimiți, plus datele tehnice inerente accesării unui site. Mai jos găsești, pentru
+    fiecare situație, ce date pot fi implicate, de ce le folosim și temeiul juridic din Regulamentul (UE) 2016/679 (GDPR).
+  </p>
 
-      <h2>Contact</h2>
-      <p>
-        {
-          contact.emailConfigured ? (
-            <>
-              Pentru întrebări legate de confidențialitate, ne poți scrie la{" "}
-              <a href={`mailto:${contact.email}`}>{contact.email}</a>.
-            </>
-          ) : (
-            <>Pentru întrebări legate de confidențialitate, ne poți contacta folosind datele disponibile în pagina Contact.</>
-          )
-        }
-      </p>
-    </div>
-  </section>
-</PageLayout>
+  <h3>4.1. Vizitarea site-ului</h3>
+  <ul>
+    <li>
+      <strong>Date:</strong> adresa IP, tipul de browser (user-agent), pagina solicitată, data și ora cererii și alte date tehnice
+      transmise automat de browser.
+    </li>
+    <li><strong>Scop:</strong> afișarea paginilor, securitatea și funcționarea corectă a site-ului.</li>
+    <li>
+      <strong>Temei:</strong> interesul legitim al asociației de a pune la dispoziție un site sigur și funcțional (art. 6 alin. (1)
+      lit. f) GDPR).
+    </li>
+  </ul>
+  <p>
+    Aceste date sunt prelucrate de furnizorul de hosting (vezi secțiunea <a href="#destinatari">Cui pot fi comunicate datele</a>).
+    Asociația nu folosește aceste date pentru a identifica vizitatorii și nu rulează instrumente de analiză a traficului.
+  </p>
+
+  <h3>4.2. Sesizări privind animale în dificultate</h3>
+  <ul>
+    <li>
+      <strong>Date:</strong> numele tău, adresa de e-mail, telefonul (dacă îl furnizezi), locația animalului (adresă, reper sau
+      coordonate GPS, dacă alegi să le trimiți), descrierea situației, fotografiile atașate și orice alte informații incluse în mesaj.
+    </li>
+    <li><strong>Scop:</strong> evaluarea și gestionarea sesizării, inclusiv revenirea la tine pentru detalii suplimentare.</li>
+    <li>
+      <strong>Temei:</strong> interesul legitim al asociației de a analiza și, în limita resurselor, de a da curs sesizărilor privind
+      animale aflate în pericol, în acord cu scopul său statutar (art. 6 alin. (1) lit. f) GDPR).
+    </li>
+  </ul>
+  <p>
+    Coordonatele GPS și fotografiile nu sunt preluate automat de site: ajung la noi doar dacă tu le adaugi în mesaj. Fotografiile pot
+    conține metadate (de exemplu locația sau data la care au fost făcute); dacă nu vrei să le transmiți, le poți elimina înainte de
+    trimitere.
+  </p>
+
+  <h3 id="adoptie">4.3. Adopție și contractul de adopție</h3>
+  <p>
+    Datele pe care ni le transmiți în legătură cu adopția unui animal sunt folosite <strong>exclusiv</strong> pentru procesul de
+    adopție și pentru contractul de adopție încheiat între tine și asociație.
+  </p>
+  <ul>
+    <li>
+      <strong>Date:</strong> în etapa de discuție — numele, adresa de e-mail, telefonul, zona sau localitatea, experiența anterioară
+      cu animale și informațiile pe care alegi să ni le dai despre condițiile în care ar trăi animalul; la încheierea contractului —
+      datele de identificare și de contact ale adoptatorului care se trec în contract, inclusiv codul numeric personal (CNP), împreună
+      cu datele animalului adoptat.
+    </li>
+    <li>
+      <strong>Scop:</strong> analizarea solicitării tale și stabilirea, împreună cu tine, dacă adopția poate avea loc; încheierea
+      contractului de adopție; executarea lui (predarea animalului și, numai dacă sunt prevăzute în contract, verificările
+      post-adopție); păstrarea contractului ca dovadă a adopției.
+    </li>
+    <li>
+      <strong>Temei:</strong> prelucrarea este necesară pentru demersurile făcute la cererea ta înainte de încheierea contractului și
+      pentru executarea contractului la care ești parte (art. 6 alin. (1) lit. b) GDPR). Contractul de adopție este un contract civil,
+      încheiat în condițiile Codului civil (Legea nr. 287/2009).
+    </li>
+  </ul>
+  <p>
+    Dacă animalul adoptat este un câine, legislația privind câinii cu stăpân (OUG nr. 155/2001, cu modificările ulterioare) impune
+    identificarea lui prin microcip și înregistrarea proprietarului în Registrul de evidență a câinilor cu stăpân (RECS). Înregistrarea
+    se face prin medicul veterinar; în măsura în care asociația transmite date în acest scop, o face numai pentru această obligație
+    legală (art. 6 alin. (1) lit. c) GDPR).
+  </p>
+  <p>
+    <strong>CNP-ul</strong> îl solicităm numai la încheierea contractului de adopție și îl folosim exclusiv pentru identificarea
+    neechivocă a părții contractante în contract și, dacă ar fi necesar, pentru apărarea drepturilor care decurg din contract.
+    Prelucrarea lui se face în temeiul art. 6 alin. (1) lit. b) GDPR, în condițiile art. 4 din Legea nr. 190/2018. Nu îți cerem CNP-ul
+    prin site sau prin e-mail în etapa de discuție și nu îl folosim în niciun alt scop.
+  </p>
+  <p>
+    Datele de identificare trecute în contract sunt necesare pentru încheierea lui: fără ele adopția nu poate fi finalizată. Dacă
+    adopția nu are loc, datele din etapa de discuție nu mai sunt folosite și sunt șterse atunci când nu mai sunt necesare pentru a
+    răspunde solicitării tale.
+  </p>
+  <div class="note">
+    <p><strong>Ce nu facem cu datele din procesul de adopție:</strong></p>
+    <ul>
+      <li>nu le vindem, nu le închiriem și nu le cedăm altor persoane sau organizații;</li>
+      <li>
+        nu le folosim pentru newsletter, marketing sau campanii de strângere de fonduri — pentru newsletter este nevoie de o abonare
+        separată, pe care o faci doar dacă vrei;
+      </li>
+      <li>
+        nu le folosim în niciun alt scop decât adopția și contractul de adopție. Le comunicăm numai atunci când este strict necesar
+        pentru acestea (de exemplu medicului veterinar care face înregistrarea obligatorie) sau când legea ne obligă ori este necesar
+        pentru apărarea drepturilor decurgând din contract, în fața autorităților sau a instanței.
+      </li>
+    </ul>
+  </div>
+
+  <h3>4.4. Voluntariat</h3>
+  <ul>
+    <li>
+      <strong>Date:</strong> numele, adresa de e-mail, telefonul (opțional), localitatea sau sectorul (opțional), modul în care vrei să
+      te implici și mesajul tău.
+    </li>
+    <li><strong>Scop:</strong> analizarea înscrierii, comunicarea cu tine și organizarea activităților de voluntariat.</li>
+    <li>
+      <strong>Temei:</strong> demersuri efectuate la cererea ta în vederea implicării ca voluntar (art. 6 alin. (1) lit. b) GDPR) și
+      interesul legitim al asociației de a-și coordona voluntarii (art. 6 alin. (1) lit. f) GDPR).
+    </li>
+  </ul>
+
+  <h3>4.5. Corespondență generală și propuneri de parteneriat</h3>
+  <ul>
+    <li>
+      <strong>Date:</strong> numele, adresa de e-mail și orice alte informații incluse în mesaj (de exemplu organizația pe care o
+      reprezinți).
+    </li>
+    <li><strong>Scop:</strong> răspunsul la întrebări, solicitări și propuneri de colaborare.</li>
+    <li>
+      <strong>Temei:</strong> interesul legitim al asociației de a comunica cu cei care o contactează (art. 6 alin. (1) lit. f) GDPR)
+      sau, în cazul propunerilor de parteneriat, demersuri la cererea ta înaintea unui eventual contract (art. 6 alin. (1) lit. b)
+      GDPR).
+    </li>
+  </ul>
+
+  <h3>4.6. Newsletter</h3>
+  <ul>
+    <li><strong>Date:</strong> adresa de e-mail.</li>
+    <li>
+      <strong>Scop:</strong> trimiterea ocazională de vești despre animalele ajutate, campanii și modalități de implicare.
+    </li>
+    <li>
+      <strong>Temei:</strong> consimțământul tău (art. 6 alin. (1) lit. a) GDPR), exprimat prin bifarea căsuței dedicate și trimiterea
+      e-mailului de abonare.
+    </li>
+  </ul>
+  <p>
+    Îți poți retrage consimțământul oricând, printr-un e-mail cu subiectul „Dezabonare newsletter” sau prin răspuns la oricare
+    dintre mesajele primite. Retragerea nu afectează legalitatea trimiterilor anterioare. Abonarea nu este o condiție pentru nimic
+    altceva de pe site.
+  </p>
+
+  <h3>4.7. Donații</h3>
+  <p>
+    {
+      cardPaymentsLive
+        ? "Donațiile se pot face prin transfer bancar sau online, cu cardul."
+        : "În prezent, donațiile se pot face numai prin transfer bancar. Donațiile online cu cardul nu sunt încă disponibile."
+    }
+  </p>
+  <ul>
+    <li>
+      <strong>Date:</strong> datele care apar în extrasul de cont al asociației: numele titularului contului plătitor, IBAN-ul, suma,
+      data și detaliile plății scrise de tine.
+    </li>
+    <li><strong>Scop:</strong> înregistrarea donației și îndeplinirea obligațiilor financiar-contabile ale asociației.</li>
+    <li>
+      <strong>Temei:</strong> îndeplinirea obligațiilor legale ale asociației, în special cele din legislația financiar-contabilă
+      (art. 6 alin. (1) lit. c) GDPR).
+    </li>
+  </ul>
+  <p>
+    Când va fi introdus un procesator de plăți pentru donațiile cu cardul, vom actualiza această politică înainte de activarea lui.
+  </p>
+
+  <h3>4.8. Redirecționarea a 3,5% (Formularul 230)</h3>
+  <p>
+    Pentru redirecționarea a 3,5% din impozitul pe venit, site-ul te poate trimite către platforma externă formular230.ro. Datele pe
+    care le introduci acolo sunt prelucrate de operatorul platformei, conform propriei politici de confidențialitate, pe care te
+    rugăm să o consulți pe site-ul respectiv.
+  </p>
+
+  <h3>Ești obligat să ne furnizezi date?</h3>
+  <p>
+    Nu. Nu există nicio obligație legală sau contractuală de a ne trimite date. Fără date de contact însă nu îți putem răspunde,
+    iar fără informații despre locație nu putem evalua o sesizare. Nu luăm decizii bazate exclusiv pe prelucrare automată și nu
+    creăm profiluri.
+  </p>
+
+  <h2 id="alte-persoane">5. Date despre alte persoane</h2>
+  <p>
+    Când trimiți o sesizare, fotografii sau o descriere, te rugăm să incluzi doar ce este necesar pentru a înțelege situația
+    animalului. Evită, pe cât posibil, să fotografiezi sau să expui alte persoane, numere de înmatriculare ori alte detalii care le
+    pot identifica, dacă acestea nu sunt necesare pentru sesizare. Dacă ne transmiți totuși date despre alte persoane, le folosim
+    doar pentru gestionarea sesizării.
+  </p>
+
+  <h2 id="destinatari">6. Cui pot fi comunicate datele</h2>
+  <p>Nu vindem și nu închiriem datele personale. Ele pot ajunge, strict în măsura necesară, la:</p>
+  <ul>
+    <li>
+      <strong>GitHub (furnizorul de hosting).</strong> Site-ul este găzduit pe GitHub Pages. Accesarea oricărei pagini presupune, în
+      mod inerent, transmiterea către infrastructura GitHub a unor date tehnice precum adresa IP, user-agent-ul și datele cererii.
+      Conform documentației GitHub, adresa IP a vizitatorilor unui site GitHub Pages este înregistrată și stocată în scopuri de
+      securitate. GitHub prelucrează aceste date conform{" "}
+      <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">
+        declarației sale de confidențialitate (GitHub General Privacy Statement)
+      </a>.
+    </li>
+    <li>
+      <strong>Furnizorii de servicii de e-mail.</strong> Mesajele pe care ni le trimiți trec prin furnizorul tău de e-mail și prin
+      serviciul de e-mail folosit de asociație.
+    </li>
+    <li>
+      <strong>Bănci.</strong> Datele unei donații prin transfer bancar sunt prelucrate de băncile implicate în tranzacție, inclusiv de
+      banca asociației.
+    </li>
+    <li>
+      <strong>Persoane implicate în rezolvarea unui caz.</strong> Atunci când este necesar pentru a da curs unei sesizări sau unei
+      adopții (de exemplu un medic veterinar partener sau un voluntar care oferă găzduire temporară), le comunicăm doar informațiile
+      de care au nevoie.
+    </li>
+    <li>
+      <strong>Autorități publice,</strong> atunci când legea ne obligă sau când este necesar pentru protecția unui animal aflat în
+      pericol ori pentru apărarea unui drept.
+    </li>
+  </ul>
+
+  <h2 id="transferuri">7. Transferuri în afara Spațiului Economic European</h2>
+  <p>
+    Unii furnizori tehnici pot prelucra date în afara Spațiului Economic European (SEE). GitHub, furnizorul de hosting, este o
+    companie cu sediul în Statele Unite și precizează în declarația sa de confidențialitate că stochează și prelucrează date în mai
+    multe țări, inclusiv în SUA. Pentru aceste transferuri, GitHub indică drept mecanisme clauzele contractuale standard adoptate de
+    Comisia Europeană și participarea la EU-U.S. Data Privacy Framework. Pentru ceilalți furnizori (de exemplu serviciile de
+    e-mail), transferurile sunt guvernate de mecanismele aplicabile fiecărui furnizor.
+  </p>
+
+  <h2 id="pastrare">8. Cât timp păstrăm datele</h2>
+  <p>Păstrăm datele doar cât este necesar pentru scopul în care au fost furnizate. Criteriile după care stabilim durata sunt:</p>
+  <ul>
+    <li>
+      <strong>Corespondența și sesizările:</strong> cât timp este necesar pentru soluționarea solicitării sau a cazului și, ulterior,
+      cât este necesar pentru apărarea drepturilor ori intereselor legitime ale asociației.
+    </li>
+    <li>
+      <strong>Contractul de adopție și datele din el:</strong> pe durata contractului și, după aceea, pe durata termenului de prescripție
+      aplicabil eventualelor pretenții legate de contract (termenul general de prescripție este de 3 ani, conform art. 2517 din Codul
+      civil).
+    </li>
+    <li>
+      <strong>Solicitările de adopție care nu se finalizează cu un contract:</strong> cât este necesar pentru a răspunde solicitării,
+      după care sunt șterse.
+    </li>
+    <li>
+      <strong>Datele privind voluntariatul:</strong> cât este necesar scopului pentru care au fost furnizate, conform procedurilor
+      interne ale asociației, și cât impune legea pentru documentele care se încheie (de exemplu contracte de voluntariat).
+    </li>
+    <li><strong>Newsletter:</strong> până la retragerea consimțământului (dezabonare).</li>
+    <li>
+      <strong>Documentele aferente donațiilor:</strong> pe perioada impusă de legislația financiar-contabilă aplicabilă.
+    </li>
+    <li>
+      <strong>Datele tehnice de acces:</strong> conform politicilor furnizorului de hosting.
+    </li>
+  </ul>
+
+  <h2 id="securitate">9. Securitatea datelor</h2>
+  <p>
+    Site-ul este servit exclusiv prin conexiune criptată (HTTPS) și nu stochează date introduse de vizitatori. Pentru datele care
+    ajung la noi, aplicăm măsuri tehnice și organizatorice rezonabile, adaptate dimensiunii asociației, astfel încât accesul să fie
+    limitat la persoanele care au nevoie de ele pentru a gestiona solicitarea. Niciun sistem nu este complet lipsit de riscuri; dacă
+    observi o problemă de securitate, te rugăm să ne anunți.
+  </p>
+
+  <h2 id="drepturi">10. Drepturile tale</h2>
+  <p>În condițiile prevăzute de GDPR (art. 15–22), ai dreptul:</p>
+  <ul>
+    <li><strong>de acces</strong> — să afli dacă prelucrăm date despre tine și să primești o copie a acestora;</li>
+    <li><strong>la rectificare</strong> — să corectezi datele inexacte sau incomplete;</li>
+    <li><strong>la ștergere</strong> — să ceri ștergerea datelor, atunci când nu mai există un motiv pentru a le păstra;</li>
+    <li><strong>la restricționarea prelucrării</strong> — de exemplu cât timp verificăm exactitatea datelor;</li>
+    <li>
+      <strong>la opoziție</strong> — să te opui prelucrării bazate pe interesul legitim al asociației, din motive legate de situația ta
+      particulară;
+    </li>
+    <li>
+      <strong>la portabilitate</strong> — să primești datele furnizate într-un format structurat, atunci când prelucrarea se bazează
+      pe consimțământ sau pe un contract și se face prin mijloace automate;
+    </li>
+    <li>
+      <strong>de a-ți retrage consimțământul</strong> oricând, pentru prelucrările bazate pe consimțământ (de exemplu newsletter-ul),
+      fără a afecta prelucrările anterioare retragerii;
+    </li>
+    <li>
+      <strong>de a depune o plângere</strong> la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal
+      (ANSPDCP) —{" "}
+      <a href="https://www.dataprotection.ro/" target="_blank" rel="noopener noreferrer">www.dataprotection.ro</a>.
+    </li>
+  </ul>
+  <p>
+    Pentru exercitarea drepturilor, contactează-ne folosind datele din <a href="#operator">secțiunea 1</a>. Îți răspundem fără
+    întârzieri nejustificate și, în general, în cel mult o lună de la primirea cererii, termen care poate fi prelungit în condițiile
+    art. 12 GDPR. Este posibil să îți cerem informații suplimentare pentru a-ți confirma identitatea.
+  </p>
+
+  <h2 id="minori">11. Minori</h2>
+  <p>
+    Site-ul nu se adresează în mod special copiilor, iar asociația nu urmărește să colecteze intenționat date despre minori fără un
+    motiv legitim. Dacă ești părinte sau tutore și crezi că un minor ne-a transmis date, te rugăm să ne contactezi.
+  </p>
+
+  <h2 id="cookies">12. Cookie-uri</h2>
+  <p>
+    Site-ul nu folosește în prezent cookie-uri de analiză, publicitate sau profilare și nici tehnologii similare de tracking.
+    Detalii în <a href={withBase(legalLinks.cookiePolicy)}>Politica de cookies</a>.
+  </p>
+
+  <h2 id="modificari">13. Modificări ale acestei politici</h2>
+  <p>
+    Vom actualiza această politică atunci când se schimbă modul în care prelucrăm datele — de exemplu înainte de introducerea
+    donațiilor cu cardul, a unui serviciu de newsletter sau a oricărui instrument de analiză. Data ultimei actualizări este afișată
+    la începutul paginii.
+  </p>
+</LegalLayout>

@@ -58,4 +58,4 @@ Nu orice animal găsit singur este abandonat, iar nu orice animal poate fi manip
 
 Observarea atentă, informațiile clare și contactarea persoanelor potrivite pot face diferența.
 
-Ai găsit un animal în dificultate? [Trimite-ne o sesizare.](/fa-o-sesizare)
+Ai găsit un animal în dificultate? [Trimite-ne o sesizare.](../../fa-o-sesizare)

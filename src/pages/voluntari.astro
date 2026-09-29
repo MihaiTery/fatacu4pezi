@@ -2,7 +2,8 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Icon from "../components/Icon.astro";
 import PatternBand from "../components/PatternBand.astro";
-import { contact } from "../data/config";
+import { contact, legalLinks } from "../data/config";
+import { withBase } from "../lib/url";
 
 const roles = [
   {
@@ -68,67 +69,83 @@ const roles = [
 
       <aside class="h-fit rounded-2xl border border-ink/10 bg-paper p-6">
         <h2 class="font-display text-lg font-bold text-ink">Înscrie-te ca voluntar</h2>
-        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-          Completează câteva informații despre tine. La final, se va pregăti un mesaj în aplicația ta de e-mail, pe care va trebui să îl trimiți.
-        </p>
+        {
+          contact.email ? (
+            <>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Completează câteva informații despre tine. La final, se va pregăti un mesaj în aplicația ta de e-mail, pe care va trebui să îl trimiți.
+            </p>
 
-        <form class="mt-5 flex flex-col gap-4" data-volunteer-form data-mailto={contact.email} novalidate>
-          <div class="field">
-            <label for="v-name">Nume <span aria-hidden="true">*</span></label>
-            <input id="v-name" name="name" type="text" autocomplete="name" required />
-          </div>
+            <form class="mt-5 flex flex-col gap-4" data-volunteer-form data-mailto={contact.email} novalidate>
+              <div class="field">
+                <label for="v-name">Nume <span aria-hidden="true">*</span></label>
+                <input id="v-name" name="name" type="text" autocomplete="name" required />
+              </div>
 
-          <div class="field">
-            <label for="v-email">Adresă de e-mail <span aria-hidden="true">*</span></label>
-            <input id="v-email" name="email" type="email" autocomplete="email" required />
-          </div>
+              <div class="field">
+                <label for="v-email">Adresă de e-mail <span aria-hidden="true">*</span></label>
+                <input id="v-email" name="email" type="email" autocomplete="email" required />
+              </div>
 
-          <div class="field">
-            <label for="v-phone">Telefon <span class="opt">(opțional)</span></label>
-            <input id="v-phone" name="phone" type="tel" autocomplete="tel" />
-          </div>
+              <div class="field">
+                <label for="v-phone">Telefon <span class="opt">(opțional)</span></label>
+                <input id="v-phone" name="phone" type="tel" autocomplete="tel" />
+              </div>
 
-          <div class="field">
-            <label for="v-area">Localitate / sector <span class="opt">(opțional)</span></label>
-            <input id="v-area" name="area" type="text" placeholder="ex. Sector 3, Cluj-Napoca, Timișoara" />
-          </div>
+              <div class="field">
+                <label for="v-area">Localitate / sector <span class="opt">(opțional)</span></label>
+                <input id="v-area" name="area" type="text" placeholder="ex. Sector 3, Cluj-Napoca, Timișoara" />
+              </div>
 
-          <fieldset class="field">
-            <legend>Cum ai vrea să ajuți?</legend>
-            <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="Tip de voluntariat">
-              {
-                roles.map((role) => (
-                  <button type="button" class="role-chip" data-role-chip aria-pressed="false">
-                    {role.title}
-                  </button>
-                ))
-              }
-            </div>
-          </fieldset>
+              <fieldset class="field">
+                <legend>Cum ai vrea să ajuți?</legend>
+                <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="Tip de voluntariat">
+                  {
+                    roles.map((role) => (
+                      <button type="button" class="role-chip" data-role-chip aria-pressed="false">
+                        {role.title}
+                      </button>
+                    ))
+                  }
+                </div>
+              </fieldset>
 
-          <div class="field">
-            <label for="v-message">Spune-ne mai multe <span class="opt">(opțional)</span></label>
-            <textarea
-              id="v-message"
-              name="message"
-              rows="4"
-              placeholder="Povestește-ne despre disponibilitatea ta, experiența relevantă sau felul în care ai vrea să te implici."
-            />
-          </div>
+              <div class="field">
+                <label for="v-message">Spune-ne mai multe <span class="opt">(opțional)</span></label>
+                <textarea
+                  id="v-message"
+                  name="message"
+                  rows="4"
+                  placeholder="Povestește-ne despre disponibilitatea ta, experiența relevantă sau felul în care ai vrea să te implici."
+                />
+              </div>
 
-          <button
-            type="submit"
-            class="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-green px-5 py-3 text-[0.95rem] font-semibold text-cream transition-colors duration-150 hover:bg-green-dark focus-visible:outline-2 focus-visible:outline-offset-3"
-          >
-            Pregătește înscrierea
-            <Icon name="arrow-right" class="h-4 w-4" />
-          </button>
+              <button
+                type="submit"
+                class="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-green px-5 py-3 text-[0.95rem] font-semibold text-cream transition-colors duration-150 hover:bg-green-dark focus-visible:outline-2 focus-visible:outline-offset-3"
+              >
+                Pregătește înscrierea
+                <Icon name="arrow-right" class="h-4 w-4" />
+              </button>
 
-          <p class="text-xs text-ink-soft" data-form-hint>{contact.email}</p>
-          <p class="hidden text-xs font-medium text-green" data-form-confirm role="status">
-            Dacă s-a deschis aplicația de e-mail, verifică mesajul pregătit și apasă „Trimite”. Formularul nu expediază automat înscrierea.
-          </p>
-        </form>
+              <p class="text-xs leading-relaxed text-ink-soft">
+                Datele pe care alegi să ni le trimiți vor fi folosite pentru a analiza înscrierea și a organiza implicarea ta ca voluntar.
+                Detalii în{" "}
+                <a href={withBase(legalLinks.privacyPolicy)} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Politica de confidențialitate</a>.
+              </p>
+              <p class="hidden text-xs font-medium text-green" data-form-confirm role="status">
+                Dacă s-a deschis aplicația de e-mail, verifică mesajul pregătit și apasă „Trimite”. Formularul nu expediază automat înscrierea.
+              </p>
+            </form>
+            </>
+          ) : (
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+              Înscrierile vor putea fi trimise de aici după activarea adresei de e-mail a asociației. Până atunci, datele de contact
+              disponibile sunt în pagina{" "}
+              <a href={withBase("/contact")} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Contact</a>.
+            </p>
+          )
+        }
       </aside>
     </div>
   </section>

@@ -1,0 +1,79 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { legalLinks } from "../data/config";
+import { withBase } from "../lib/url";
+
+// Reflects the audit of the codebase and the live hosting (September 2026):
+// no document.cookie, localStorage, sessionStorage or IndexedDB use; no
+// analytics, pixels, tag managers, captchas, iframes or third-party
+// scripts; fonts and images are self-hosted; GitHub Pages returns no
+// Set-Cookie header. See "Cookie-uri și tracking" in README.md for the rule
+// that applies before any of that changes.
+---
+
+<LegalLayout
+  title="Politica de cookies"
+  seoTitle="Politica de cookies | Fata cu 4pezi"
+  description="Site-ul Asociației Fata cu 4pezi nu folosește cookie-uri de analiză, publicitate sau profilare și nici alte tehnologii de tracking. Află ce înseamnă asta și ce se va schimba în viitor."
+  intro="Pe scurt: acest site nu setează cookie-uri de analiză, publicitate sau profilare și nu folosește alte tehnologii de urmărire. De aceea nu îți afișăm un banner de cookies."
+>
+  <h2>Ce sunt cookie-urile și tehnologiile similare</h2>
+  <p>
+    Cookie-urile sunt fișiere mici pe care un site le poate salva în browserul tău și le poate citi ulterior. Aceeași regulă se aplică
+    și tehnologiilor similare care stochează sau accesează informații pe dispozitivul tău, precum stocarea locală a browserului
+    (localStorage, sessionStorage, IndexedDB), pixelii de urmărire sau scripturile unor servicii externe. Legea nr. 506/2004 cere
+    consimțământul tău înainte de folosirea acestor tehnologii, cu excepția celor strict necesare pentru funcționarea serviciului pe
+    care l-ai solicitat.
+  </p>
+
+  <h2>Ce folosește acest site în prezent</h2>
+  <ul>
+    <li>
+      <strong>Nu setăm cookie-uri</strong> de analiză, publicitate sau profilare și nu folosim tehnologii similare de tracking în
+      scopuri neesențiale.
+    </li>
+    <li>
+      <strong>Nu folosim</strong> instrumente precum Google Analytics, Google Tag Manager, Meta Pixel, TikTok Pixel, Hotjar sau
+      Microsoft Clarity.
+    </li>
+    <li>
+      <strong>Nu încărcăm conținut de la terți</strong> în pagini: nu avem videoclipuri YouTube, postări Facebook sau Instagram
+      încorporate, hărți externe ori verificări de tip reCAPTCHA. Fonturile și imaginile sunt găzduite pe același server ca site-ul.
+    </li>
+    <li>
+      <strong>Nu stocăm informații în browserul tău</strong> (nici cookie-uri, nici localStorage, sessionStorage sau IndexedDB).
+      Scripturile site-ului servesc doar interfeței — meniul, animațiile, copierea IBAN-ului, pregătirea mesajelor de e-mail — și
+      nu păstrează nimic după ce închizi pagina.
+    </li>
+    <li>
+      <strong>Hostingul.</strong> Site-ul este găzduit pe GitHub Pages. La data ultimei actualizări, serverele care livrează paginile
+      nu setează cookie-uri. Datele tehnice pe care furnizorul le prelucrează la accesarea site-ului sunt descrise în{" "}
+      <a href={withBase(legalLinks.privacyPolicy)}>Politica de confidențialitate</a>.
+    </li>
+  </ul>
+  <p>
+    Dacă în viitor va fi nevoie de un mecanism strict necesar funcționării site-ului (de exemplu pentru un formular de donație), îl
+    vom descrie în această pagină.
+  </p>
+
+  <h2>Linkuri către rețele sociale și alte platforme</h2>
+  <p>
+    Linkurile către Facebook, Instagram, TikTok, YouTube, formular230.ro sau alte platforme sunt simple trimiteri: serviciile
+    respective nu sunt încărcate în paginile noastre și nu pot seta cookie-uri prin acest site. Abia după ce accesezi un astfel de
+    link ajungi pe platforma respectivă, unde se aplică propriile ei politici de cookies și de confidențialitate.
+  </p>
+
+  <h2>Ce se va schimba dacă introducem astfel de tehnologii</h2>
+  <p>
+    Înainte de a introduce orice tehnologie neesențială (de exemplu un instrument de analiză a traficului sau conținut încorporat de
+    la terți), vom actualiza această politică și îți vom cere consimțământul printr-un banner în care vei putea accepta sau refuza la
+    fel de ușor, fără opțiuni preselectate. Aceste tehnologii nu vor fi încărcate înainte de alegerea ta, iar alegerea va putea fi
+    modificată oricând dintr-un link permanent în subsolul site-ului.
+  </p>
+
+  <h2>Cum poți controla cookie-urile</h2>
+  <p>
+    Indiferent de site, poți vedea, bloca sau șterge cookie-urile și datele stocate din setările browserului tău. Pentru acest site
+    nu este nevoie de nicio setare specială, deoarece nu stocăm nimic pe dispozitivul tău.
+  </p>
+</LegalLayout>

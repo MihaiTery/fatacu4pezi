@@ -16,7 +16,7 @@ interface Props {
 }
 
 const { title, seoTitle, description, image = "/og-image.png", noindex = false, ogType = "website" } = Astro.props;
-const pageTitle = seoTitle ?? (title === site.name ? title : `${title} · ${site.name}`);
+const pageTitle = seoTitle ?? (title === site.displayName ? title : `${title} · ${site.displayName}`);
 // Astro.url.pathname already includes the deploy base (it's the real served
 // path), so the canonical URL needs no extra prefixing — only the image
 // path (a plain string prop/default) does.
@@ -45,10 +45,10 @@ const ogImageURL = new URL(withBase(image), Astro.site ?? site.url);
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${site.name} — ${site.shortDescription}`} />
+    <meta property="og:image:alt" content={`${site.displayName} — ${site.shortDescription}`} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="ro_RO" />
-    <meta property="og:site_name" content={site.name} />
+    <meta property="og:site_name" content={site.displayName} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />

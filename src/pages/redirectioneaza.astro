@@ -55,7 +55,12 @@ const steps = [
             <Button href={redirect230.url} variant="primary" size="lg" class="mt-5" external>
               Completează Formularul 230
               <Icon name="external" class="h-4 w-4" />
+              <span class="sr-only">(se deschide într-o filă nouă, pe formular230.ro)</span>
             </Button>
+            <p class="mt-3 max-w-xl text-xs leading-relaxed text-ink-soft">
+              Linkul se deschide într-o filă nouă: vei părăsi site-ul Fata cu 4pezi. Formularul și datele pe care le introduci pe
+              formular230.ro sunt gestionate de platforma respectivă, conform propriilor ei politici.
+            </p>
             {redirect230.deadlineNote && <p class="mt-3 text-xs text-ink-soft">{redirect230.deadlineNote}</p>}
           </>
         ) : (

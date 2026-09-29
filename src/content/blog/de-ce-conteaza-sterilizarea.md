@@ -50,4 +50,4 @@ Poți discuta cu un medic veterinar despre sterilizarea animalului tău și poț
 
 Dacă dorești să sprijini activitatea Fata cu 4pezi, o donație poate contribui la acoperirea unor nevoi de îngrijire veterinară și recuperare.
 
-[Susține îngrijirea animalelor printr-o donație.](/doneaza)
+[Susține îngrijirea animalelor printr-o donație.](../../doneaza)

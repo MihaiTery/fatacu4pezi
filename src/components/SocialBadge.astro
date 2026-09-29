@@ -4,14 +4,11 @@
 // 1.75-stroke, round-cap language as Icon.astro — so they read as Instagram
 // / Facebook / TikTok / YouTube at a glance, but in ink like every other
 // icon on the site, never in the networks' own brand colors.
+// Only networks with a confirmed profile URL render — with none confirmed
+// the component outputs nothing at all (see `social` in src/data/config.ts).
 import { social } from "../data/config";
 
-const links = [
-  { key: "instagram", label: "Instagram", href: social.instagram },
-  { key: "facebook", label: "Facebook", href: social.facebook },
-  { key: "tiktok", label: "TikTok", href: social.tiktok },
-  { key: "youtube", label: "YouTube", href: social.youtube },
-] as const;
+const links = social.flatMap((s) => (s.url ? [{ key: s.key, label: s.label, href: s.url }] : []));
 
 interface Props {
   class?: string;
@@ -27,6 +24,7 @@ const toneClasses =
     : "border-cream/30 text-cream/75 hover:border-cream hover:bg-cream hover:text-ink";
 ---
 
+{links.length > 0 && (
 <ul class={`flex items-center gap-2 ${className ?? ""}`}>
   {
     links.map((link) => (
@@ -76,3 +74,4 @@ const toneClasses =
     ))
   }
 </ul>
+)}

@@ -3,7 +3,8 @@ import PageLayout from "../layouts/PageLayout.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
 import WallpaperGift from "../components/WallpaperGift.astro";
-import { donations, contact } from "../data/config";
+import { donations, bank, legalLinks } from "../data/config";
+import { withBase } from "../lib/url";
 ---
 
 <PageLayout
@@ -13,64 +14,71 @@ import { donations, contact } from "../data/config";
   intro="O donație ne ajută să acoperim nevoi precum tratamente veterinare, hrană, recuperare și îngrijire pentru animalele aflate în dificultate."
 >
   <section class="mx-auto max-w-3xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
-    <div class="bg-animals rounded-[2rem] p-4 sm:p-10 [--animals-ink:var(--color-green)] [--animals-size:280px]">
-      <div class="rounded-2xl border-2 border-dashed border-ink/25 bg-paper p-7">
-        <p class="inline-flex items-center gap-2 rounded-full bg-blue px-3 py-1 text-xs font-semibold text-ink">
-          Donații cu cardul — în pregătire
-        </p>
-        <h2 class="mt-4 font-display text-xl font-bold text-ink">Pregătim donațiile online</h2>
-        <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
-          Lucrăm la introducerea donațiilor cu cardul. Această opțiune nu este încă disponibilă.
-        </p>
-        <ul class="mt-5 flex flex-wrap gap-2.5" aria-hidden="true">
-          {
-            donations.suggestedAmounts.map((amount) => (
-              <li class="rounded-full border border-ink/20 px-4 py-2 text-sm font-semibold text-ink/50">{amount} lei</li>
-            ))
-          }
-        </ul>
-        <p class="mt-3 text-xs text-ink-soft">Sume orientative. Donațiile cu cardul nu sunt încă active.</p>
-        <Button href="#alternative" variant="dark" size="md" class="mt-5 pointer-events-none opacity-50" aria-disabled="true">
-          Continuă către plată — indisponibil momentan
-        </Button>
-        <!-- TODO(payment-provider): wire up a real checkout (e.g. Stripe / Netopia / EuPlătesc) here.
-             `donations.provider` in src/data/config.ts stays null until a processor is selected. -->
-      </div>
+    <div id="transfer" class="scroll-mt-24 rounded-2xl border border-ink/10 bg-paper p-7">
+      <h2 class="font-display text-xl font-bold text-ink">Donează prin transfer bancar</h2>
+      <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+        Poți susține activitatea asociației printr-un transfer bancar în contul de mai jos. Pentru transfer bancar poți folosi mențiunea
+        „Donație” la detaliile plății.
+      </p>
+      <dl class="mt-5 grid gap-x-8 gap-y-1 sm:grid-cols-[auto_1fr] sm:gap-y-4">
+        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">Titular</dt>
+        <dd class="mb-3 text-sm text-ink sm:mb-0">{bank.accountHolder}</dd>
+        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">IBAN</dt>
+        <dd class="mb-3 flex flex-wrap items-center gap-3 sm:mb-0">
+          <code class="rounded-lg bg-ink/5 px-3 py-1.5 text-sm text-ink break-all" data-iban>{bank.iban}</code>
+          <button
+            type="button"
+            class="inline-flex min-h-11 items-center gap-1.5 rounded-full px-2 text-sm font-semibold text-green hover:text-green-dark focus-visible:outline-2 focus-visible:outline-offset-2"
+            data-copy-iban
+            aria-label="Copiază IBAN-ul"
+          >
+            <span data-copy-icon hidden>
+              <Icon name="check" class="h-4 w-4" />
+            </span>
+            <span data-copy-label aria-live="polite">Copiază</span>
+          </button>
+        </dd>
+        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">SWIFT/BIC</dt>
+        <dd class="mb-3 text-sm text-ink sm:mb-0">{bank.swift}</dd>
+        <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">Bancă</dt>
+        <dd class="text-sm text-ink">{bank.name}</dd>
+      </dl>
+      <p class="mt-6 border-t border-ink/10 pt-4 text-xs leading-relaxed text-ink-soft">
+        Datele transferului (numele plătitorului, contul, suma și detaliile plății) ajung la noi prin extrasul bancar și sunt folosite
+        pentru evidența donațiilor și obligațiile contabile ale asociației. Detalii în{" "}
+        <a href={withBase(legalLinks.privacyPolicy)} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Politica de confidențialitate</a>.
+      </p>
     </div>
 
-    <div id="alternative" class="mt-10 scroll-mt-24 rounded-2xl border border-ink/10 bg-paper p-7">
-      {
-        contact.bankAccountConfigured ? (
-          <>
-            <h2 class="font-display text-xl font-bold text-ink">Donează prin transfer bancar</h2>
-            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-              Poți susține activitatea asociației printr-un transfer bancar. Folosește datele confirmate de mai jos și menționează „Donație” în detaliile plății.
+    {
+      !donations.provider && (
+        <div class="bg-animals mt-10 rounded-[2rem] p-4 sm:p-10 [--animals-ink:var(--color-green)] [--animals-size:280px]">
+          <div class="rounded-2xl border-2 border-dashed border-ink/25 bg-paper p-7">
+            <p class="inline-flex items-center gap-2 rounded-full bg-blue px-3 py-1 text-xs font-semibold text-ink">
+              Donații cu cardul — în pregătire
             </p>
-            <dl class="mt-5 grid gap-4 sm:grid-cols-[auto_1fr] sm:gap-x-8">
-              <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">Titular</dt>
-              <dd class="text-sm text-ink">{contact.bankName}</dd>
-              <dt class="text-xs font-semibold uppercase tracking-wide text-ink-soft sm:self-center">IBAN</dt>
-              <dd class="flex flex-wrap items-center gap-3">
-                <code class="rounded-lg bg-ink/5 px-3 py-1.5 text-sm text-ink" data-iban>{contact.bankAccount}</code>
-                <button type="button" class="inline-flex items-center gap-1.5 text-sm font-semibold text-green hover:text-green-dark" data-copy-iban>
-                  <span data-copy-icon hidden>
-                    <Icon name="check" class="h-4 w-4" />
-                  </span>
-                  <span data-copy-label>Copiază</span>
-                </button>
-              </dd>
-            </dl>
-          </>
-        ) : (
-          <>
-            <h2 class="font-display text-xl font-bold text-ink">Datele pentru transfer bancar sunt în pregătire</h2>
-            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-              Vom publica aici informațiile bancare după confirmarea lor. Îți mulțumim pentru interesul de a susține animalele aflate în grija noastră.
+            <h2 class="mt-4 font-display text-xl font-bold text-ink">Pregătim donațiile online</h2>
+            <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
+              Donațiile online cu cardul vor fi disponibile ulterior. Până atunci, poți dona prin{" "}
+              <a href="#transfer" class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">transfer bancar</a>.
             </p>
-          </>
-        )
-      }
-    </div>
+            {/* A real disabled button, not a link styled to look inactive:
+                it can't be focused or activated, and assistive tech reads it
+                as unavailable. */}
+            <button
+              type="button"
+              disabled
+              class="mt-5 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full bg-ink/15 px-5 py-3 text-[0.95rem] font-semibold text-ink/60"
+            >
+              Donează cu cardul — indisponibil momentan
+            </button>
+            {/* TODO(payment-provider): wire up a real checkout (e.g. Stripe / Netopia / EuPlătesc) here.
+                 `donations.provider` in src/data/config.ts stays null until a processor is selected —
+                 update the privacy policy before enabling it. */}
+          </div>
+        </div>
+      )
+    }
 
     <div class="mt-10 flex flex-col gap-3 border-t border-ink/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
       <p class="max-w-sm text-sm leading-relaxed text-ink-soft">
@@ -96,7 +104,7 @@ import { donations, contact } from "../data/config";
     if (!iban) return;
     try {
       await navigator.clipboard.writeText(iban.textContent?.trim() ?? "");
-      if (label) label.textContent = "Copiat";
+      if (label) label.textContent = "IBAN copiat";
       icon?.removeAttribute("hidden");
       setTimeout(() => {
         if (label) label.textContent = "Copiază";

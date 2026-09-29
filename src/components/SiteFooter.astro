@@ -2,10 +2,23 @@
 import Logo from "./Logo.astro";
 import SocialBadge from "./SocialBadge.astro";
 import Icon from "./Icon.astro";
-import { site, contact, nav, legalLinks, credits } from "../data/config";
+import { site, legal, contact, nav, legalLinks, credits } from "../data/config";
 import { withBase } from "../lib/url";
 
 const year = new Date().getFullYear();
+
+const legalNav = [
+  { label: "Politica de confidențialitate", href: legalLinks.privacyPolicy },
+  { label: "Politica de cookies", href: legalLinks.cookiePolicy },
+  { label: "Termeni de utilizare", href: legalLinks.terms },
+  { label: "Informații legale", href: legalLinks.legalInfo },
+];
+
+const unsubscribeHref = contact.email
+  ? `mailto:${contact.email}?subject=${encodeURIComponent("Dezabonare newsletter")}&body=${encodeURIComponent(
+      "Vă rog să dezabonați această adresă de la newsletter-ul Asociației Fata cu 4pezi."
+    )}`
+  : null;
 ---
 
 <footer class="bg-animals bg-pink text-ink [--animals-ink:var(--color-cream)] [--animals-size:340px]">
@@ -51,26 +64,28 @@ const year = new Date().getFullYear();
           <li><a href={withBase("/adopta")} class="text-ink/70 hover:text-ink">Adoptă un animal</a></li>
           <li><a href={withBase("/voluntari")} class="text-ink/70 hover:text-ink">Devino voluntar</a></li>
           <li><a href={withBase("/parteneri")} class="text-ink/70 hover:text-ink">Devino partener</a></li>
-          <li><a href={withBase("/shop")} class="text-ink/70 hover:text-ink">Magazin (în curând)</a></li>
         </ul>
       </div>
 
-      <div>
+      <div class="min-w-0">
         <p class="font-display text-sm font-bold uppercase tracking-wide text-ink/70">Contact</p>
         <ul class="mt-3 flex flex-col gap-2.5 text-sm text-ink/80 lg:mt-4 lg:gap-3">
           {
-            contact.emailConfigured && (
+            contact.email && (
               <li class="flex items-start gap-2.5">
                 <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
-                <a href={`mailto:${contact.email}`} class="hover:text-ink">{contact.email}</a>
+                <a href={`mailto:${contact.email}`} class="min-w-0 [overflow-wrap:anywhere] hover:text-ink">{contact.email}</a>
               </li>
             )
           }
           {
-            contact.phoneConfigured && (
+            contact.phone && (
               <li class="flex items-start gap-2.5">
                 <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
-                <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="hover:text-ink">{contact.phone}</a>
+                <span>
+                  <a href={`tel:${contact.phone.replace(/\s+/g, "")}`} class="hover:text-ink">{contact.phone}</a>
+                  {contact.phoneContactName && <span class="block text-xs text-ink/70">{contact.phoneContactName}</span>}
+                </span>
               </li>
             )
           }
@@ -92,65 +107,96 @@ const year = new Date().getFullYear();
           </p>
         </div>
 
-        <form class="flex w-full max-w-sm flex-col gap-3" data-newsletter-form data-mailto={contact.email} novalidate>
-          <div class="flex flex-col gap-2 sm:flex-row">
-            <label for="nl-email" class="sr-only">Adresă de e-mail</label>
-            <input
-              id="nl-email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              required
-              placeholder="adresa@exemplu.ro"
-              class="w-full flex-1 rounded-full border border-ink/20 bg-cream px-4 py-2.5 text-sm text-ink placeholder:text-ink/40"
-            />
-            <button
-              type="submit"
-              class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-cream transition-colors duration-150 hover:bg-[#2a1108] focus-visible:outline-2 focus-visible:outline-offset-3"
-            >
-              Abonează-te
-            </button>
-          </div>
-          <label class="flex items-start gap-2 text-xs leading-relaxed text-ink/70">
-            <input id="nl-consent" name="consent" type="checkbox" required class="mt-0.5 h-4 w-4 shrink-0 rounded border border-ink/30" />
-            <span>
-              Sunt de acord să primesc e-mailuri de la Fata cu 4pezi, conform{" "}
-              <a href={withBase(legalLinks.privacyPolicy)} class="underline hover:text-ink">politicii de confidențialitate</a>.
-            </span>
-          </label>
-          <p class="hidden text-xs font-medium text-green" data-newsletter-confirm role="status">
-            Dacă s-a deschis aplicația de e-mail, apasă „Trimite” pentru a confirma abonarea. Mulțumim! Între timp,
-            <a href={withBase("/doneaza#wallpapere")} class="underline underline-offset-2 hover:text-green-dark">descarcă un wallpaper</a>.
-          </p>
-        </form>
+        {
+          contact.email ? (
+            <form class="flex w-full max-w-sm flex-col gap-3" data-newsletter-form data-mailto={contact.email} novalidate>
+              <div class="flex flex-col gap-2 sm:flex-row">
+                <label for="nl-email" class="sr-only">Adresă de e-mail</label>
+                <input
+                  id="nl-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  placeholder="adresa@exemplu.ro"
+                  class="w-full flex-1 rounded-full border border-ink/20 bg-cream px-4 py-2.5 text-sm text-ink placeholder:text-ink/40"
+                />
+                <button
+                  type="submit"
+                  class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-cream transition-colors duration-150 hover:bg-[#2a1108] focus-visible:outline-2 focus-visible:outline-offset-3"
+                >
+                  Abonează-te
+                </button>
+              </div>
+              <!-- The newsletter is the one flow that genuinely rests on
+                   consent (GDPR art. 6(1)(a)): a separate, never-prechecked
+                   box the visitor has to tick themselves. -->
+              <label class="flex items-start gap-2 text-xs leading-relaxed text-ink/70">
+                <input id="nl-consent" name="consent" type="checkbox" required class="mt-0.5 h-4 w-4 shrink-0 rounded border border-ink/30" />
+                <span>Vreau să primesc pe e-mail newsletter-ul Asociației Fata cu 4pezi: vești despre animalele ajutate, campanii și modalități de implicare.</span>
+              </label>
+              <p class="text-xs leading-relaxed text-ink/70">
+                Se va deschide aplicația ta de e-mail cu o cerere de abonare; adresa ajunge la noi doar dacă trimiți mesajul.
+                Te poți dezabona oricând{unsubscribeHref && (
+                  <>
+                    {" "}(<a href={unsubscribeHref} class="underline hover:text-ink">trimite o cerere de dezabonare</a>)
+                  </>
+                )}. Detalii în{" "}
+                <a href={withBase(legalLinks.privacyPolicy)} class="underline hover:text-ink">Politica de confidențialitate</a>.
+              </p>
+              <p class="hidden text-xs font-medium text-green" data-newsletter-confirm role="status">
+                Dacă s-a deschis aplicația de e-mail, apasă „Trimite” pentru a confirma abonarea. Mulțumim! Între timp,
+                <a href={withBase("/doneaza#wallpapere")} class="underline underline-offset-2 hover:text-green-dark">descarcă un wallpaper</a>.
+              </p>
+            </form>
+          ) : (
+            <p class="w-full max-w-sm text-sm leading-relaxed text-ink/70">
+              Abonarea va fi disponibilă după activarea adresei de e-mail a asociației. Până atunci,{" "}
+              <a href={withBase("/doneaza#wallpapere")} class="underline underline-offset-2 hover:text-ink">descarcă un wallpaper</a>.
+            </p>
+          )
+        }
       </div>
     </div>
 
-    <p class="mt-8 text-xs text-ink/60 sm:mt-10">Website în construcție — o parte din conținut este demonstrativ, până la publicarea datelor reale.</p>
+    <p class="mt-8 text-xs text-ink/75 sm:mt-10">Website în construcție — o parte din conținut este demonstrativ, până la publicarea datelor reale.</p>
 
-    <div class="mt-4 flex flex-col gap-3 border-t border-ink/15 pt-6 text-xs text-ink/60 sm:flex-row sm:items-center sm:justify-between">
-      <p>© {year} {site.legalName}. Toate drepturile rezervate.</p>
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-        <a href={withBase(legalLinks.privacyPolicy)} class="hover:text-ink">Politica de confidențialitate</a>
-        {(contact.cifConfigured || contact.registrationNumberConfigured) && (
-          <span>
-            {contact.cifConfigured && `CIF ${contact.cif}`}
-            {contact.cifConfigured && contact.registrationNumberConfigured && " · "}
-            {contact.registrationNumberConfigured && `Înreg. ${contact.registrationNumber}`}
-          </span>
-        )}
-        <a href={credits.studioUrl} target="_blank" rel="noopener noreferrer" class="hover:text-ink">
-          Design de {credits.studioName}
-        </a>
+    <div class="mt-4 flex flex-col gap-4 border-t border-ink/15 pt-6 text-xs text-ink/75 lg:flex-row lg:items-start lg:justify-between">
+      <div class="flex flex-col gap-1">
+        <p>© {year} {site.legalName}. Toate drepturile rezervate.</p>
+        <p>
+          CUI {legal.cif}
+          {legal.registrationNumber && <> · Nr. Registrul Asociațiilor și Fundațiilor {legal.registrationNumber}</>}
+        </p>
       </div>
+      <nav aria-label="Informații juridice">
+        <ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          {
+            legalNav.map((item) => (
+              <li>
+                <a href={withBase(item.href)} class="underline decoration-ink/25 underline-offset-2 hover:text-ink hover:decoration-ink">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href={credits.studioUrl} target="_blank" rel="noopener noreferrer" class="hover:text-ink">
+              Design de {credits.studioName}
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </footer>
 
 <script>
   // TODO(newsletter-provider): once an ESP (Mailchimp, Brevo, etc.) is
-  // chosen, point this form at its signup endpoint instead. Until then it
-  // falls back to a mailto request, same pattern as the volunteer form.
+  // chosen, point this form at its signup endpoint instead — and update the
+  // privacy/cookie policies first. Until then it falls back to a mailto
+  // request, same pattern as the volunteer form. The form only renders once
+  // contact.email is confirmed.
   import { fireConfetti } from "../lib/confetti";
 
   const form = document.querySelector<HTMLFormElement>("[data-newsletter-form]");
@@ -164,7 +210,11 @@ const year = new Date().getFullYear();
     const email = new FormData(form).get("email");
     const mailto = form.dataset.mailto;
     const subject = encodeURIComponent("Abonare newsletter");
-    const body = encodeURIComponent(`Vreau să mă abonez la newsletter cu adresa: ${email}`);
+    const body = encodeURIComponent(
+      `Solicit abonarea acestei adrese la newsletter-ul Asociației Fata cu 4pezi.
+
+Adresa de e-mail: ${email}`
+    );
     // Burst first, while the button is still measurable on screen, then hand
     // off to the mail app — on mobile, opening the mailto link right away can
     // pull the page out from under the animation before it is placed.

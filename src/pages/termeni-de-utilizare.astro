@@ -1,0 +1,109 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { site, legal, legalLinks } from "../data/config";
+import { withBase } from "../lib/url";
+
+// General rules of use for an informational site. There is no shop: nothing
+// here covers sales, delivery, returns or warranties, and donations are not
+// purchases.
+---
+
+<LegalLayout
+  title="Termeni de utilizare"
+  seoTitle="Termeni de utilizare | Fata cu 4pezi"
+  description="Regulile generale de utilizare a site-ului Asociației Fata cu 4pezi: rolul informativ al site-ului, conținutul și imaginile, informațiile despre animale, sesizările și linkurile externe."
+  intro="Acești termeni stabilesc regulile generale de folosire a site-ului. Prin navigarea pe site accepți aceste reguli; dacă nu ești de acord cu ele, te rugăm să nu folosești site-ul."
+>
+  <h2>1. Cine operează site-ul</h2>
+  <p>
+    Site-ul oficial al asociației ({site.domains.join(" / ")}) este operat de {site.legalName}, CUI {legal.cif}, cu sediul social în {legal.address}. Detalii complete găsești în pagina{" "}
+    <a href={withBase(legalLinks.legalInfo)}>Informații legale</a>.
+  </p>
+
+  <h2>2. Rolul site-ului</h2>
+  <p>
+    Site-ul are scop informativ și de prezentare: descrie activitatea asociației, animalele care își caută o familie, modalitățile de
+    implicare (adopție, voluntariat, sesizări, donații, redirecționarea a 3,5%) și informații de interes pentru comunitate. Site-ul nu
+    este un magazin online și nu vinde produse sau servicii. Donațiile sunt contribuții voluntare, nu cumpărări.
+  </p>
+
+  <h2>3. Conținutul, imaginile și marca</h2>
+  <p>
+    Textele, fotografiile, ilustrațiile, sigla, numele „Fata cu 4pezi” și elementele grafice ale site-ului aparțin asociației sau sunt
+    folosite cu acordul autorilor lor și sunt protejate de legislația privind drepturile de autor și mărcile.
+  </p>
+  <p>Poți folosi conținutul în mod rezonabil, de exemplu:</p>
+  <ul>
+    <li>să distribui linkuri către pagini ale site-ului, inclusiv către profilurile animalelor;</li>
+    <li>să citezi scurte fragmente, cu menționarea sursei și a unui link către pagina originală;</li>
+    <li>să descarci pentru uz personal materialele oferite explicit în acest scop (de exemplu wallpaperele).</li>
+  </ul>
+  <p>
+    Nu este permisă folosirea conținutului, a siglei sau a numelui asociației în scop comercial, într-un mod care sugerează în mod
+    fals o colaborare cu asociația sau într-un context care îi poate afecta reputația, fără acordul nostru scris.
+  </p>
+
+  <h2>4. Informațiile despre animale</h2>
+  <ul>
+    <li>
+      Informațiile despre animale (vârstă, stare de sănătate, temperament, status) reflectă ce știm la momentul publicării și pot
+      evolua în timp.
+    </li>
+    <li>
+      Listarea unui animal pe site nu garantează că acesta este disponibil pentru adopție la momentul în care ne contactezi. Statusul
+      poate fi actualizat cu întârziere.
+    </li>
+    <li>
+      Adopția presupune un proces de discuție și evaluare. Asociația decide, în interesul animalului, dacă o adopție poate avea loc.
+    </li>
+  </ul>
+
+  <h2>5. Sesizările</h2>
+  <p>
+    Trimiterea unei sesizări nu reprezintă o garanție că asociația poate interveni. Intervențiile depind de resursele disponibile
+    (voluntari, fonduri, parteneri veterinari, locuri de găzduire temporară) și de circumstanțele fiecărui caz. În situații urgente,
+    contactează un medic veterinar sau autoritățile competente. Te rugăm să nu te pui în pericol pentru a ajuta un animal și să ne
+    transmiți informații corecte.
+  </p>
+
+  <h2>6. Nu oferim consultații veterinare</h2>
+  <p>
+    Articolele și informațiile de pe site au caracter general și nu înlocuiesc consultul unui medic veterinar. Pentru orice problemă
+    de sănătate a unui animal, adresează-te unui cabinet veterinar.
+  </p>
+
+  <h2>7. Linkuri către alte platforme</h2>
+  <p>
+    Site-ul conține linkuri către platforme externe (de exemplu Instagram, Facebook, TikTok, YouTube, formular230.ro). Acestea sunt
+    operate de terți, iar folosirea lor este guvernată de termenii și politicile platformelor respective. Nu controlăm conținutul lor
+    și nu răspundem pentru modul în care funcționează.
+  </p>
+
+  <h2>8. Folosirea corectă a site-ului</h2>
+  <p>
+    Te rugăm să nu folosești site-ul sau canalele de contact pentru a trimite conținut ilegal, ofensator sau înșelător ori pentru a
+    încerca să afectezi funcționarea site-ului.
+  </p>
+
+  <h2>9. Răspunderea</h2>
+  <p>
+    Ne străduim ca informațiile de pe site să fie corecte și actualizate, dar pot apărea erori sau întârzieri. Dacă observi o
+    informație greșită, te rugăm să ne anunți și o vom corecta. Acești termeni nu limitează drepturile pe care le ai conform legii.
+  </p>
+
+  <h2>10. Datele personale</h2>
+  <p>
+    Modul în care prelucrăm datele personale este descris în{" "}
+    <a href={withBase(legalLinks.privacyPolicy)}>Politica de confidențialitate</a>, iar folosirea cookie-urilor în{" "}
+    <a href={withBase(legalLinks.cookiePolicy)}>Politica de cookies</a>.
+  </p>
+
+  <h2>11. Modificări</h2>
+  <p>
+    Asociația poate actualiza conținutul și paginile site-ului, precum și acești termeni. Versiunea în vigoare este cea publicată pe
+    această pagină, cu data ultimei actualizări afișată mai sus.
+  </p>
+
+  <h2>12. Legea aplicabilă</h2>
+  <p>Acești termeni sunt guvernați de legea română.</p>
+</LegalLayout>
