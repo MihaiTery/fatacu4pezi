@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mihaitery.github.io/fatacu4pezi/sitemap-index.xml
+Sitemap: https://fatacu4pezi.ro/sitemap-index.xml

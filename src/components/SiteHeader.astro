@@ -9,7 +9,7 @@ import { withBase } from "../lib/url";
 // while no official profile URL is confirmed.
 const hasSocial = social.some((s) => s.url);
 const currentPath = Astro.url.pathname;
-// Astro.url.pathname includes the deploy base ("/fatacu4pezi/adopta"), so
+// Astro.url.pathname includes the deploy base, if one is configured, so
 // the comparison target needs the same prefix — comparing against the bare
 // config href would never match once a base path is configured.
 const isActive = (href: string) => {

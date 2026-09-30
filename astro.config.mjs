@@ -7,12 +7,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Currently deployed to a GitHub Pages project site. Swap `site` to the
-  // real custom domain (and drop `base` entirely) once fatacu4pezi.ro is
-  // live — see src/data/config.ts `site.url` for the intended production
-  // domain, which is kept separate from this deploy-target value on purpose.
-  site: 'https://mihaitery.github.io',
-  base: '/fatacu4pezi',
+  // Deployed to GitHub Pages under the custom domain (set in the repo's
+  // Settings → Pages), served from the domain root — no `base` needed.
+  site: 'https://fatacu4pezi.ro',
 
   vite: {
     plugins: [tailwindcss()]

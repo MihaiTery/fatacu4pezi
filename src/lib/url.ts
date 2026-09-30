@@ -1,8 +1,8 @@
-// GitHub Pages project-site deploy: the site is served under a sub-path
-// (astro.config.mjs `base`), not at the domain root. Astro base-prefixes its
+// The site is served from the domain root today (no `base` in
+// astro.config.mjs), so this is a no-op. It stays in place so that serving
+// under a sub-path again only needs a config change: Astro base-prefixes its
 // own generated asset URLs automatically, but a hand-written root-relative
-// path ("/adopta", "/logo/logo-maro.png") does not get that treatment —
-// this makes it explicit at every call site that needs it.
+// path ("/adopta", "/logo/logo-maro.png") does not get that treatment.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 /**

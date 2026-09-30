@@ -13,12 +13,12 @@ export const site = {
   displayName: "Fata cu 4pezi",
   shortDescription:
     "Fata cu 4pezi intervine, în limita resurselor disponibile, pentru salvarea, tratamentul veterinar, sterilizarea, găsirea unui foster și adopția animalelor de pe străzi, pe tot teritoriul României.",
-  // Primary production domain — not live yet. Canonical/OG URLs use
-  // `site` from astro.config.mjs (the current GitHub Pages deploy) first.
+  // Primary production domain. Canonical/OG URLs use `site` from
+  // astro.config.mjs first; keep the two in sync.
   url: "https://fatacu4pezi.ro",
   // Every domain the association uses for this site; shown together
   // wherever the website is named (Informații legale, Termeni).
-  domains: ["fatacu4pezi.ro", "asociatiafatacu4pezi.ro"],
+  domains: ["fatacu4pezi.ro"],
   locale: "ro-RO",
   area: "România",
 };
@@ -53,9 +53,9 @@ export const animalsAreDemo = false;
 // every flow that would send to it (mailto forms, CTAs) shows an
 // "available soon" state instead. Set the real, monitored value to enable.
 export const contact = {
-  email: "contact@asociatiafatacu4pezi.ro" as string | null,
+  email: "contact@fatacu4pezi.ro" as string | null,
   // Used by "Fă o sesizare"; currently the same inbox as general contact.
-  reportEmail: "contact@asociatiafatacu4pezi.ro" as string | null,
+  reportEmail: "contact@fatacu4pezi.ro" as string | null,
   phone: "+40 765 737 439" as string | null,
   // Person who answers `phone`, shown next to it. Spelling as provided.
   phoneContactName: "Madalina Bacauanu" as string | null,

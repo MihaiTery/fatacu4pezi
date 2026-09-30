@@ -2,13 +2,13 @@
 
 Site-ul Asociației Fata cu 4pezi (salvarea animalelor de toate speciile, la nivel național). Astro + Tailwind CSS, static.
 
-**Live:** https://mihaitery.github.io/fatacu4pezi/
+**Live:** https://fatacu4pezi.ro/
 
 ## Development
 
 ```sh
 npm install
-npm run dev       # http://localhost:4321/fatacu4pezi/
+npm run dev       # http://localhost:4321/
 npm run build      # outputs to dist/
 npm run preview
 ```
@@ -41,4 +41,4 @@ Regulă pentru viitor (GDPR + Legea nr. 506/2004). Dacă se introduc Google Anal
 
 ## Deploy
 
-Push pe `main` declanșează automat `.github/workflows/deploy.yml`, care publică pe GitHub Pages. Site-ul rulează sub o subcale (`base: '/fatacu4pezi'` în `astro.config.mjs`) — orice link intern nou trebuie construit cu helper-ul `withBase()` din `src/lib/url.ts` (vezi exemplele din `Button.astro`, `SiteHeader.astro`). Când domeniul propriu (fatacu4pezi.ro) devine disponibil, `site`/`base` din `astro.config.mjs` trebuie actualizate și `withBase()` poate fi eliminat.
+Push pe `main` declanșează automat `.github/workflows/deploy.yml`, care publică pe GitHub Pages, pe domeniul propriu **fatacu4pezi.ro** (setat din *Settings → Pages → Custom domain* al repo-ului, cu DNS-ul către GitHub Pages). Site-ul rulează din rădăcina domeniului, fără `base`. Link-urile interne trec în continuare prin helper-ul `withBase()` din `src/lib/url.ts` (acum fără efect), ca o eventuală mutare sub o subcale să necesite doar schimbarea configului.
