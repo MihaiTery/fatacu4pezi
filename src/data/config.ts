@@ -34,20 +34,11 @@ export const legal = {
   caen: { code: "9499", label: "Activități ale altor organizații n.c.a." },
 };
 
-// The partner data currently in the repository is
-// demonstrative (see PRODUCT.md) — names, dates, "since" years and photos
-// are illustrative, not real records. Pages built on that data are kept
-// noindex so they aren't promoted in Google as real information. Flip this
-// to `false` once the demonstrative entries are replaced with confirmed,
-// real animals/partners and the site is ready to be indexed — every page
-// that reads it will stop applying noindex automatically.
-export const isDemoContent = true;
-
-// The adoption catalogue graduated first: its entries are now real animals
-// taken from the association's Instagram posts (September 2026), so the
-// adopta pages no longer carry the demo notice or noindex. The demo blog
-// posts were removed outright; partners are still demonstrative and keep
-// following isDemoContent.
+// The adoption catalogue holds real animals taken from the association's
+// Instagram posts (September 2026), so the adopta pages carry no demo
+// notice or noindex. Flip to `true` only if placeholder profiles ever
+// return. (The demo blog posts and partners were removed outright; those
+// pages show an "în curând" state while their collections are empty.)
 export const animalsAreDemo = false;
 
 // Contact channels. `null` = not confirmed yet → the UI hides the value and
