@@ -2,6 +2,7 @@
 import Logo from "./Logo.astro";
 import SocialBadge from "./SocialBadge.astro";
 import Icon from "./Icon.astro";
+import EmailText from "./EmailText.astro";
 import { site, legal, contact, nav, legalLinks, credits } from "../data/config";
 import { withBase } from "../lib/url";
 
@@ -74,7 +75,7 @@ const unsubscribeHref = contact.email
             contact.email && (
               <li class="flex items-start gap-2.5">
                 <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink/60" />
-                <a href={`mailto:${contact.email}`} class="min-w-0 [overflow-wrap:anywhere] hover:text-ink">{contact.email}</a>
+                <a href={`mailto:${contact.email}`} class="min-w-0 [overflow-wrap:anywhere] hover:text-ink"><EmailText email={contact.email} /></a>
               </li>
             )
           }

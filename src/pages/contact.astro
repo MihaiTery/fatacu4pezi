@@ -1,6 +1,7 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
 import Icon from "../components/Icon.astro";
+import EmailText from "../components/EmailText.astro";
 import SocialBadge from "../components/SocialBadge.astro";
 import Button from "../components/Button.astro";
 import { site, legal, contact, social, legalLinks } from "../data/config";
@@ -33,7 +34,7 @@ const hasSocial = social.some((s) => s.url);
           {contact.email && (
             <li class="flex items-start gap-3">
               <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-ink-soft" />
-              <a href={`mailto:${contact.email}`} class="min-w-0 text-ink [overflow-wrap:anywhere] hover:text-green">{contact.email}</a>
+              <a href={`mailto:${contact.email}`} class="min-w-0 text-ink [overflow-wrap:anywhere] hover:text-green"><EmailText email={contact.email} /></a>
             </li>
           )}
           {contact.phone && (

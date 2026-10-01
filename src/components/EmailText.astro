@@ -1,0 +1,14 @@
+---
+// Renders an e-mail address with a preferred line break right after the "@",
+// so narrow columns wrap as "contact@" / "fatacu4pezi.ro" instead of splitting
+// the domain at an arbitrary letter. Pair with [overflow-wrap:anywhere] on the
+// parent as a fallback for when even one half doesn't fit.
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+const at = email.lastIndexOf("@");
+---
+
+{at > 0 ? <>{email.slice(0, at + 1)}<wbr />{email.slice(at + 1)}</> : email}
