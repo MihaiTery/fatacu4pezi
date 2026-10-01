@@ -2,45 +2,38 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
-import { contact, legalLinks } from "../data/config";
-import { withBase } from "../lib/url";
+import { policeReportUrl } from "../data/config";
 
 const checklist = [
   {
     title: "Locația animalului",
-    text: "Trimite o adresă, un reper ușor de identificat sau coordonate GPS, dacă le ai.",
+    text: "Notează o adresă, un reper ușor de identificat sau coordonate GPS, dacă le ai.",
   },
   {
     title: "Fotografii, dacă le poți face în siguranță",
-    text: "Câteva imagini ne pot ajuta să înțelegem situația. Nu te apropia de un animal speriat sau rănit doar pentru a obține fotografii. Pe cât posibil, evită să fotografiezi alte persoane sau detalii care le pot identifica, dacă nu sunt necesare pentru sesizare.",
+    text: "Câteva imagini pot ajuta la înțelegerea situației. Nu te apropia de un animal speriat sau rănit doar pentru a obține fotografii. Pe cât posibil, evită să fotografiezi alte persoane sau detalii care le pot identifica, dacă nu sunt necesare pentru sesizare.",
   },
   {
     title: "Ce ai observat",
-    text: "Spune-ne dacă animalul pare rănit, blocat, slăbit sau expus unui pericol și de cât timp se află în acel loc, dacă știi.",
+    text: "Descrie dacă animalul pare rănit, blocat, slăbit sau expus unui pericol și de cât timp se află în acel loc, dacă știi.",
   },
   {
-    title: "Cum te putem contacta",
-    text: "Lasă o adresă de e-mail sau un număr de telefon la care putem reveni dacă sunt necesare informații suplimentare.",
+    title: "Datele tale de contact",
+    text: "Petițiile anonime nu sunt luate în considerare, așa că formularul îți va cere datele de identificare și de contact. Pe acestea vei primi răspunsul.",
   },
 ];
-
-const subject = encodeURIComponent("Sesizare — animal în dificultate");
-const body = encodeURIComponent(
-  `Locație (adresă / reper / coordonate GPS):\n\nCe ai observat:\n\nDe cât timp este acolo:\n\nFotografii atașate: da / nu\n\nDatele tale de contact:\n`
-);
-const mailtoHref = contact.reportEmail ? `mailto:${contact.reportEmail}?subject=${subject}&body=${body}` : null;
 ---
 
 <PageLayout
   title="Ai găsit un animal în pericol?"
   seoTitle="Ai găsit un animal în pericol? Semnalează cazul | Fata cu 4pezi"
-  description="Ai găsit un animal rănit, abandonat sau aflat în pericol pe stradă, oriunde în România? Află ce informații sunt utile pentru o sesizare către Fata cu 4pezi."
-  intro="Dacă ai observat un animal rănit, abandonat sau aflat în dificultate, oriunde în România, ne poți semnala situația. Informațiile cât mai clare ne ajută să evaluăm cazul."
+  description="Ai găsit un animal rănit, abandonat sau aflat în pericol oriunde în România? Află ce informații sunt utile și cum faci o sesizare la Poliția Română."
+  intro="Dacă ai observat un animal rănit, abandonat sau aflat în dificultate, oriunde în România, poți face o sesizare online la Poliția Română. Informațiile cât mai clare ajută la evaluarea cazului."
 >
   <section class="mx-auto max-w-5xl px-4 pb-20 pt-2 sm:px-6 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[1fr_320px]">
       <div>
-        <h2 class="font-display text-xl font-bold text-ink">Ce informații ne sunt utile</h2>
+        <h2 class="font-display text-xl font-bold text-ink">Ce informații sunt utile</h2>
         <ul class="mt-6 flex flex-col gap-6">
           {
             checklist.map((item, i) => (
@@ -58,38 +51,27 @@ const mailtoHref = contact.reportEmail ? `mailto:${contact.reportEmail}?subject=
         </ul>
 
         <p class="mt-10 max-w-xl text-sm leading-relaxed text-ink-soft">
-          Nu trebuie să ai toate informațiile pentru a trimite o sesizare. Comunică ceea ce știi și evită să te pui în pericol.
+          Nu trebuie să ai toate informațiile pentru a face o sesizare. Comunică ceea ce știi și evită să te pui în pericol.
         </p>
         <p class="mt-3 max-w-xl text-sm leading-relaxed text-ink-soft">
-          Dacă animalul are nevoie de ajutor medical urgent, contactează un medic veterinar sau serviciile competente. Trimiterea unui
-          e-mail către asociație nu garantează o intervenție imediată.
+          Dacă un animal este agresat chiar acum, sună la 112. Dacă are nevoie de ajutor medical urgent, contactează un medic
+          veterinar. Un formular online nu garantează o intervenție imediată.
         </p>
       </div>
 
       <aside class="h-fit rounded-2xl border border-ink/10 bg-paper p-6">
-        <h2 class="font-display text-lg font-bold text-ink">Trimite o sesizare</h2>
-        {
-          contact.reportEmail && mailtoHref ? (
-            <>
-              <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-                Butonul deschide aplicația ta de e-mail și pregătește un mesaj pe care îl poți completa înainte de trimitere.
-              </p>
-              <Button href={mailtoHref} variant="primary" size="md" class="mt-5 w-full">
-                <Icon name="mail" class="h-4 w-4" />
-                Pregătește sesizarea prin e-mail
-              </Button>
-              <p class="mt-3 text-xs text-ink-soft">{contact.reportEmail}</p>
-              <p class="mt-4 border-t border-ink/10 pt-4 text-xs leading-relaxed text-ink-soft">
-                Datele, locația și fotografiile pe care alegi să ni le trimiți vor fi folosite pentru gestionarea sesizării. Detalii în{" "}
-                <a href={withBase(legalLinks.privacyPolicy)} class="font-semibold text-ink underline decoration-ink/30 hover:decoration-ink">Politica de confidențialitate</a>.
-              </p>
-            </>
-          ) : (
-            <p class="mt-2 text-sm leading-relaxed text-ink-soft">
-              Adresa dedicată sesizărilor va fi disponibilă în curând.
-            </p>
-          )
-        }
+        <h2 class="font-display text-lg font-bold text-ink">Fă o sesizare</h2>
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">
+          Butonul deschide, într-un tab nou, formularul de petiție online al Poliției Române.
+        </p>
+        <Button href={policeReportUrl} external variant="primary" size="md" class="mt-5 w-full">
+          Deschide formularul Poliției
+          <Icon name="external" class="h-4 w-4" />
+        </Button>
+        <p class="mt-4 border-t border-ink/10 pt-4 text-xs leading-relaxed text-ink-soft">
+          Sesizarea ajunge direct la Poliția Română, nu la asociație. Datele pe care le completezi în formular sunt prelucrate de
+          Poliția Română, conform regulilor de pe site-ul acesteia.
+        </p>
       </aside>
     </div>
   </section>

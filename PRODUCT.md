@@ -31,7 +31,7 @@ Not a shelter with a website bolted on, and not a generic charity template. The 
 - Geographic scope: national — the association operates across all of Romania, not limited to Bucharest/Ilfov.
 - Species scope: all species, not dogs and cats only — the association rescues any animal in need. The catalogue's content-collection schema accepts any species as free text (see `src/content.config.ts`); every animal published so far happens to be a dog or a cat. For species that cannot legally be rehomed as pets, the `adoptable` field is set to `false` so the profile talks about care/recovery instead of promising adoption.
 - No CMS/admin: the dev team edits content collection files directly (animals, blog posts, partners are structured content, not hardcoded markup).
-- No backend exists or is planned at this stage: "Fă o sesizare" opens a mailto flow (no submission backend); adoption CTA leads to a placeholder contact flow; donation is UI + isolated payment-provider placeholder, no live transactions.
+- No backend exists or is planned at this stage: "Fă o sesizare" links out to the Romanian Police online petition form (no submission backend); adoption CTA leads to a placeholder contact flow; donation is UI + isolated payment-provider placeholder, no live transactions.
 - Future integrations arrive later without a redesign: card payment provider, https://formular230.ro/ for 3.5% redirection, and a real report-an-animal email address.
 
 ## Capabilities and Constraints

@@ -46,8 +46,6 @@ export const animalsAreDemo = false;
 // "available soon" state instead. Set the real, monitored value to enable.
 export const contact = {
   email: "contact@fatacu4pezi.ro" as string | null,
-  // Used by "Fă o sesizare"; currently the same inbox as general contact.
-  reportEmail: "contact@fatacu4pezi.ro" as string | null,
   phone: "+40 765 737 439" as string | null,
   // Person who answers `phone`, shown next to it. Spelling as provided.
   phoneContactName: "Madalina Bacauanu" as string | null,
@@ -95,6 +93,10 @@ export const redirect230 = {
   deadlineNote: null as string | null, // set once the current campaign's real deadline is confirmed
 };
 
+// "Fă o sesizare" sends people to the Romanian Police's online petition form
+// (animal cruelty falls under Legea 205/2004); the site itself receives nothing.
+export const policeReportUrl = "https://politiaromana.ro/ro/contact#formular-petitie";
+
 export const legalLinks = {
   privacyPolicy: "/politica-de-confidentialitate",
   cookiePolicy: "/politica-de-cookies",
@@ -104,7 +106,7 @@ export const legalLinks = {
 
 // Date shown as "Ultima actualizare" on the legal pages. Bump it whenever
 // the privacy, cookie or terms text changes.
-export const legalLastUpdated = "29.09.2026";
+export const legalLastUpdated = "01.10.2026";
 
 // Newsletter: no email service provider (Mailchimp, Brevo, etc.) is wired up
 // and none should be added without first updating the privacy/cookie
