@@ -1,25 +1,30 @@
 ---
-// The lockup (illustration + "ASOCIAȚIA" arc + "Fata cu 4pezi" wordmark) is
-// baked into the supplied raster art — the SVG export's arc text relies on
-// an unlicensed font and drops a diacritic, so the PNG colorways are the
-// reliable source for on-screen use. Never redraw or recolor outside the
-// six supplied variants.
+// Two supplied lockups, each in six colorways:
+// - "crest": illustration + "ASOCIAȚIA" arc + "Fata cu 4pezi" wordmark.
+// - "wordmark": the wide logotip ("ASOCIAȚIA / FATA cu 4PEZI"), used next to
+//   the crest wherever the association's full name should read clearly.
+// Both are vector art in public/logo/, generated from the sources in Logo/:
+// the crest's arc text is outlined (Raleway Bold, OFL) so it renders the same
+// everywhere, and both viewBoxes are trimmed to the artwork. Never redraw or
+// recolor outside the six supplied colorways.
 import { withBase } from "../lib/url";
 
 interface Props {
-  variant?: "maro" | "verde" | "bej" | "negru" | "roz" | "albastru";
+  kind?: "crest" | "wordmark";
+  variant?: "maro" | "verde" | "galben" | "negru" | "roz" | "albastru";
   class?: string;
   priority?: boolean;
 }
 
-const { variant = "maro", class: className, priority = false } = Astro.props;
+const { kind = "crest", variant = "maro", class: className, priority = false } = Astro.props;
+const size = kind === "crest" ? { file: "logo", width: 802, height: 840 } : { file: "logotip", width: 702, height: 161 };
 ---
 
 <img
-  src={withBase(`/logo/logo-${variant}.png`)}
+  src={withBase(`/logo/${size.file}-${variant}.svg`)}
   alt="Asociația Fata cu 4pezi"
-  width="288"
-  height="348"
+  width={size.width}
+  height={size.height}
   class={className}
   loading={priority ? "eager" : "lazy"}
   fetchpriority={priority ? "high" : "auto"}

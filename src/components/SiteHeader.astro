@@ -35,10 +35,15 @@ const isActive = (href: string) => {
 
   <div class="bg-pink text-ink">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
-      <a href={withBase("/")} class="flex shrink-0 items-center gap-2" aria-label="Fata cu 4pezi — acasă">
-        <span class="flex aspect-square h-[7.28rem] shrink-0 items-center justify-center overflow-visible rounded-full border border-ink/10 bg-cream p-[0.8125rem] sm:h-[8.32rem]">
-          <Logo variant="maro" class="h-full w-full -translate-y-[10%] object-contain" priority />
+      <!-- The wide wordmark spells out the association's full name beside the
+           crest — only below lg, where the nav folds into the menu pill. At
+           lg+ the nav and CTAs need the room (they wrap even at 1568px), so
+           the full name is carried by the footer there. -->
+      <a href={withBase("/")} class="flex min-w-0 items-center gap-3 sm:gap-4" aria-label="Asociația Fata cu 4pezi — acasă">
+        <span class="flex aspect-square h-[7.28rem] shrink-0 items-center justify-center overflow-visible rounded-full border border-ink/10 bg-cream p-[1.1rem] sm:h-[8.32rem] sm:p-[1.3rem]">
+          <Logo variant="maro" class="h-full w-full object-contain" priority />
         </span>
+        <Logo kind="wordmark" variant="maro" class="hidden h-auto w-36 min-w-0 sm:block sm:w-48 lg:hidden" priority />
       </a>
 
       <nav class="hidden items-center gap-6 lg:flex" aria-label="Navigație principală">

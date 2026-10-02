@@ -38,7 +38,7 @@ Not a shelter with a website bolted on, and not a generic charity template. The 
 
 - Romanian only, no language switcher, correct diacritics required throughout.
 - No lorem ipsum anywhere; all placeholder copy must be realistic, in Romanian, and obviously fictional where it states facts (names, numbers, legal data).
-- Logo: illustrated crest (girl + cats + dog line art) with the "ASOCIAȚIA" arc and "Fata cu 4pezi" wordmark baked into the artwork itself, supplied as raster PNG/JPG and vector SVG/PDF in six colorways (albastru/blue, bej/beige, maro/brown, negru/black, roz/pink, verde/green). The SVG's arc text ("ASOCIAȚIA") is live `<text>` using an unlicensed custom font (Daffiys) and is missing the correct "Ț" glyph — the raster PNGs are the reliable source for on-screen use; SVGs are reserved for contexts needing vector scaling where the arc-text risk is acceptable or re-authored. Logo must not be redrawn or altered, only recolored via the provided colorways and resized.
+- Logo: illustrated crest (girl + cats + dog line art) with the "ASOCIAȚIA" arc and "Fata cu 4pezi" wordmark, plus a wide wordmark variation ("ASOCIAȚIA / FATA cu 4PEZI" with paw-print counters) used alongside it so the association's full name reads clearly. Both supplied as SVG in six colorways (albastru/blue, galben/yellow-cream, maro/brown, negru/black, roz/pink, verde/green). Redrawn in October 2026 to drop the original lettering font (Daffiys), which the association had no rights to; the crest's arc text is Raleway Bold (OFL). Logos must not be redrawn or altered, only used in the provided colorways and resized.
 - No shop: the association does not sell anything online and the site is not e-commerce. The earlier `/shop` placeholder was removed (September 2026). Do not add return/delivery/warranty/sales terms or ANPC/SAL e-commerce notices — donations are not sales.
 - No cookie banner unless a non-essential technology is actually introduced (none is, at this stage) — see "Cookie-uri și tracking" in `README.md` for the rule that applies before one is.
 - Legal pages: `/politica-de-confidentialitate`, `/politica-de-cookies`, `/termeni-de-utilizare`, `/informatii-legale`, all built on `LegalLayout.astro` and reading legal facts from `src/data/config.ts`. They describe the site's real behaviour — update them before changing it (payment processor, newsletter service, analytics, embeds, a backend).
@@ -55,7 +55,7 @@ Not a shelter with a website bolted on, and not a generic charity template. The 
 ## Evidence on Hand
 
 - `mediakit.pdf` (repo root) — full color palette and typography spec, and the six logo colorways.
-- `/Logo` (repo root) — PDF/JPG/PNG/SVG exports of the logo in six colorways.
+- `/Logo` (repo root) — SVG sources of the crest in six colorways; `/Logo/Logo variation` holds the wide wordmark in the same six.
 - No real photography, no real animal data, no real partner data, no real blog content, no real legal/contact/financial information exists yet. All of it is placeholder and must be obviously replaceable, and must never be presented as fact (no invented statistics, testimonials, or legal claims stated as real).
 
 ## Product Principles

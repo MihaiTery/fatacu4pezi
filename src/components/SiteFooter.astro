@@ -33,12 +33,17 @@ const unsubscribeHref = contact.email
       <div class="col-span-2 grid grid-cols-[7rem_1fr] items-center gap-x-4 gap-y-4 sm:col-span-3 sm:grid-cols-[9rem_1fr] lg:col-span-1 lg:flex lg:flex-col lg:items-stretch">
         <!-- Same cream roundel as the header badge, scaled up, so the logo
              sits on a clean ground instead of over the animal pattern. -->
-        <span class="flex aspect-square h-28 shrink-0 items-center justify-center self-start rounded-full border border-ink/10 bg-cream p-3 sm:h-36 sm:p-4 lg:h-52 lg:p-5">
-          <Logo variant="maro" class="h-full w-full -translate-y-[10%] object-contain" />
+        <span class="flex aspect-square h-28 shrink-0 items-center justify-center self-start rounded-full border border-ink/10 bg-cream p-4 sm:h-36 sm:p-5 lg:h-52 lg:p-7">
+          <Logo variant="maro" class="h-full w-full object-contain" />
         </span>
-        <p class="max-w-xs text-[0.8125rem] leading-relaxed text-ink/80 sm:text-sm">
-          {site.shortDescription}
-        </p>
+        <!-- The wide wordmark names the association in full above its
+             description. -->
+        <div class="flex min-w-0 flex-col gap-3">
+          <Logo kind="wordmark" variant="maro" class="h-auto w-full max-w-52 self-start" />
+          <p class="max-w-xs text-[0.8125rem] leading-relaxed text-ink/80 sm:text-sm">
+            {site.shortDescription}
+          </p>
+        </div>
         <SocialBadge tone="ink" size="md" class="col-span-2 lg:mt-1" />
       </div>
 

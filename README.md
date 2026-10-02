@@ -19,7 +19,7 @@ Nothing on this site should be treated as real yet — see `PRODUCT.md` for the 
 
 - **Animale, articole de blog, parteneri** — edit/add Markdown files under `src/content/animals/`, `src/content/blog/`, `src/content/partners/`. Schema for each is in `src/content.config.ts`.
 - **Date juridice, date bancare, contact, rețele sociale, link-uri externe (plată, Formular 230, formularul de sesizare al Poliției)** — toate centralizate în `src/data/config.ts`. O valoare neconfirmată rămâne `null` și nu este afișată deloc (nici e-mailul, nici telefonul, nici profilurile sociale, nici numărul din Registrul Asociațiilor și Fundațiilor). Nu pune placeholder-uri afișabile acolo.
-- **Sigla** — cele șase variante de culoare furnizate sunt în `public/logo/`; nu redesena sau recolora în afara acestora (vezi `DESIGN.md`).
+- **Sigla** — emblema (`logo-*.svg`) și varianta lată (`logotip-*.svg`), fiecare în șase culori, sunt în `public/logo/`, generate din sursele din `Logo/`; nu redesena sau recolora în afara acestora (vezi `DESIGN.md`).
 - **Sistemul de design** — documentat integral în `DESIGN.md` (culori, tipografie, componente, reguli de motion).
 
 ## Pagini juridice
