@@ -63,8 +63,8 @@ export const bank = {
 // could point at someone else's account).
 export const social: { key: "instagram" | "facebook" | "tiktok" | "youtube"; label: string; url: string | null }[] = [
   { key: "instagram", label: "Instagram", url: "https://www.instagram.com/fatacu4pezi/" },
-  { key: "facebook", label: "Facebook", url: null },
-  { key: "tiktok", label: "TikTok", url: null },
+  { key: "facebook", label: "Facebook", url: "https://www.facebook.com/profile.php?id=61595151324634" },
+  { key: "tiktok", label: "TikTok", url: "https://www.tiktok.com/@asociatiafatacu4pezi" },
   { key: "youtube", label: "YouTube", url: null },
 ];
 
